@@ -46,6 +46,7 @@ public class Player : MonoBehaviour {
             bulletArray[i] = Instantiate(BulletPrefab , Vector3.zero , BulletPrefab.transform.rotation) as GameObject;
             bulletArray[i].GetComponent<Bullet>().Damage = Damage;
             bulletArray[i].GetComponent<Bullet>().Speed = ShootForce;
+            bulletArray[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
             bulletArray[i].GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
             bulletArray[i].SetActive(false);
         }
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour {
 
         chargedBullet = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet.GetComponent<Bullet>().Speed = ShootForce;
+        chargedBullet.GetComponent<Bullet>().ThisPlayer = this.gameObject;
         chargedBullet.GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
         chargedBullet.SetActive(false);
 
@@ -77,9 +79,7 @@ public class Player : MonoBehaviour {
                 currentShootCharge = 0;
                 canShoot = true;
             }
-        }           
-
-        
+        }               
     } 
 
     public void Move(float horizontal, float vertical)

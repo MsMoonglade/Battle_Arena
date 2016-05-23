@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour {
         }
         if (GetAxis(1, "Shoot") > 0.1)
             players[0].Shoot();
+        if (GetAxis(1, "SuperShoot") > 0.1)
+            players[0].SuperShoot(GetAxis(1, "SuperShoot"));
         if (GetButton(1, "Dash"))
             players[0].Dash();
         if (GetButtonDown(1, "Wall"))
@@ -37,6 +39,8 @@ public class PlayerController : MonoBehaviour {
         }
         if (GetAxis(0, "Shoot") > 0.1)
             players[1].Shoot();
+        if (GetAxis(0, "SuperShoot") > 0.1)
+            players[1].SuperShoot(GetAxis(0, "SuperShoot"));
         if (GetButton(0, "Dash"))
             players[1].Dash();
         if (GetButtonDown(0, "Wall"))

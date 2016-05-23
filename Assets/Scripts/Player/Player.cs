@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
     private bool inSuperDash;
     private bool charging;
     private float currentShootCharge;
-    private GameObject chargedBullet;
+    private SuperBullet chargedBullet;
     private GameObject[] bulletArray;
     private GameObject spawn;    
     private float shootTimer;
@@ -66,11 +66,9 @@ public class Player : MonoBehaviour {
         spawn = transform.FindChild("Spawnpoint").gameObject;
         bulletIndex = 0;
 
-        chargedBullet = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
-        chargedBullet.GetComponent<Bullet>().Speed = ShootForce;
-        chargedBullet.GetComponent<Bullet>().ThisPlayer = this.gameObject;
-        chargedBullet.GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
-        chargedBullet.SetActive(false);
+        GameObject superBul = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
+        chargedBullet = superBul.GetComponent<SuperBullet>();
+        superBul.SetActive(false);
 
     }
 
@@ -171,6 +169,28 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void SuperShoot(float buttonPression)
+    {
+        if (!chargedBullet.charging)
+        {
+            chargedBullet.gameObject.transform.position = spawn.transform.position;
+            chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
+            chargedBullet.gameObject.SetActive(true);
+        }
+            ChargeSuperShoot();
+            if (buttonPression < 0.5)
+            {
+                chargedBullet.Relase();
+
+            }
+        
+    }
+
+    private void ChargeSuperShoot()
+    {
+        chargedBullet.Charge();
+    }
+
     public void CreateWall()
     {
         wall.transform.position = spawn.transform.position;
@@ -194,7 +214,7 @@ public class Player : MonoBehaviour {
 
             if (currentShootCharge >= 3)
             {
-                chargedBullet.SetActive(true);
+                chargedBullet.gameObject.SetActive(true);
 
                 currentShootCharge = 0;
                 canShoot = true;

@@ -5,13 +5,15 @@ public class Player : MonoBehaviour {
 
     public GameObject ChargedBulletPrefab;
     public GameObject BulletPrefab;
+    public GameObject MirinoPrefab;
     public float MaxHealth;
     public float MoveSpeed;
     public float ShootForce;
     public float FireRate;
-    public float Damage; 
+    public float Damage;  
     public float ShieldDeactive;
     public float DashDistance;
+    public float SuperDashDistance;
 
     [HideInInspector]
     public float CurrentHealth;
@@ -19,6 +21,9 @@ public class Player : MonoBehaviour {
     private GameObject shield;
     private Rigidbody rb;
 
+    private bool canShoot;
+    private bool inAir;
+    private bool inSuperDash;
     private bool charging;
     private float currentShootCharge;
     private GameObject chargedBullet;
@@ -26,7 +31,9 @@ public class Player : MonoBehaviour {
     private GameObject spawn;    
     private float shootTimer;
     private int bulletIndex;
-    private bool canShoot;
+    private GameObject inAirAim;
+    private GameObject dashTail;
+
 
     void Awake()
     {
@@ -34,11 +41,15 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         shield = transform.FindChild("Shield").gameObject;
         shield.SetActive(false);
+        inAirAim = Instantiate(MirinoPrefab, Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
+        inAirAim.SetActive(false); 
 
+
+        inAir = false;
+        inSuperDash = false;
         charging = false;
         canShoot = true;
-        currentShootCharge = 0;
-     
+        currentShootCharge = 0;        
 
         bulletArray = new GameObject[30];
         for (int i = 0; i < 30; i++)
@@ -66,7 +77,8 @@ public class Player : MonoBehaviour {
         shootTimer += Time.deltaTime;
         
 
-        if (Input.GetAxis("Shoot2") != 0)        
+        //test sparo caricato
+      /*  if (Input.GetAxis("Shoot2") != 0)        
             ChargedShoot();
 
 
@@ -79,8 +91,44 @@ public class Player : MonoBehaviour {
                 currentShootCharge = 0;
                 canShoot = true;
             }
-        }               
+        }
+        */
+
+        //test dash su muro
+       /* if (Input.GetButtonDown(buttonName: ("Fire1")))
+            SuperDash(1 , 1);*/
+
+
+
+        if (inAir)
+        {
+            WallDash(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            if (Input.GetButtonDown(buttonName: ("Fire1")))
+            {
+                transform.position = inAirAim.transform.position;
+                inAirAim.SetActive(false);
+                inAir = false;
+            }
+
+        } 
     } 
+
+
+    void OnCollisionExit(Collision col)
+    {
+        if (col.transform.CompareTag ("Player") && inSuperDash)                
+            col.transform.GetComponent<Player>().TakeDamage(Damage);        
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.CompareTag("EnvironmentWall") && inSuperDash)
+        {
+            transform.position = new Vector3(transform.position.x, 50, transform.position.z);
+            inAirAim.transform.position = Vector3.zero;
+            inAir = true;
+        }
+    }
 
     public void Move(float horizontal, float vertical)
     {
@@ -101,43 +149,50 @@ public class Player : MonoBehaviour {
 
     public void Shoot()
     {
-        if(shootTimer > FireRate && canShoot)
+        if (!inAir)
         {
-            bulletArray[bulletIndex].transform.position = spawn.transform.position;
-            bulletArray[bulletIndex].transform.rotation = transform.rotation;
-            bulletArray[bulletIndex].SetActive(true);
-        
-            shootTimer = 0;
-        }
+            if (shootTimer > FireRate && canShoot)
+            {
+                bulletArray[bulletIndex].transform.position = spawn.transform.position;
+                bulletArray[bulletIndex].transform.rotation = transform.rotation;
+                bulletArray[bulletIndex].SetActive(true);
 
-        if (bulletIndex == bulletArray.Length)
-            bulletIndex = 0;
+                shootTimer = 0;
+            }
+
+            if (bulletIndex == bulletArray.Length)
+                bulletIndex = 0;
+        }
     }
 
     public void ChargedShoot()
     {
-        charging = true;
-        canShoot = false;
-        currentShootCharge += Time.deltaTime;
+        if (!inAir)
+        {
+            charging = true;
+            canShoot = false;
+            currentShootCharge += Time.deltaTime;
 
-        Debug.Log("cazzo");
-        chargedBullet.transform.position = spawn.transform.position;
-        chargedBullet.GetComponent<Bullet>().Damage = currentShootCharge * 5;
-        chargedBullet.transform.localScale = new Vector3(currentShootCharge / 2, currentShootCharge / 2, currentShootCharge / 2);
+            Debug.Log("cazzo");
+            chargedBullet.transform.position = spawn.transform.position;
+            chargedBullet.GetComponent<Bullet>().Damage = currentShootCharge * 5;
+            chargedBullet.transform.localScale = new Vector3(currentShootCharge / 2, currentShootCharge / 2, currentShootCharge / 2);
 
-        if (currentShootCharge >= 3)
-        {           
-            chargedBullet.SetActive(true);
+            if (currentShootCharge >= 3)
+            {
+                chargedBullet.SetActive(true);
 
-            currentShootCharge = 0;
-            canShoot = true;            
-        }     
+                currentShootCharge = 0;
+                canShoot = true;
+            }
+        }
     }
 
 
     public void Wall()
     {
-        StartCoroutine("ShieldBuff");
+        if(!inAir)
+            StartCoroutine("ShieldBuff");
     }
 
     public IEnumerator ShieldBuff()
@@ -153,9 +208,41 @@ public class Player : MonoBehaviour {
     {
         Vector3 Direction = new Vector3(horizontal, 0, - vertical) * DashDistance;
 
-        if (horizontal != 0 || vertical != 0)
-            transform.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime);
+        if (horizontal != 0 || vertical != 0 && inAir == false)
+            rb.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime);
     }
+
+    public void SuperDash(float horizontal, float vertical)
+    {
+
+        Vector3 Direction = new Vector3(horizontal, 0, -vertical) * SuperDashDistance;
+
+        if (horizontal != 0 || vertical != 0 && inAir ==false)
+        {
+            StartCoroutine("DashDamage");
+           
+            transform.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime /3);
+        }
+
+    }
+
+    private IEnumerator DashDamage()
+    {
+        inSuperDash = true;     
+        yield return new WaitForSeconds(1);
+        inSuperDash = false;
+    }
+
+    public void WallDash(float horizontal, float vertical)
+    {
+        
+        inAirAim.SetActive(true);
+
+        Vector3 position = new Vector3(horizontal, 0, vertical) * MoveSpeed * Time.deltaTime;
+
+        inAirAim.transform.position = inAirAim.transform.position + position;
+    }
+
 
     public void TakeDamage(float amount)
     {

@@ -33,14 +33,16 @@ public class Player : MonoBehaviour {
     private int bulletIndex;
     private GameObject inAirAim;
     private GameObject dashTail;
+    private GameObject wall;
 
 
     void Awake()
     {
+        wall = transform.FindChild("Wall").gameObject;
+        wall.SetActive(false);
         CurrentHealth = MaxHealth;
         rb = GetComponent<Rigidbody>();
-        shield = transform.FindChild("Shield").gameObject;
-        shield.SetActive(false);
+      
         inAirAim = Instantiate(MirinoPrefab, Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
         inAirAim.SetActive(false); 
 
@@ -75,28 +77,32 @@ public class Player : MonoBehaviour {
     void Update()
     {
         shootTimer += Time.deltaTime;
-        
+
+      
+
+
+
 
         //test sparo caricato
-      /*  if (Input.GetAxis("Shoot2") != 0)        
-            ChargedShoot();
+        /*  if (Input.GetAxis("Shoot2") != 0)        
+              ChargedShoot();
 
 
-        if (Input.GetAxis("Shoot2") == 0)
-        {
-            if (charging)
-            {
-                chargedBullet.SetActive(true);
+          if (Input.GetAxis("Shoot2") == 0)
+          {
+              if (charging)
+              {
+                  chargedBullet.SetActive(true);
 
-                currentShootCharge = 0;
-                canShoot = true;
-            }
-        }
-        */
+                  currentShootCharge = 0;
+                  canShoot = true;
+              }
+          }
+          */
 
         //test dash su muro
-       /* if (Input.GetButtonDown(buttonName: ("Fire1")))
-            SuperDash(1 , 1);*/
+           // if (Input.GetButtonDown(buttonName: ("Fire1")))
+                //SuperDash(1 , 1);
 
 
 
@@ -165,6 +171,14 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void CreateWall()
+    {
+        wall.transform.position = spawn.transform.position;
+        wall.transform.rotation = transform.rotation;
+        wall.transform.SetParent(null);
+        wall.SetActive(true);
+    }
+
     public void ChargedShoot()
     {
         if (!inAir)
@@ -204,18 +218,23 @@ public class Player : MonoBehaviour {
         canShoot = true;
     }
 
-    public void Dash(float horizontal , float vertical)
+    public void Dash()
     {
-        Vector3 Direction = new Vector3(horizontal, 0, - vertical) * DashDistance;
+       /*  Vector3 Direction = new Vector3(horizontal, 0, - vertical) * DashDistance;
 
-        if (horizontal != 0 || vertical != 0 && inAir == false)
-            rb.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime);
+         if (horizontal != 0 || vertical != 0 && inAir == false)
+             rb.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime);*/
+
+        transform.Translate(Vector3.forward * Time.deltaTime * DashDistance);
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
-
-    public void SuperDash(float horizontal, float vertical)
+/*
+    public void SuperDash()
     {
 
-        Vector3 Direction = new Vector3(horizontal, 0, -vertical) * SuperDashDistance;
+      /*  Vector3 Direction = new Vector3(horizontal, 0, -vertical) * SuperDashDistance;
 
         if (horizontal != 0 || vertical != 0 && inAir ==false)
         {
@@ -224,7 +243,7 @@ public class Player : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime /3);
         }
 
-    }
+    }*/
 
     private IEnumerator DashDamage()
     {

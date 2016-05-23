@@ -22,12 +22,12 @@ public class Bullet : MonoBehaviour {
             transform.Translate(Vector3.forward * Speed * Time.deltaTime);
     }
   
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if (col.transform.CompareTag ("EnvironmentWall"))
             gameObject.SetActive(false);
 
-        if (col.transform.CompareTag("Shield"))
+        if (col.transform.CompareTag("PlayerWall"))
             gameObject.SetActive(false);
 
         if (col.transform.CompareTag("Player"))

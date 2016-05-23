@@ -3,12 +3,13 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+    public GameObject ChargedBulletPrefab;
     public GameObject BulletPrefab;
     public float MaxHealth;
     public float MoveSpeed;
     public float ShootForce;
     public float FireRate;
-    public float Damage;
+    public float Damage; 
     public float ShieldDeactive;
     public float DashDistance;
 
@@ -17,7 +18,10 @@ public class Player : MonoBehaviour {
 
     private GameObject shield;
     private Rigidbody rb;
-    
+
+    private bool charging;
+    private float currentShootCharge;
+    private GameObject chargedBullet;
     private GameObject[] bulletArray;
     private GameObject spawn;    
     private float shootTimer;
@@ -31,7 +35,10 @@ public class Player : MonoBehaviour {
         shield = transform.FindChild("Shield").gameObject;
         shield.SetActive(false);
 
+        charging = false;
         canShoot = true;
+        currentShootCharge = 0;
+     
 
         bulletArray = new GameObject[30];
         for (int i = 0; i < 30; i++)
@@ -45,11 +52,34 @@ public class Player : MonoBehaviour {
         spawn = transform.FindChild("Spawnpoint").gameObject;
         bulletIndex = 0;
 
+        chargedBullet = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
+        chargedBullet.GetComponent<Bullet>().Speed = ShootForce;
+        chargedBullet.GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
+        chargedBullet.SetActive(false);
+
     }
 
     void Update()
     {
-        shootTimer += Time.deltaTime;     
+        shootTimer += Time.deltaTime;
+        
+
+        if (Input.GetAxis("Shoot2") != 0)        
+            ChargedShoot();
+
+
+        if (Input.GetAxis("Shoot2") == 0)
+        {
+            if (charging)
+            {
+                chargedBullet.SetActive(true);
+
+                currentShootCharge = 0;
+                canShoot = true;
+            }
+        }           
+
+        
     } 
 
     public void Move(float horizontal, float vertical)
@@ -69,20 +99,41 @@ public class Player : MonoBehaviour {
         }   
     }
 
-    public void Shoot1()
+    public void Shoot()
     {
         if(shootTimer > FireRate && canShoot)
         {
             bulletArray[bulletIndex].transform.position = spawn.transform.position;
             bulletArray[bulletIndex].transform.rotation = transform.rotation;
             bulletArray[bulletIndex].SetActive(true);
-            Debug.Log("Shoot");
+        
             shootTimer = 0;
         }
 
         if (bulletIndex == bulletArray.Length)
             bulletIndex = 0;
     }
+
+    public void ChargedShoot()
+    {
+        charging = true;
+        canShoot = false;
+        currentShootCharge += Time.deltaTime;
+
+        Debug.Log("cazzo");
+        chargedBullet.transform.position = spawn.transform.position;
+        chargedBullet.GetComponent<Bullet>().Damage = currentShootCharge * 5;
+        chargedBullet.transform.localScale = new Vector3(currentShootCharge / 2, currentShootCharge / 2, currentShootCharge / 2);
+
+        if (currentShootCharge >= 3)
+        {           
+            chargedBullet.SetActive(true);
+
+            currentShootCharge = 0;
+            canShoot = true;            
+        }     
+    }
+
 
     public void Wall()
     {

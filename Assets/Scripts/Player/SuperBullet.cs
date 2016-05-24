@@ -6,8 +6,20 @@ public class SuperBullet : MonoBehaviour {
     public float ScaleValue;
     public float Damage;
     public float DeactivationTime = 5f;
+    public float MaxScaleValue= 3;
     [HideInInspector]
     public bool charging;
+    [HideInInspector]
+    public GameObject ThisPlayer;
+
+    private Collider thisCol;
+
+    void Start()
+    {
+        thisCol = ThisPlayer.GetComponent<Collider>();
+    }
+
+   
 
 
     void FixedUpdate()
@@ -28,23 +40,24 @@ public class SuperBullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (col.gameObject.CompareTag("Player") && col != thisCol )
         {
             col.SendMessage("TakeDamage", Damage);
         }
     }
     public void Charge()
     {
-        Debug.Log("Qui");
-        charging = true;
-        transform.position += transform.forward * ScaleValue;
-        transform.localScale += new Vector3(ScaleValue, ScaleValue, ScaleValue);
+        if (transform.localScale.x < MaxScaleValue)
+        {
+            charging = true;
+            transform.position += transform.forward * ScaleValue;
+            transform.localScale += new Vector3(ScaleValue, ScaleValue, ScaleValue);
+        }
     }
 
     public void Relase()
     {
         charging = false;
-        Debug.Log("Qua");
     }
 
     public void Restore()

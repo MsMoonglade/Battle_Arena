@@ -2,143 +2,154 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-
-    public GameObject ChargedBulletPrefab;
-    public GameObject BulletPrefab;
-    public GameObject MirinoPrefab;
+	
+	//variabili statistiche
     public float MaxHealth;
-    public float MoveSpeed;
+	public float MaxStamina;
+	public float MaxEnergy;
+	public float StaminaRegen;
+    public float Speed;
+	public float RotationSpeed;
     public float ShootForce;
     public float FireRate;
-    public float Damage;  
-    public float ShieldDeactive;
-    public float DashDistance;
-    public float SuperDashDistance;
+    public float Damage;     
+    public float DashSpeed;
+    public float DashTime;
+    public float SuperDashSpeed;
+	public float RangeExplosion;
 
     [HideInInspector]
-    public float CurrentHealth;
-
-    private GameObject shield;
-    private Rigidbody rb;
-
+    public float currentHealth;
+	[HideInInspector]
+	public float currentStamina;
+	[HideInInspector]
+	public float currentDefEnergy;    
+    
     private bool canShoot;
-    private bool inAir;
-    private bool inSuperDash;
-    private bool charging;
-    private float currentShootCharge;
-    private SuperBullet chargedBullet;
-    private GameObject[] bulletArray;
-    private GameObject spawn;    
-    private float shootTimer;
-    private int bulletIndex;
-    private GameObject inAirAim;
-    private GameObject dashTail;
-    private GameObject wall;
+    private bool onFly;
+    //Variabili per Dash
+    [HideInInspector]
+    public bool onDash;
+    private bool onSuperDash;
+	private bool onTurbo;
 
+	//prefabs pubblici
+	private GameObject prefabs;
+	private GameObject chargedBulletPrefab;
+	private GameObject bulletPrefab;
+	private GameObject mirinoPrefab;
+	private GameObject inAirAim; 
+	private GameObject spawn;
+
+	//components
+	private Rigidbody rb;
+	private Collider col;
+	private Animator anim;
+
+	//variabili shoot
+	private float shootTimer;
+	private GameObject[] bulletPool;
+	private int bulletIndex;
+	private SuperBullet chargedBullet; 
+
+	//variabili wall
+	private GameObject wall;
+	
 
     void Awake()
     {
-        wall = transform.FindChild("Wall").gameObject;
+		currentHealth = MaxHealth;
+
+		//prefabs
+		prefabs = transform.FindChild ("Prefabs").gameObject;
+
+        wall = prefabs.transform.FindChild("Wall").gameObject;
         wall.SetActive(false);
-        CurrentHealth = MaxHealth;
+        
+		mirinoPrefab = prefabs.transform.FindChild ("InAirAim").gameObject;
+		inAirAim = Instantiate(mirinoPrefab, Vector3.zero, mirinoPrefab.transform.rotation) as GameObject;
+		inAirAim.SetActive(false);
+
+		bulletPrefab = prefabs.transform.FindChild ("Bullet").gameObject;
+		chargedBulletPrefab = prefabs.transform.FindChild ("SuperBullet").gameObject;
+
+		spawn = transform.FindChild("Spawnpoint").gameObject;
+
+
+
+		//components
         rb = GetComponent<Rigidbody>();
-      
-        inAirAim = Instantiate(MirinoPrefab, Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
-        inAirAim.SetActive(false); 
+        
+		//bool varie
+        onFly = false;
+        onSuperDash = false;       
+        canShoot = true;			     
 
-
-        inAir = false;
-        inSuperDash = false;
-        charging = false;
-        canShoot = true;
-        currentShootCharge = 0;        
-
-        bulletArray = new GameObject[30];
+		//shoot 
+		bulletIndex = 0;
+        bulletPool = new GameObject[30];
         for (int i = 0; i < 30; i++)
         {
-            bulletArray[i] = Instantiate(BulletPrefab , Vector3.zero , BulletPrefab.transform.rotation) as GameObject;
-            bulletArray[i].GetComponent<Bullet>().Damage = Damage;
-            bulletArray[i].GetComponent<Bullet>().Speed = ShootForce;
-            bulletArray[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
-            bulletArray[i].GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
-            bulletArray[i].SetActive(false);
+			bulletPool[i] = Instantiate(bulletPrefab , Vector3.zero , bulletPrefab.transform.rotation) as GameObject;
+			bulletPool[i].GetComponent<Bullet>().Damage = Damage;
+			bulletPool[i].GetComponent<Bullet>().Speed = ShootForce;
+			bulletPool[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
+			bulletPool[i].GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
+			bulletPool[i].SetActive(false);
         }
-        spawn = transform.FindChild("Spawnpoint").gameObject;
-        bulletIndex = 0;
 
-        GameObject superBul = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
+		//super shoot
+        GameObject superBul = Instantiate(chargedBulletPrefab, Vector3.zero, chargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
+        chargedBullet.ThisPlayer = this.gameObject;
         superBul.SetActive(false);
 
     }
 
     void Update()
     {
-        shootTimer += Time.deltaTime;
+        shootTimer += Time.deltaTime;   
 
-      
-
-
-
-
-        //test sparo caricato
-        /*  if (Input.GetAxis("Shoot2") != 0)        
-              ChargedShoot();
-
-
-          if (Input.GetAxis("Shoot2") == 0)
-          {
-              if (charging)
-              {
-                  chargedBullet.SetActive(true);
-
-                  currentShootCharge = 0;
-                  canShoot = true;
-              }
-          }
-          */
-
-        //test dash su muro
-           // if (Input.GetButtonDown(buttonName: ("Fire1")))
-                //SuperDash(1 , 1);
-
-
-
-        if (inAir)
+		/*
+        if (onFly)
         {
             WallDash(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (Input.GetButtonDown(buttonName: ("Fire1")))
             {
                 transform.position = inAirAim.transform.position;
                 inAirAim.SetActive(false);
-                inAir = false;
+                onFly = false;
             }
-
         } 
+        */
     } 
 
 
     void OnCollisionExit(Collision col)
     {
-        if (col.transform.CompareTag ("Player") && inSuperDash)                
+        if (col.transform.CompareTag ("Player") && onSuperDash)                
             col.transform.GetComponent<Player>().TakeDamage(Damage);        
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.transform.CompareTag("EnvironmentWall") && inSuperDash)
+		if (col.transform.CompareTag("PlayerWall") && onSuperDash)
         {
             transform.position = new Vector3(transform.position.x, 50, transform.position.z);
             inAirAim.transform.position = Vector3.zero;
-            inAir = true;
+            onFly = true;
         }
     }
 
     public void Move(float horizontal, float vertical)
     {
-        Vector3 movement = new Vector3(horizontal, 0, vertical) * MoveSpeed * Time.deltaTime;
-
-        rb.MovePosition(transform.position + movement);
+        if (!onDash && !onFly)
+        {
+            Vector3 movement = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.MovePosition(transform.position + movement);
+        }
     }
 
     public void Rotate(float horizontal, float vertical)
@@ -153,37 +164,36 @@ public class Player : MonoBehaviour {
 
     public void Shoot()
     {
-        if (!inAir)
+        if (!onFly)
         {
             if (shootTimer > FireRate && canShoot)
             {
-                bulletArray[bulletIndex].transform.position = spawn.transform.position;
-                bulletArray[bulletIndex].transform.rotation = transform.rotation;
-                bulletArray[bulletIndex].SetActive(true);
+                bulletPool[bulletIndex].transform.position = spawn.transform.position;
+				bulletPool[bulletIndex].transform.rotation = transform.rotation;
+				bulletPool[bulletIndex].SetActive(true);
 
                 shootTimer = 0;
             }
 
-            if (bulletIndex == bulletArray.Length)
+			if (bulletIndex == bulletPool.Length)
                 bulletIndex = 0;
         }
     }
 
     public void SuperShoot(float buttonPression)
     {
-        if (!chargedBullet.charging)
-        {
+      
             chargedBullet.gameObject.transform.position = spawn.transform.position;
             chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
             chargedBullet.gameObject.SetActive(true);
-        }
             ChargeSuperShoot();
-            if (buttonPression < 0.5)
-            {
-                chargedBullet.Relase();
+               
+    }
 
-            }
-        
+    public void RelaseSuperShoot()
+    {
+        if(chargedBullet.charging)
+            chargedBullet.Relase();
     }
 
     private void ChargeSuperShoot()
@@ -193,15 +203,18 @@ public class Player : MonoBehaviour {
 
     public void CreateWall()
     {
-        wall.transform.position = spawn.transform.position;
-        wall.transform.rotation = transform.rotation;
-        wall.transform.SetParent(null);
-        wall.SetActive(true);
+		if (!onFly)
+		{
+			wall.transform.position = spawn.transform.position;
+			wall.transform.rotation = transform.rotation;
+			wall.transform.SetParent (null);
+			wall.SetActive (true);
+		}
     }
 
-    public void ChargedShoot()
+    /*public void ChargedShoot()
     {
-        if (!inAir)
+        if (!onFly)
         {
             charging = true;
             canShoot = false;
@@ -221,55 +234,42 @@ public class Player : MonoBehaviour {
             }
         }
     }
-
-
-    public void Wall()
-    {
-        if(!inAir)
-            StartCoroutine("ShieldBuff");
-    }
-
-    public IEnumerator ShieldBuff()
-    {
-        shield.SetActive(true);
-        canShoot = false;
-        yield return new WaitForSeconds(ShieldDeactive);
-        shield.SetActive(false);
-        canShoot = true;
-    }
+	*/
 
     public void Dash()
+    {            
+        onDash = true;
+        rb.AddForce(transform.forward * DashSpeed, ForceMode.Impulse);
+        Invoke("EndDash", DashTime);        
+    }
+
+    public void EndDash()
     {
-       /*  Vector3 Direction = new Vector3(horizontal, 0, - vertical) * DashDistance;
-
-         if (horizontal != 0 || vertical != 0 && inAir == false)
-             rb.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime);*/
-
-        transform.Translate(Vector3.forward * Time.deltaTime * DashDistance);
-
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        onDash = false;
     }
-/*
-    public void SuperDash()
+
+
+    public void SuperDash(float horizontal , float vertical)
     {
 
-      /*  Vector3 Direction = new Vector3(horizontal, 0, -vertical) * SuperDashDistance;
+        Vector3 Direction = new Vector3(horizontal, 0, -vertical) * SuperDashSpeed;
 
-        if (horizontal != 0 || vertical != 0 && inAir ==false)
+        if (horizontal != 0 || vertical != 0 && onFly ==false)
         {
             StartCoroutine("DashDamage");
            
             transform.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime /3);
         }
 
-    }*/
+    }
 
     private IEnumerator DashDamage()
     {
-        inSuperDash = true;     
+        onSuperDash = true;     
         yield return new WaitForSeconds(1);
-        inSuperDash = false;
+        onSuperDash = false;
     }
 
     public void WallDash(float horizontal, float vertical)
@@ -277,7 +277,7 @@ public class Player : MonoBehaviour {
         
         inAirAim.SetActive(true);
 
-        Vector3 position = new Vector3(horizontal, 0, vertical) * MoveSpeed * Time.deltaTime;
+        Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
 
         inAirAim.transform.position = inAirAim.transform.position + position;
     }
@@ -285,8 +285,8 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(float amount)
     {
-        CurrentHealth -= amount;
-        if (CurrentHealth <= 0)
+        currentHealth -= amount;
+        if (currentHealth <= 0)
             gameObject.SetActive(false);
     }
 }

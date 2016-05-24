@@ -24,12 +24,11 @@ public class Player : MonoBehaviour {
 	public float currentStamina;
 	[HideInInspector]
 	public float currentDefEnergy;    
-    
-    private bool canShoot;
-    private bool onFly;
+
     //Variabili per Dash
     [HideInInspector]
     public bool onDash;
+    private bool onFly;
     private bool onSuperDash;
 	private bool onTurbo;
 
@@ -39,22 +38,28 @@ public class Player : MonoBehaviour {
 	private GameObject bulletPrefab;
 	private GameObject mirinoPrefab;
 	private GameObject inAirAim; 
-	private GameObject spawn;
-
+	
 	//components
 	private Rigidbody rb;
 	private Collider col;
 	private Animator anim;
 
-	//variabili shoot
-	private float shootTimer;
-	private GameObject[] bulletPool;
+    //variabili shoot
+    private GameObject spawn;
+    private GameObject[] bulletPool;
+    private SuperBullet chargedBullet;
+    private bool canShoot;
+    private float shootTimer;	
 	private int bulletIndex;
-	private SuperBullet chargedBullet; 
-
+    private GameObject spawnStartPos;
+	
 	//variabili wall
 	private GameObject wall;
-	
+
+    //limiti mappa
+    private GameObject[] mapLimit = new GameObject[4];
+    
+
 
     void Awake()
     {
@@ -73,20 +78,26 @@ public class Player : MonoBehaviour {
 		bulletPrefab = prefabs.transform.FindChild ("Bullet").gameObject;
 		chargedBulletPrefab = prefabs.transform.FindChild ("SuperBullet").gameObject;
 
-		spawn = transform.FindChild("Spawnpoint").gameObject;
+        spawn = transform.FindChild("Spawnpoint").gameObject;
+        spawnStartPos = transform.FindChild("SpawnpointLocalPos").gameObject;
 
 
-
-		//components
+        //components
         rb = GetComponent<Rigidbody>();
-        
-		//bool varie
+
+        //limitatori di movimento
+        for (int i = 0; i < 4; i++)
+        {
+            mapLimit[i] = GameObject.FindGameObjectWithTag("EnvironmentLimit").transform.GetChild(i).gameObject;
+        }
+
+        //bool varie
         onFly = false;
         onSuperDash = false;       
-        canShoot = true;			     
+        canShoot = true;
 
-		//shoot 
-		bulletIndex = 0;
+        //shoot      
+        bulletIndex = 0;
         bulletPool = new GameObject[30];
         for (int i = 0; i < 30; i++)
         {
@@ -101,16 +112,21 @@ public class Player : MonoBehaviour {
 		//super shoot
         GameObject superBul = Instantiate(chargedBulletPrefab, Vector3.zero, chargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
+        chargedBullet.GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
         chargedBullet.ThisPlayer = this.gameObject;
+        chargedBullet.playerSpawn = spawn.gameObject;
         superBul.SetActive(false);
 
     }
 
     void Update()
     {
-        shootTimer += Time.deltaTime;   
+        shootTimer += Time.deltaTime;
 
-		/*
+        /*
+         * 
+        //Dash su muro da sistemare
+
         if (onFly)
         {
             WallDash(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -122,6 +138,18 @@ public class Player : MonoBehaviour {
             }
         } 
         */
+
+/*
+ * //super shoot test
+        if (Input.GetButton(buttonName: ("Fire1")))
+        {
+            SuperShoot();
+        }
+        if (Input.GetButtonUp(buttonName: ("Fire1")))
+        {
+            RelaseSuperShoot();
+        }*/
+
     } 
 
 
@@ -145,11 +173,23 @@ public class Player : MonoBehaviour {
     {
         if (!onDash && !onFly)
         {
+
             Vector3 movement = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             rb.MovePosition(transform.position + movement);
         }
+
+        //limite del movimento
+        Vector3 clampedPositionX = transform.position;
+        clampedPositionX.x = Mathf.Clamp(transform.position.x, mapLimit[1].transform.position.x, mapLimit[0].transform.position.x);
+        transform.position = new Vector3 (clampedPositionX.x , transform.position.y , transform.position.z);
+
+        Vector3 clampedPositionZ = transform.position;
+        clampedPositionZ.z = Mathf.Clamp(transform.position.z, mapLimit[3].transform.position.z, mapLimit[2].transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y, clampedPositionZ.z); 
+
+
     }
 
     public void Rotate(float horizontal, float vertical)
@@ -180,20 +220,19 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void SuperShoot(float buttonPression)
+    public void SuperShoot(/*float buttonPression*/)
     {
-      
-            chargedBullet.gameObject.transform.position = spawn.transform.position;
-            chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
-            chargedBullet.gameObject.SetActive(true);
-            ChargeSuperShoot();
-               
+        chargedBullet.gameObject.transform.position = spawn.transform.position;
+        chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
+        chargedBullet.gameObject.SetActive(true);
+
+        ChargeSuperShoot();
     }
 
     public void RelaseSuperShoot()
     {
-        if(chargedBullet.charging)
-            chargedBullet.Relase();
+        chargedBullet.ShootStart();
+        spawn.transform.position = spawnStartPos.transform.position;
     }
 
     private void ChargeSuperShoot()

@@ -23,17 +23,14 @@ public class Bullet : MonoBehaviour {
     }
   
     void OnTriggerEnter(Collider col)
-    {
-        if (col.transform.CompareTag ("EnvironmentWall"))
-            gameObject.SetActive(false);
-
+    {    
         if (col.transform.CompareTag("PlayerWall"))
             gameObject.SetActive(false);
 
         if (col.transform.CompareTag("Player"))
         {
-            gameObject.SetActive(false);
-            col.transform.GetComponent<Player>().TakeDamage(Damage);
+            col.SendMessage("TakeDamage", Damage);
+            gameObject.SetActive(false);            
         }
 
     }

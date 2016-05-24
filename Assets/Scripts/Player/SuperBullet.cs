@@ -8,29 +8,33 @@ public class SuperBullet : MonoBehaviour {
     public float DeactivationTime = 5f;
     public float MaxScaleValue= 3;
     [HideInInspector]
-    public bool charging;
+    public bool fire;
     [HideInInspector]
     public GameObject ThisPlayer;
+    [HideInInspector]
+    public GameObject playerSpawn;
 
     private Collider thisCol;
+
+    void Awake()
+    {
+        fire = false;
+    }
 
     void Start()
     {
         thisCol = ThisPlayer.GetComponent<Collider>();
     }
 
-   
-
-
     void FixedUpdate()
     {
-        if(!charging)
+        if(fire)
             transform.Translate(Vector3.forward * Time.deltaTime * Speed);
     }
 
     void OnEnable()
     {
-        StartCoroutine("Disable");
+         StartCoroutine("Disable");
     }
 
     void OnDisable()
@@ -43,21 +47,27 @@ public class SuperBullet : MonoBehaviour {
         if (col.gameObject.CompareTag("Player") && col != thisCol )
         {
             col.SendMessage("TakeDamage", Damage);
+
+            transform.gameObject.SetActive(false);           
+            Restore();
+            fire = false;
         }
     }
     public void Charge()
     {
-        if (transform.localScale.x < MaxScaleValue)
-        {
-            charging = true;
-            transform.position += transform.forward * ScaleValue;
+        if (transform.localScale.x < MaxScaleValue) 
+        {         
+           // transform.position += transform.forward * ScaleValue/2;         
+            playerSpawn.transform.position += transform.forward * ScaleValue / 2;
             transform.localScale += new Vector3(ScaleValue, ScaleValue, ScaleValue);
         }
+
+
     }
 
-    public void Relase()
+    public void ShootStart()
     {
-        charging = false;
+        fire = true;
     }
 
     public void Restore()
@@ -70,7 +80,7 @@ public class SuperBullet : MonoBehaviour {
         yield return new WaitForSeconds(DeactivationTime);
         Restore();
         gameObject.SetActive(false);
-        charging = true;
+        fire = false;
     }
 	
 }

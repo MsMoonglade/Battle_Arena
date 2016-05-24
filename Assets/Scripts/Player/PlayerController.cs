@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(1, "Shoot") > 0.1)
             players[0].Shoot();
         if (GetAxis(1, "SuperShoot") > 0.1)
-            players[0].SuperShoot(GetAxis(1, "SuperShoot"));
+           // players[0].SuperShoot(GetAxis(1, "SuperShoot"));
 
         if(GetAxis(0, "SuperShoot") <= 0.2)
             players[0].RelaseSuperShoot();
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(0, "Shoot") > 0.1)
             players[1].Shoot();
         if (GetAxis(0, "SuperShoot") > 0.1)
-            players[1].SuperShoot(GetAxis(0, "SuperShoot"));
+           // players[1].SuperShoot(GetAxis(0, "SuperShoot"));
 
         if (GetAxis(0, "SuperShoot") <= 0.2)
             players[1].RelaseSuperShoot();

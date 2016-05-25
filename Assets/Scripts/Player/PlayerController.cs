@@ -51,6 +51,16 @@ public class PlayerController : MonoBehaviour {
             players[1].Dash();
         if (GetButtonDown(0, "Wall"))
             players[1].CreateWall();
+		if (GetButton (0, "SuperShoot")) {
+			players[1].SuperShoot();
+		}
+		if (GetButton (1, "SuperShoot")) {
+			players[0].SuperShoot();
+		}
+
+
+
+
     }
 
     bool GetButton(int player, string name)

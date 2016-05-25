@@ -5,9 +5,8 @@ public class Player : MonoBehaviour {
 	
 	//variabili statistiche
     public float MaxHealth;
-	public float MaxStamina;
 	public float MaxEnergy;
-	public float StaminaRegen;
+	public float EnergyRegen;
     public float Speed;
 	public float RotationSpeed;
     public float ShootForce;
@@ -22,9 +21,7 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public float currentHealth;
 	[HideInInspector]
-	public float currentStamina;
-	[HideInInspector]
-	public float currentDefEnergy;    
+	public float currentEnergy;    
 
     //Variabili per Dash
     [HideInInspector]
@@ -68,7 +65,7 @@ public class Player : MonoBehaviour {
     void Awake()
     {
 		currentHealth = MaxHealth;
-
+		currentEnergy = MaxEnergy;
 		//prefabs
 		prefabs = transform.FindChild ("Prefabs").gameObject;
 
@@ -126,7 +123,7 @@ public class Player : MonoBehaviour {
     void Update()
     {
         shootTimer += Time.deltaTime;
-
+		RechargeEnergy();
         /*
         //test super dash su muro e caduta;
         if (Input.GetButtonDown(buttonName: ("Fire1")) && !onSuperDash)
@@ -233,16 +230,17 @@ public class Player : MonoBehaviour {
         chargedBullet.Charge();
     }
 
-    public void CreateWall()
-    {
-		if (!onFly)
+	public void CreateWall()
+	{
+		if (!onFly && currentEnergy >=2)
 		{
+			currentEnergy -= 2; // da controllare
 			wall.transform.position = spawn.transform.position;
 			wall.transform.rotation = transform.rotation;
 			wall.transform.SetParent (null);
 			wall.SetActive (true);
 		}
-    }
+	}
 
     public void Dash()
     {            
@@ -318,4 +316,9 @@ public class Player : MonoBehaviour {
         if (currentHealth <= 0)
             gameObject.SetActive(false);
     }
+	void RechargeEnergy()
+	{
+		if ( currentEnergy < MaxEnergy ) 
+			currentEnergy += EnergyRegen * Time.deltaTime;
+	}
 }

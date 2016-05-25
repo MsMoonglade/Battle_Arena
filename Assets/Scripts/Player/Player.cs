@@ -52,6 +52,7 @@ public class Player : MonoBehaviour {
     private GameObject[] bulletPool;
     private SuperBullet chargedBullet;
     private bool canShoot;
+    private bool isChargingShoot;
     private float shootTimer;	
 	private int bulletIndex;
     private GameObject spawnStartPos;
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour {
         //bool varie
         onFly = false;       
         canShoot = true;
+        isChargingShoot = false;
 
         //shoot      
         bulletIndex = 0;
@@ -125,8 +127,6 @@ public class Player : MonoBehaviour {
     {
         shootTimer += Time.deltaTime;
 
-
-
         /*
         //test super dash su muro e caduta;
         if (Input.GetButtonDown(buttonName: ("Fire1")) && !onSuperDash)
@@ -134,21 +134,6 @@ public class Player : MonoBehaviour {
         if(Input.GetButtonDown(buttonName: ("Fire2")))
             FallDown();
             */
-
-
-
-        /*
-         * //super shoot test
-                if (Input.GetButton(buttonName: ("Fire1")))
-                {
-                    SuperShoot();
-                }
-                if (Input.GetButtonUp(buttonName: ("Fire1")))
-                {
-                    RelaseSuperShoot();
-                }*/
-
-
     }
 
 
@@ -225,6 +210,7 @@ public class Player : MonoBehaviour {
 
     public void SuperShoot()
     {
+        isChargingShoot = true;
         chargedBullet.gameObject.transform.position = spawn.transform.position;
         chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
         chargedBullet.gameObject.SetActive(true);
@@ -234,8 +220,12 @@ public class Player : MonoBehaviour {
 
     public void RelaseSuperShoot()
     {
-        chargedBullet.ShootStart();
-        spawn.transform.position = spawnStartPos.transform.position;
+        if (isChargingShoot)
+        {
+            chargedBullet.ShootStart();
+            spawn.transform.position = spawnStartPos.transform.position;
+            isChargingShoot = false;
+        }
     }
 
     private void ChargeSuperShoot()

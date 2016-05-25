@@ -16,50 +16,49 @@ public class PlayerController : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
-        
-       if (GetAxis(1,"LeftRotationH") != 0 || GetAxis(1, "LeftRotationV") != 0 || GetAxis(1, "RightRotationH") != 0 || GetAxis(1, "RightRotationV") != 0 || GetAxis(1,"Shoot") != 0)
+        //player 1
+        if (GetAxis(1,"LeftRotationH") != 0 || GetAxis(1, "LeftRotationV") != 0 || GetAxis(1, "RightRotationH") != 0 || GetAxis(1, "RightRotationV") != 0 || GetAxis(1,"Shoot") != 0)
         {
             players[0].Move(GetAxis(1, "LeftRotationH"), GetAxis(1, "LeftRotationV"));
             players[0].Rotate(GetAxis(1, "RightRotationH"), GetAxis(1, "RightRotationV") * -1);
         }
+
         if (GetAxis(1, "Shoot") > 0.1)
             players[0].Shoot();
-        if (GetAxis(1, "SuperShoot") > 0.1)
-           // players[0].SuperShoot(GetAxis(1, "SuperShoot"));
 
-        if(GetAxis(0, "SuperShoot") <= 0.2)
-            players[0].RelaseSuperShoot();
+        if (GetAxis(1, "SuperShoot") > 0.5f)
+            players[0].SuperShoot();
+
+        if (GetAxis(1, "SuperShoot") < 0.4f)        
+            players[0].RelaseSuperShoot();        
+
         if (GetButtonDown(1, "Dash") && !players[0].onDash)
             players[0].Dash() ;
+
         if (GetButtonDown(1, "Wall"))
             players[0].CreateWall();
 
-
+        //player 2
         if (GetAxis(0, "LeftRotationH") != 0 || GetAxis(0, "LeftRotationV") != 0 || GetAxis(0, "RightRotationH") != 0 || GetAxis(0, "RightRotationV") != 0)
         {
             players[1].Move(GetAxis(0, "LeftRotationH"), GetAxis(0, "LeftRotationV"));
             players[1].Rotate(GetAxis(0, "RightRotationH"), GetAxis(0, "RightRotationV") * -1);
         }
+
         if (GetAxis(0, "Shoot") > 0.1)
             players[1].Shoot();
-        if (GetAxis(0, "SuperShoot") > 0.1)
-           // players[1].SuperShoot(GetAxis(0, "SuperShoot"));
 
-        if (GetAxis(0, "SuperShoot") <= 0.2)
+        if (GetAxis(0, "SuperShoot") > 0.5f)
+            players[1].SuperShoot();
+
+        if (GetAxis(0, "SuperShoot") < 0.4f)        
             players[1].RelaseSuperShoot();
+       
         if (GetButtonDown(0, "Dash") && !players[1].onDash)
             players[1].Dash();
+
         if (GetButtonDown(0, "Wall"))
             players[1].CreateWall();
-		if (GetButton (0, "SuperShoot")) {
-			players[1].SuperShoot();
-		}
-		if (GetButton (1, "SuperShoot")) {
-			players[0].SuperShoot();
-		}
-
-
-
 
     }
 

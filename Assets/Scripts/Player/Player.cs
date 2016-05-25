@@ -16,7 +16,8 @@ public class Player : MonoBehaviour {
     public float DashSpeed;
     public float DashTime;
     public float SuperDashSpeed;
-	public float RangeExplosion;
+    public float SuperDashTime;
+    public float RangeExplosion;
 
     [HideInInspector]
     public float currentHealth;
@@ -28,19 +29,21 @@ public class Player : MonoBehaviour {
     //Variabili per Dash
     [HideInInspector]
     public bool onDash;
-    private bool onFly;
-    private bool onSuperDash;
+    [HideInInspector]
+    public bool onSuperDash;
+    private bool onFly;   
 	private bool onTurbo;
+    Vector3 fallPoint;
 
-	//prefabs pubblici
-	private GameObject prefabs;
+    //prefabs
+    private GameObject prefabs;
 	private GameObject chargedBulletPrefab;
 	private GameObject bulletPrefab;
 	private GameObject mirinoPrefab;
-	private GameObject inAirAim; 
-	
-	//components
-	private Rigidbody rb;
+	private GameObject inAirAim;
+
+    //components
+    private Rigidbody rb;
 	private Collider col;
 	private Animator anim;
 
@@ -92,8 +95,7 @@ public class Player : MonoBehaviour {
         }
 
         //bool varie
-        onFly = false;
-        onSuperDash = false;       
+        onFly = false;       
         canShoot = true;
 
         //shoot      
@@ -123,34 +125,31 @@ public class Player : MonoBehaviour {
     {
         shootTimer += Time.deltaTime;
 
+
+
         /*
-         * 
-        //Dash su muro da sistemare
+        //test super dash su muro e caduta;
+        if (Input.GetButtonDown(buttonName: ("Fire1")) && !onSuperDash)
+            SuperDash();
+        if(Input.GetButtonDown(buttonName: ("Fire2")))
+            FallDown();
+            */
 
-        if (onFly)
-        {
-            WallDash(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            if (Input.GetButtonDown(buttonName: ("Fire1")))
-            {
-                transform.position = inAirAim.transform.position;
-                inAirAim.SetActive(false);
-                onFly = false;
-            }
-        } 
-        */
 
-/*
- * //super shoot test
-        if (Input.GetButton(buttonName: ("Fire1")))
-        {
-            SuperShoot();
-        }
-        if (Input.GetButtonUp(buttonName: ("Fire1")))
-        {
-            RelaseSuperShoot();
-        }*/
 
-    } 
+        /*
+         * //super shoot test
+                if (Input.GetButton(buttonName: ("Fire1")))
+                {
+                    SuperShoot();
+                }
+                if (Input.GetButtonUp(buttonName: ("Fire1")))
+                {
+                    RelaseSuperShoot();
+                }*/
+
+
+    }
 
 
     void OnCollisionExit(Collision col)
@@ -161,9 +160,9 @@ public class Player : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-		if (col.transform.CompareTag("PlayerWall") && onSuperDash)
+        if (col.transform.CompareTag("PlayerWall") && onSuperDash)
         {
-            transform.position = new Vector3(transform.position.x, 50, transform.position.z);
+            StartCoroutine (WallHit());
             inAirAim.transform.position = Vector3.zero;
             onFly = true;
         }
@@ -173,7 +172,6 @@ public class Player : MonoBehaviour {
     {
         if (!onDash && !onFly)
         {
-
             Vector3 movement = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -187,9 +185,14 @@ public class Player : MonoBehaviour {
 
         Vector3 clampedPositionZ = transform.position;
         clampedPositionZ.z = Mathf.Clamp(transform.position.z, mapLimit[3].transform.position.z, mapLimit[2].transform.position.z);
-        transform.position = new Vector3(transform.position.x, transform.position.y, clampedPositionZ.z); 
+        transform.position = new Vector3(transform.position.x, transform.position.y, clampedPositionZ.z);
 
+        //movimento mirino quando si salta su un muro
+        if (onFly)           
+            AimMove(horizontal, vertical);
 
+        if (inAirAim.transform.gameObject.activeInHierarchy)
+            transform.position = new Vector3(inAirAim.transform.position.x, transform.position.y, inAirAim.transform.position.z);
     }
 
     public void Rotate(float horizontal, float vertical)
@@ -220,7 +223,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void SuperShoot(/*float buttonPression*/)
+    public void SuperShoot()
     {
         chargedBullet.gameObject.transform.position = spawn.transform.position;
         chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
@@ -251,30 +254,6 @@ public class Player : MonoBehaviour {
 		}
     }
 
-    /*public void ChargedShoot()
-    {
-        if (!onFly)
-        {
-            charging = true;
-            canShoot = false;
-            currentShootCharge += Time.deltaTime;
-
-            Debug.Log("cazzo");
-            chargedBullet.transform.position = spawn.transform.position;
-            chargedBullet.GetComponent<Bullet>().Damage = currentShootCharge * 5;
-            chargedBullet.transform.localScale = new Vector3(currentShootCharge / 2, currentShootCharge / 2, currentShootCharge / 2);
-
-            if (currentShootCharge >= 3)
-            {
-                chargedBullet.gameObject.SetActive(true);
-
-                currentShootCharge = 0;
-                canShoot = true;
-            }
-        }
-    }
-	*/
-
     public void Dash()
     {            
         onDash = true;
@@ -289,31 +268,25 @@ public class Player : MonoBehaviour {
         onDash = false;
     }
 
-
-    public void SuperDash(float horizontal , float vertical)
+    public void SuperDash()
     {
-
-        Vector3 Direction = new Vector3(horizontal, 0, -vertical) * SuperDashSpeed;
-
-        if (horizontal != 0 || vertical != 0 && onFly ==false)
+        if (!onFly)
         {
-            StartCoroutine("DashDamage");
-           
-            transform.position = Vector3.Lerp(transform.position, Direction, Time.deltaTime /3);
+            onSuperDash = true;
+            rb.AddForce(transform.forward * SuperDashSpeed, ForceMode.Impulse);
+            Invoke("EndSuperDash", SuperDashTime);
         }
-
     }
 
-    private IEnumerator DashDamage()
+    public void EndSuperDash()
     {
-        onSuperDash = true;     
-        yield return new WaitForSeconds(1);
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         onSuperDash = false;
     }
 
-    public void WallDash(float horizontal, float vertical)
-    {
-        
+    public void AimMove(float horizontal, float vertical)
+    {        
         inAirAim.SetActive(true);
 
         Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
@@ -321,6 +294,33 @@ public class Player : MonoBehaviour {
         inAirAim.transform.position = inAirAim.transform.position + position;
     }
 
+    public void FallDown()
+    {
+        if (onFly)
+        {  
+            StartCoroutine(FallDownAnimation());                    
+            inAirAim.SetActive(false);
+            onFly = false;
+        }
+    }
+
+    public IEnumerator FallDownAnimation()
+    {
+        while (transform.position.y > 1)
+        {
+            transform.Translate(Vector3.down * 30 * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    public IEnumerator WallHit()
+    {
+        while (transform.position.y < 20)
+        {
+            transform.Translate(transform.up * 20 * Time.deltaTime);
+            yield return null;
+        }
+    }
 
     public void TakeDamage(float amount)
     {

@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(0, "SuperShoot") < 0.4f)        
             players[0].RelaseSuperShoot();
 
-        if (GetButtonDown(0, "Dash") && GetButtonDown(0, "Wall"))
+        if (GetButton(0, "Dash") && GetButton(0, "Wall") && !players[0].onSuperDash)
             players[0].SuperDash();
 
         if (GetButtonDown(0, "Dash") && !players[0].onDash && !GetButton(0, "Wall"))

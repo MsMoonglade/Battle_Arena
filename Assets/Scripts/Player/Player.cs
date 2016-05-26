@@ -251,7 +251,7 @@ public class Player : MonoBehaviour {
 	{
 		if (!onFly && currentEnergy >=2)
 		{
-			currentEnergy -= 2; // da controllare
+			currentEnergy -= 2; 
 			wall.transform.position = spawn.transform.position;
 			wall.transform.rotation = transform.rotation;
 			wall.transform.SetParent (null);
@@ -260,7 +260,8 @@ public class Player : MonoBehaviour {
 	}
 
     public void Dash()
-    {            
+    {      
+		currentEnergy -= 1;
         onDash = true;
         rb.AddForce(transform.forward * DashSpeed, ForceMode.Impulse);
         Invoke("EndDash", DashTime);        
@@ -277,6 +278,7 @@ public class Player : MonoBehaviour {
     {
         if (!onFly)
         {
+			currentEnergy -= 4;
             onSuperDash = true;
             rb.AddForce(transform.forward * SuperDashSpeed, ForceMode.Impulse);
             inAirAim.transform.position = new Vector3(transform.position.x, 0, transform.position.z);

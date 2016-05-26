@@ -6,31 +6,38 @@ public class GUIController : MonoBehaviour {
 	public UISlider[] HealthBar=new UISlider[4];
 	public UISlider[] EnergyBar = new UISlider[4];
 	
-	private GameObject[] gameObjPlayer;
-	private Player[] players = new Player[4];
+	private Player[] players;
 	
 	
 	
 	void Awake()
 	{
-		gameObjPlayer = GameObject.FindGameObjectsWithTag ("Player");
-		for (int i = 0; i< gameObjPlayer.Length; i++) {
-			players[i] = gameObjPlayer[i].GetComponent<Player>();
-		}
+		players = new Player[4];
+		AssignPlayers ();
+
 	}
-	
-	
+
+	private void AssignPlayers()
+	{
+		players [0] = GameObject.Find ("Player1").GetComponent<Player> ();
+		players [1] = GameObject.Find ("Player2").GetComponent<Player> ();
+		players [2] = GameObject.Find ("Player3").GetComponent<Player> ();
+		players [3] = GameObject.Find ("Player4").GetComponent<Player> ();
+	}
 	
 	void Update () 
 	{
-		HealthBar [0].value = players[0].currentHealth/5;
-		HealthBar [1].value = players[1].currentHealth/5;
-//		HealthBar [2].value = players[2].currentHealth/5;
-//		HealthBar [3].value = players[3].currentHealth/5;
+		HealthBar[0].value = players[0].currentHealth/players[0].MaxHealth;
+		HealthBar[1].value = players[1].currentHealth/players[1].MaxHealth;
+		HealthBar[2].value = players[2].currentHealth/players[2].MaxHealth;
+		HealthBar[3].value = players[3].currentHealth/players[3].MaxHealth;
 		
-		EnergyBar [0].value = players[0].currentEnergy/4;
-		EnergyBar [1].value = players[1].currentEnergy/4;
-//		EnergyBar [2].value = players[2].currentEnergy/4;
-//		EnergyBar [3].value = players[3].currentEnergy/4;
+		EnergyBar[0].value = players[0].currentHealth/players[0].MaxEnergy;
+		EnergyBar[1].value = players[1].currentHealth/players[1].MaxEnergy;
+		EnergyBar[2].value = players[2].currentHealth/players[2].MaxEnergy;	
+		EnergyBar[3].value = players[3].currentHealth/players[3].MaxEnergy;
 	}
+
+
+
 }

@@ -159,7 +159,6 @@ public class Player : MonoBehaviour {
         {
             StartCoroutine (WallHit());
             onFly = true;
-            rb.useGravity = false;
             Invoke("FallDown", FallDownTime);
             Debug.Log("SonoQua");
         }
@@ -167,7 +166,7 @@ public class Player : MonoBehaviour {
 
     public void Move(float horizontal, float vertical)
     {
-        if (!onDash && !onFly && !imDied && !onSuperDash)
+        if (!onDash && !onFly && !imDied)
         {
             Vector3 movement = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
             rb.velocity = Vector3.zero;
@@ -196,18 +195,10 @@ public class Player : MonoBehaviour {
     {
         if (horizontal != 0 || vertical != 0)
         {
-            Quaternion rotation = Quaternion.LookRotation(new Vector3(horizontal, 0, -vertical));
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * RotationSpeed);
-        }
-    
-   
-        /* if (horizontal != 0 || vertical != 0)
-        {
             Quaternion rotation = Quaternion.LookRotation(new Vector3(horizontal, 0, - vertical));
 
             transform.rotation = rotation;
-        }   */
+        }   
     }
 
     public void Shoot()
@@ -313,8 +304,7 @@ public class Player : MonoBehaviour {
     public void FallDown()
     {
         if (onFly)
-        {
-            rb.useGravity = true;
+        {  
             StartCoroutine(FallDownAnimation());                    
             inAirAim.SetActive(false);
             onFly = false;

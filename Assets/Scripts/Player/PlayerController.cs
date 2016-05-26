@@ -32,10 +32,10 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(0, "Dash") && GetButtonDown(0, "Wall"))
             players[0].SuperDash();
 
-        if (GetButtonDown(0, "Dash") && !players[0].onDash)
+        if (GetButtonDown(0, "Dash") && !players[0].onDash && !GetButton(0, "Wall"))
             players[0].Dash() ;
 
-        if (GetButtonDown(0, "Wall"))
+        if (GetButtonDown(0, "Wall") && !players[0].onDash && !GetButton(0, "Dash"))
             players[0].CreateWall();
 
         //player 2
@@ -57,10 +57,10 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(1, "Dash") && GetButtonDown(1, "Wall"))
             players[1].SuperDash();
 
-        if (GetButtonDown(1, "Dash") && !players[1].onDash)
+        if (GetButtonDown(1, "Dash") && !players[1].onDash && !GetButton(1, "Wall"))
             players[1].Dash();
 
-        if (GetButtonDown(1, "Wall"))
+        if (GetButtonDown(1, "Wall") && !players[1].onDash && !GetButton(1, "Dash"))
             players[1].CreateWall();
 
         //player 3
@@ -82,10 +82,10 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(2, "Dash") && GetButtonDown(2, "Wall"))
             players[2].SuperDash();
 
-        if (GetButtonDown(2, "Dash") && !players[2].onDash)
+        if (GetButtonDown(2, "Dash") && !players[2].onDash && !GetButton(2, "Wall"))
             players[2].Dash();
 
-        if (GetButtonDown(2, "Wall"))
+        if (GetButtonDown(2, "Wall") && !players[2].onDash && !GetButton(2, "Dash"))
             players[2].CreateWall();
 
         //player 4
@@ -107,10 +107,10 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(3, "Dash") && GetButtonDown(3, "Wall"))
             players[3].SuperDash();
 
-        if (GetButtonDown(3, "Dash") && !players[3].onDash)
+        if (GetButtonDown(3, "Dash") && !players[3].onDash && !GetButton(3, "Wall"))
             players[3].Dash();
 
-        if (GetButtonDown(3, "Wall"))
+        if (GetButtonDown(3, "Wall") && !players[3].onDash && !GetButton(3, "Dash"))
             players[3].CreateWall();
 
     }

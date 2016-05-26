@@ -68,8 +68,7 @@ public class Player : MonoBehaviour {
 
     void Awake()
     {
-		currentHealth = MaxHealth;
-		currentEnergy = MaxEnergy;
+		
 		//prefabs
 		prefabs = transform.FindChild ("Prefabs").gameObject;
 
@@ -96,11 +95,6 @@ public class Player : MonoBehaviour {
             mapLimit[i] = GameObject.FindGameObjectWithTag("EnvironmentLimit").transform.GetChild(i).gameObject;
         }
 
-        //bool varie
-        onFly = false;       
-        canShoot = true;
-        isChargingShoot = false;
-
         //shoot      
         bulletIndex = 0;
         bulletPool = new GameObject[30];
@@ -121,6 +115,19 @@ public class Player : MonoBehaviour {
         chargedBullet.ThisPlayer = this.gameObject;
         chargedBullet.playerSpawn = spawn.gameObject;
         superBul.SetActive(false);
+
+    }
+
+    void Start()
+    {
+        //Assegnazione Stat
+        currentHealth = MaxHealth;
+        currentEnergy = MaxEnergy;
+        //bool varie
+        onFly = false;
+        canShoot = true;
+        isChargingShoot = false;
+        imDied = false;
 
     }
 
@@ -153,6 +160,7 @@ public class Player : MonoBehaviour {
             StartCoroutine (WallHit());
             onFly = true;
             Invoke("FallDown", FallDownTime);
+            Debug.Log("SonoQua");
         }
     }
 

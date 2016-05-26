@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
 	private Animator anim;
 
     //variabili shoot
-    private GameObject spawn;
+    private GameObject[] bulletSpawnPoint;    
     private GameObject[] bulletPool;
     private SuperBullet chargedBullet;
     private bool canShoot;
@@ -56,10 +56,12 @@ public class Player : MonoBehaviour {
     private float shootTimer;
     private float superShootTimer;	
 	private int bulletIndex;
-    private GameObject spawnStartPos;
-	
-	//variabili wall
-	private GameObject wall;
+    private int spawnpointIndex;
+
+
+    //variabili wall
+    private GameObject wall;
+    private GameObject wallSpawnPoint;
 
     //limiti mappa
     private GameObject[] mapLimit = new GameObject[4];
@@ -82,9 +84,13 @@ public class Player : MonoBehaviour {
 		bulletPrefab = prefabs.transform.FindChild ("Bullet").gameObject;
 		chargedBulletPrefab = prefabs.transform.FindChild ("SuperBullet").gameObject;
 
-        spawn = transform.FindChild("Spawnpoint").gameObject;
-        spawnStartPos = transform.FindChild("SpawnpointLocalPos").gameObject;
 
+        //Spawnpoint Wall && Shoot
+        wallSpawnPoint = transform.FindChild("WallSpawnpoint").gameObject;
+
+        bulletSpawnPoint = new GameObject[2];
+        bulletSpawnPoint[0] = transform.FindChild("ShootSpawnPointDX").gameObject;
+        bulletSpawnPoint[1] = transform.FindChild("ShootSpawnPointSX").gameObject;
 
         //components
         rb = GetComponent<Rigidbody>();
@@ -95,8 +101,7 @@ public class Player : MonoBehaviour {
             mapLimit[i] = GameObject.FindGameObjectWithTag("EnvironmentLimit").transform.GetChild(i).gameObject;
         }
 
-        //shoot      
-        bulletIndex = 0;
+        //shoot     
         bulletPool = new GameObject[30];
         for (int i = 0; i < 30; i++)
         {
@@ -112,8 +117,7 @@ public class Player : MonoBehaviour {
         GameObject superBul = Instantiate(chargedBulletPrefab, Vector3.zero, chargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
         chargedBullet.GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
-        chargedBullet.ThisPlayer = this.gameObject;
-        chargedBullet.playerSpawn = spawn.gameObject;
+        //chargedBullet.playerSpawn = spawn.gameObject;
         superBul.SetActive(false);
 
     }
@@ -123,11 +127,16 @@ public class Player : MonoBehaviour {
         //Assegnazione Stat
         currentHealth = MaxHealth;
         currentEnergy = MaxEnergy;
+
         //bool varie
         onFly = false;
         canShoot = true;
         isChargingShoot = false;
         imDied = false;
+
+        //Assegnazioni indici per sparo
+        bulletIndex = 0;
+        spawnpointIndex = 0;
 
     }
 
@@ -209,12 +218,17 @@ public class Player : MonoBehaviour {
         {
             if (shootTimer > FireRate && canShoot)
             {
-                bulletPool[bulletIndex].transform.position = spawn.transform.position;
+                bulletPool[bulletIndex].transform.position = bulletSpawnPoint[spawnpointIndex].transform.position;
 				bulletPool[bulletIndex].transform.rotation = transform.rotation;
 				bulletPool[bulletIndex].SetActive(true);
 
+                spawnpointIndex++;
+                bulletIndex++;
                 shootTimer = 0;
             }
+
+            if (spawnpointIndex == bulletSpawnPoint.Length)
+                spawnpointIndex = 0;
 
 			if (bulletIndex == bulletPool.Length)
                 bulletIndex = 0;
@@ -225,8 +239,8 @@ public class Player : MonoBehaviour {
     {
         if (!imDied && !onFly && superShootTimer > SuperShootCD){
             isChargingShoot = true;
-            chargedBullet.gameObject.transform.position = spawn.transform.position;
-            chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
+            //chargedBullet.gameObject.transform.position = spawn.transform.position;
+            //chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
             chargedBullet.gameObject.SetActive(true);
 
             ChargeSuperShoot();
@@ -239,7 +253,7 @@ public class Player : MonoBehaviour {
         {
             superShootTimer = 0;
             chargedBullet.ShootStart();
-            spawn.transform.position = spawnStartPos.transform.position;
+            //spawn.transform.position = spawnStartPos.transform.position;
             isChargingShoot = false;
         }
     }
@@ -254,7 +268,7 @@ public class Player : MonoBehaviour {
 		if (!onFly && currentEnergy >=2)
 		{
 			currentEnergy -= 2; 
-			wall.transform.position = spawn.transform.position;
+			wall.transform.position = wallSpawnPoint.transform.position;
 			wall.transform.rotation = transform.rotation;
 			wall.transform.SetParent (null);
 			wall.SetActive (true);

@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
     public float ShootForce;
     public float FireRate;
     public float SuperShootCD;
+    public float SuperShootMaxTimeCharge;
     public float Damage;     
     public float DashSpeed;
     public float DashTime;
@@ -57,7 +58,8 @@ public class Player : MonoBehaviour {
     private float superShootTimer;	
 	private int bulletIndex;
     private int spawnpointIndex;
-
+    [HideInInspector]
+    public float shootCharge;
 
     //variabili wall
     private GameObject wall;
@@ -117,8 +119,9 @@ public class Player : MonoBehaviour {
         GameObject superBul = Instantiate(chargedBulletPrefab, Vector3.zero, chargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
         chargedBullet.GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
-        //chargedBullet.playerSpawn = spawn.gameObject;
-        superBul.SetActive(false);
+        chargedBullet.GetComponent<SuperBullet>().player = this.gameObject;
+        chargedBullet.GetComponent<SuperBullet>().playerSpawnPoint = wallSpawnPoint.gameObject;
+        chargedBullet.transform.gameObject.SetActive(false);
 
     }
 
@@ -142,17 +145,15 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
+        //Timer per lo sparo
         shootTimer += Time.deltaTime;
         superShootTimer += Time.deltaTime;
 
-		RechargeEnergy();
-        /*
-        //test super dash su muro e caduta;
-        if (Input.GetButtonDown(buttonName: ("Fire1")) && !onSuperDash)
-            SuperDash();
-        if(Input.GetButtonDown(buttonName: ("Fire2")))
-            FallDown();
-            */
+        //Metodo per caricare il colpo caricato
+        ShootCharge();
+
+        //Metodo per il recupero dell'energy
+        RechargeEnergy();
     }
 
 
@@ -238,29 +239,30 @@ public class Player : MonoBehaviour {
     public void SuperShoot()
     {
         if (!imDied && !onFly && superShootTimer > SuperShootCD){
-            isChargingShoot = true;
-            //chargedBullet.gameObject.transform.position = spawn.transform.position;
-            //chargedBullet.gameObject.transform.rotation = spawn.transform.rotation;
-            chargedBullet.gameObject.SetActive(true);
-
-            ChargeSuperShoot();
+            isChargingShoot = true;       
         }
+    }
+
+    public void ShootCharge()
+    {
+        //aumento la carica del colpo che al rilascio passo al proiettile e se la gestisce lui
+        if (isChargingShoot)
+            shootCharge += Time.deltaTime;
+
+        if (shootCharge > SuperShootMaxTimeCharge)
+            shootCharge = SuperShootMaxTimeCharge;
     }
 
     public void RelaseSuperShoot()
     {
         if (isChargingShoot)
-        {
-            superShootTimer = 0;
-            chargedBullet.ShootStart();
-            //spawn.transform.position = spawnStartPos.transform.position;
-            isChargingShoot = false;
-        }
-    }
+        {         
+            chargedBullet.ShootStart(shootCharge);
 
-    private void ChargeSuperShoot()
-    {
-        chargedBullet.Charge();
+            superShootTimer = 0;
+            isChargingShoot = false;
+            shootCharge = 0;
+        }
     }
 
 	public void CreateWall()
@@ -276,11 +278,14 @@ public class Player : MonoBehaviour {
 	}
 
     public void Dash()
-    {      
-		currentEnergy -= 1;
-        onDash = true;
-        rb.AddForce(transform.forward * DashSpeed, ForceMode.Impulse);
-        Invoke("EndDash", DashTime);        
+    {
+        if (currentEnergy >= 1)
+        {
+            currentEnergy -= 1;
+            onDash = true;
+            rb.AddForce(transform.forward * DashSpeed, ForceMode.Impulse);
+            Invoke("EndDash", DashTime);
+        }        
     }
 
     public void EndDash()
@@ -292,7 +297,7 @@ public class Player : MonoBehaviour {
 
     public void SuperDash()
     {
-        if (!onFly)
+        if (!onFly && currentEnergy >= 4)
         {
 			currentEnergy -= 4;
             onSuperDash = true;

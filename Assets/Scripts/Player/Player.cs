@@ -157,6 +157,8 @@ public class Player : MonoBehaviour {
     {
         if (col.transform.CompareTag("PlayerWall") && onSuperDash)
         {
+            rb.useGravity = false;
+            inAirAim.SetActive(true);
             StartCoroutine (WallHit());
             onFly = true;
             Invoke("FallDown", FallDownTime);
@@ -197,7 +199,7 @@ public class Player : MonoBehaviour {
         {
             Quaternion rotation = Quaternion.LookRotation(new Vector3(horizontal, 0, - vertical));
 
-            transform.rotation = rotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * RotationSpeed);
         }   
     }
 
@@ -294,7 +296,7 @@ public class Player : MonoBehaviour {
 
     public void AimMove(float horizontal, float vertical)
     {        
-        inAirAim.SetActive(true);
+        
 
         Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
 
@@ -304,7 +306,8 @@ public class Player : MonoBehaviour {
     public void FallDown()
     {
         if (onFly)
-        {  
+        {
+            rb.useGravity = true;
             StartCoroutine(FallDownAnimation());                    
             inAirAim.SetActive(false);
             onFly = false;

@@ -23,10 +23,10 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(0, "Shoot") > 0.1)
             players[0].Shoot();
 
-        if (GetAxis(0, "SuperShoot") > 0.5f)
+        if (GetAxis(0, "SuperShoot") > 0.5f || Input.GetKey(KeyCode.P))
             players[0].SuperShoot();
 
-        if (GetAxis(0, "SuperShoot") < 0.4f)        
+        if (/*GetAxis(0, "SuperShoot") < 0.4f*/ Input.GetKeyUp(KeyCode.P))        
             players[0].RelaseSuperShoot();
 
         if (GetButtonDown(0, "Dash") && GetButtonDown(0, "Wall"))

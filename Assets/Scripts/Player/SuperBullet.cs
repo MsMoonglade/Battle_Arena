@@ -2,95 +2,87 @@
 using System.Collections;
 
 public class SuperBullet : MonoBehaviour {
-
-    //Variabili pubbliche carica
     public float[] Speed = new float[3];
-    public float[] Scale = new float[3];
     public float[] Damage = new float[3];
-    public float[] DeactivationTime = new float[3];
+    public float[] Scale = new float[3];
+    public float DeactivationTime;
 
     [HideInInspector]
-    public GameObject player;
+    public GameObject col;
     [HideInInspector]
-    public GameObject playerSpawnPoint;
-
-    private Player ThisPlayer;
-
-    //Variabili Carica
-    private float chargeValue;
-    private float moveSpeed;
-    private float scale;
+    public ParticleSystem[] partc;
+    private GameObject particle;
+    private float speed;
     private float damage;
-    private float deactivationTime;
+    [HideInInspector]
+    public float scale;
 
     void Awake()
     {
-        ThisPlayer = player.GetComponent <Player>();
+        col = transform.FindChild("Collider").gameObject;
+        particle = transform.FindChild("Particle").gameObject;
+        partc = new ParticleSystem[3];
+        for(int i = 0; i < partc.Length; i++)
+            partc[i] = particle.transform.GetChild(i).GetComponent<ParticleSystem>();
+        
+        
     }
- 
-    void OnEnable()
+
+    void Start()
     {
-        //quando il proiettile viene attivato controlla la carica passata dal player e modifica i suoi valori
-        if(chargeValue <= (ThisPlayer.SuperShootMaxTimeCharge / 3))
-        {
-            Debug.Log("1");
-            moveSpeed = Speed[0];
-            scale = Scale[0];
-            damage = Damage[0];
-            deactivationTime = DeactivationTime[0];
-        }
-        else if(chargeValue >= (ThisPlayer.SuperShootMaxTimeCharge / 3) && chargeValue < ThisPlayer.SuperShootMaxTimeCharge)
-        {
-            Debug.Log("2");
-            moveSpeed = Speed[1];
-            scale = Scale[1];
-            damage = Damage[1];
-            deactivationTime = DeactivationTime[1];
-        }
-        else if (chargeValue >= ThisPlayer.SuperShootMaxTimeCharge)
-        {
-            Debug.Log("3");
-            moveSpeed = Speed[2];
-            scale = Scale[2];
-            damage = Damage[2];
-            deactivationTime = DeactivationTime[2];
-        }
-
-        //lo posiziono nello spawnpoint 
-        transform.position = playerSpawnPoint.transform.position + (playerSpawnPoint.transform.forward * scale)/2 ;
-        transform.rotation = playerSpawnPoint.transform.rotation;
-        transform.localScale = new Vector3(scale, scale, scale);
-        StartCoroutine("Disable");
+        col.SetActive(false);
     }
-
+  
     void FixedUpdate()
     {
-        if(transform.gameObject.activeInHierarchy)
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        Move();
+        ScaleMetod();
     }
 
-    void OnTriggerEnter(Collider col)
+    void Move()
     {
-        if (col.gameObject.CompareTag("Player"))
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+    }
+
+    void ScaleMetod()
+    {
+        Debug.Log("Scale  : " + scale);
+        for (int i = 0; i < partc.Length; i++)
+            partc[i].startSize = scale;
+    }
+
+    public void Charge(int charge)
+    {
+        switch (charge)
         {
-            col.SendMessage("TakeDamage", damage);          
+            case 0:
+                speed = Speed[0];
+                scale = Scale[0];
+                damage = Damage[0];
+                Debug.Log(0);
+                break;
+            case 1:
+                speed = Speed[1];
+                scale = Scale[1];
+                damage = Damage[1];
+                Debug.Log(1);
+                break;
+            case 2:
+                speed = Speed[2];
+                scale = Scale[2];
+                damage = Damage[2];
+                Debug.Log(2);
+                break;
+
+
         }
-    }
-
-    public void ShootStart(float charge)
-    {
-        chargeValue = charge;     
-
-        //lo attivo e quindi richiamo l'onEnable
-        transform.gameObject.SetActive(true);     
-       // Debug.Log("charge" + charge);
-       // Debug.Log(chargeValue);
     }
 
     IEnumerator Disable()
     {
-        yield return new WaitForSeconds(deactivationTime);
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(DeactivationTime);
+        col.SetActive(false);
+        for (int i = 0; i < partc.Length; i++)
+            partc[i].Stop();
     }
-	
 }

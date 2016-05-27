@@ -118,10 +118,7 @@ public class Player : MonoBehaviour {
 		//super shoot
         GameObject superBul = Instantiate(chargedBulletPrefab, Vector3.zero, chargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
-        chargedBullet.GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
-        chargedBullet.GetComponent<SuperBullet>().player = this.gameObject;
-        chargedBullet.GetComponent<SuperBullet>().playerSpawnPoint = wallSpawnPoint.gameObject;
-        chargedBullet.transform.gameObject.SetActive(false);
+       
 
     }
 
@@ -148,9 +145,7 @@ public class Player : MonoBehaviour {
         //Timer per lo sparo
         shootTimer += Time.deltaTime;
         superShootTimer += Time.deltaTime;
-
-        //Metodo per caricare il colpo caricato
-        ShootCharge();
+        shootCharge += Time.deltaTime;
 
         //Metodo per il recupero dell'energy
         RechargeEnergy();
@@ -238,30 +233,42 @@ public class Player : MonoBehaviour {
 
     public void SuperShoot()
     {
-        if (!imDied && !onFly && superShootTimer > SuperShootCD){
-            isChargingShoot = true;       
+        if (!imDied && !onFly && superShootTimer > SuperShootCD)
+        {
+            if (isChargingShoot)
+                ChargeBullet();
+            else
+            {
+                isChargingShoot = true;
+                shootCharge = 0;
+                chargedBullet.transform.position = wallSpawnPoint.transform.position + (Vector3.forward * chargedBullet.scale);
+            }       
         }
     }
 
-    public void ShootCharge()
+    private void ChargeBullet()
     {
-        //aumento la carica del colpo che al rilascio passo al proiettile e se la gestisce lui
-        if (isChargingShoot)
-            shootCharge += Time.deltaTime;
+        for (int i = 0; i < chargedBullet.partc.Length; i++)
+            chargedBullet.partc[i].Play();
+        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (Vector3.forward * chargedBullet.scale/3), Time.deltaTime);
+        if (shootCharge < 1)
+            chargedBullet.Charge(0);
+        
 
-        if (shootCharge > SuperShootMaxTimeCharge)
-            shootCharge = SuperShootMaxTimeCharge;
+        if (shootCharge < 2 && shootCharge > 1)
+            chargedBullet.Charge(1);
+
+        if (shootCharge < 3 && shootCharge > 2)
+            chargedBullet.Charge(2);
     }
 
     public void RelaseSuperShoot()
     {
         if (isChargingShoot)
-        {         
-            chargedBullet.ShootStart(shootCharge);
-
+        {
+            chargedBullet.col.SetActive(true);    
             superShootTimer = 0;
             isChargingShoot = false;
-            shootCharge = 0;
         }
     }
 

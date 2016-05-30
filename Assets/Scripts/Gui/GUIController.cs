@@ -14,7 +14,6 @@ public class GUIController : MonoBehaviour {
 	{
 		players = new Player[4];
 		AssignPlayers ();
-
 	}
 
 	private void AssignPlayers()
@@ -27,6 +26,12 @@ public class GUIController : MonoBehaviour {
 	
 	void Update () 
 	{
+		ScreenBarsUpdate();
+	}
+
+
+	void ScreenBarsUpdate()
+	{
 		HealthBar[0].value = players[0].currentHealth/players[0].MaxHealth;
 		HealthBar[1].value = players[1].currentHealth/players[1].MaxHealth;
 		HealthBar[2].value = players[2].currentHealth/players[2].MaxHealth;
@@ -37,6 +42,7 @@ public class GUIController : MonoBehaviour {
 		EnergyBar[2].value = players[2].currentEnergy/players[2].MaxEnergy;	
 		EnergyBar[3].value = players[3].currentEnergy/players[3].MaxEnergy;
 	}
+
 
 
 

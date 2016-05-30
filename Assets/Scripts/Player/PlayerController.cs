@@ -21,7 +21,12 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (GetAxis(0, "Shoot") > 0.1)
+        {
             players[0].Shoot();
+            players[0].anim.SetBool("Shoot", true);
+        }
+        else
+            players[0].anim.SetBool("Shoot", false);
 
         if (GetAxis(0, "SuperShoot") > 0.5f || Input.GetKey(KeyCode.P))
             players[0].SuperShoot();
@@ -46,7 +51,12 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (GetAxis(1, "Shoot") > 0.1)
+        {
             players[1].Shoot();
+            players[1].anim.SetBool("Shoot", true);
+        }
+        else
+            players[1].anim.SetBool("Shoot", false);
 
         if (GetAxis(1, "SuperShoot") > 0.5f)
             players[1].SuperShoot();
@@ -71,7 +81,12 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (GetAxis(2, "Shoot") > 0.1)
+        {
             players[2].Shoot();
+            players[2].anim.SetBool("Shoot", true);
+        }
+        else
+            players[2].anim.SetBool("Shoot", false);
 
         if (GetAxis(2, "SuperShoot") > 0.5f)
             players[2].SuperShoot();
@@ -96,7 +111,12 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (GetAxis(3, "Shoot") > 0.1)
+        {
             players[3].Shoot();
+            players[3].anim.SetBool("Shoot", true);
+        }
+        else
+            players[3].anim.SetBool("Shoot", false);
 
         if (GetAxis(3, "SuperShoot") > 0.5f)
             players[3].SuperShoot();

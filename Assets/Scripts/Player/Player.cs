@@ -46,7 +46,8 @@ public class Player : MonoBehaviour {
     //components
     private Rigidbody rb;
 	private Collider col;
-	private Animator anim;
+    [HideInInspector]
+    public Animator anim;
 
     //variabili shoot
     private GameObject[] bulletSpawnPoint;    
@@ -96,6 +97,7 @@ public class Player : MonoBehaviour {
 
         //components
         rb = GetComponent<Rigidbody>();
+        anim = GetComponentInChildren<Animator>();
 
         //limitatori di movimento
         for (int i = 0; i < 4; i++)
@@ -111,7 +113,7 @@ public class Player : MonoBehaviour {
 			bulletPool[i].GetComponent<Bullet>().Damage = Damage;
 			bulletPool[i].GetComponent<Bullet>().Speed = ShootForce;
 			bulletPool[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
-			bulletPool[i].GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
+			//bulletPool[i].GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
 			bulletPool[i].SetActive(false);
         }
 
@@ -214,6 +216,8 @@ public class Player : MonoBehaviour {
         {
             if (shootTimer > FireRate && canShoot)
             {
+               
+
                 bulletPool[bulletIndex].transform.position = bulletSpawnPoint[spawnpointIndex].transform.position;
 				bulletPool[bulletIndex].transform.rotation = transform.rotation;
 				bulletPool[bulletIndex].SetActive(true);
@@ -228,7 +232,8 @@ public class Player : MonoBehaviour {
 
 			if (bulletIndex == bulletPool.Length)
                 bulletIndex = 0;
-        }
+        } else
+            anim.SetBool("Shoot", false);
     }
 
     public void SuperShoot()
@@ -241,7 +246,8 @@ public class Player : MonoBehaviour {
             {
                 isChargingShoot = true;
                 shootCharge = 0;
-                chargedBullet.transform.position = wallSpawnPoint.transform.position + (Vector3.forward * chargedBullet.scale);
+                chargedBullet.transform.position = wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale);
+                chargedBullet.transform.rotation = transform.rotation;
             }       
         }
     }
@@ -250,7 +256,7 @@ public class Player : MonoBehaviour {
     {
         for (int i = 0; i < chargedBullet.partc.Length; i++)
             chargedBullet.partc[i].Play();
-        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (Vector3.forward * chargedBullet.scale/3), Time.deltaTime);
+        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime);
         if (shootCharge < 1)
             chargedBullet.Charge(0);
         

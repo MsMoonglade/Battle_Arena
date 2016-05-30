@@ -39,6 +39,14 @@ public class SuperBullet : MonoBehaviour {
         ScaleMetod();
     }
 
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            collider.gameObject.SendMessage("TakeDamage", damage);
+        }
+    }
+
     void Move()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed);

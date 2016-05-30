@@ -1,32 +1,33 @@
 fileFormatVersion: 2
-guid: 00f0cdfc7bb16b5418c5cdeae1ea9321
-timeCreated: 1464275630
+guid: d7b7a4ee29bb4f04a89a62001748eaf4
+timeCreated: 1464610866
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: robot01_body
-    100002: robot01_cannonL
-    100004: robot01_cannonR
-    100006: //RootNode
-    400000: robot01_body
-    400002: robot01_cannonL
-    400004: robot01_cannonR
-    400006: //RootNode
-    2300000: robot01_body
-    2300002: robot01_cannonL
-    2300004: robot01_cannonR
-    3300000: robot01_body
-    3300002: robot01_cannonL
-    3300004: robot01_cannonR
-    4300000: robot01_cannonL
-    4300002: robot01_cannonR
-    4300004: robot01_body
+    100000: //RootNode
+    100002: robot02_body
+    100004: robot02_cannonL
+    100006: robot02_cannonR
+    400000: //RootNode
+    400002: robot02_body
+    400004: robot02_cannonL
+    400006: robot02_cannonR
+    2300000: robot02_body
+    2300002: robot02_cannonL
+    2300004: robot02_cannonR
+    3300000: robot02_body
+    3300002: robot02_cannonL
+    3300004: robot02_cannonR
+    4300000: robot02_body
+    4300002: robot02_cannonL
+    4300004: robot02_cannonR
+    7400000: Take 001
     9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 1
-    materialSearch: 1
+    materialSearch: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -42,7 +43,41 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: robot02_body
+        weight: 1
+      - path: robot02_cannonL
+        weight: 1
+      - path: robot02_cannonR
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

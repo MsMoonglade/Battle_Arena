@@ -2,7 +2,15 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-	
+
+	//variabili wall
+	public GameObject Wall;
+	public GameObject WallSpawnPoint;
+	//prefabs
+	public GameObject ChargedBulletPrefab;
+	public GameObject BulletPrefab;
+	public GameObject MirinoPrefab;
+	public GameObject[] BulletSpawnPoint;
 	//variabili statistiche
     public float MaxHealth;
 	public float MaxEnergy;
@@ -35,13 +43,8 @@ public class Player : MonoBehaviour {
     public bool onFly;   
 	private bool onTurbo;
     private bool imDied;
-
-    //prefabs
-    private GameObject prefabs;
-	private GameObject chargedBulletPrefab;
-	private GameObject bulletPrefab;
-	private GameObject mirinoPrefab;
 	private GameObject inAirAim;
+   
 
     //components
     private Rigidbody rb;
@@ -49,10 +52,9 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public Animator anim;
 
-    //variabili shoot
-    private GameObject[] bulletSpawnPoint;    
-    private GameObject[] bulletPool;
-    private SuperBullet chargedBullet;
+    //variabili shoot  
+	private SuperBullet chargedBullet;
+    private GameObject[] bulletPool; 
     private bool canShoot;
     private bool isChargingShoot;
     private float shootTimer;
@@ -62,9 +64,9 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public float shootCharge;
 
-    //variabili wall
-    private GameObject wall;
-    private GameObject wallSpawnPoint;
+	//variabili wall
+	private GameObject wall;
+  
 
     //limiti mappa
     private GameObject[] mapLimit = new GameObject[4];
@@ -72,32 +74,10 @@ public class Player : MonoBehaviour {
 
 
     void Awake()
-    {
-		
-		//prefabs
-		prefabs = transform.FindChild ("Prefabs").gameObject;
-
-        wall = prefabs.transform.FindChild("Wall").gameObject;
-        wall.SetActive(false);
-        
-		mirinoPrefab = prefabs.transform.FindChild ("InAirAim").gameObject;
-		inAirAim = Instantiate(mirinoPrefab, Vector3.zero, mirinoPrefab.transform.rotation) as GameObject;
-		inAirAim.SetActive(false);
-
-		bulletPrefab = prefabs.transform.FindChild ("Bullet").gameObject;
-		chargedBulletPrefab = prefabs.transform.FindChild ("SuperBullet").gameObject;
-
-
-        //Spawnpoint Wall && Shoot
-        wallSpawnPoint = transform.FindChild("WallSpawnpoint").gameObject;
-
-        bulletSpawnPoint = new GameObject[2];
-        bulletSpawnPoint[0] = transform.FindChild("ShootSpawnPointDX").gameObject;
-        bulletSpawnPoint[1] = transform.FindChild("ShootSpawnPointSX").gameObject;
-
-        //components
+	{        
+		//components
         rb = GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
+        
 
         //limitatori di movimento
         for (int i = 0; i < 4; i++)
@@ -109,24 +89,29 @@ public class Player : MonoBehaviour {
         bulletPool = new GameObject[30];
         for (int i = 0; i < 30; i++)
         {
-			bulletPool[i] = Instantiate(bulletPrefab , Vector3.zero , bulletPrefab.transform.rotation) as GameObject;
+			bulletPool[i] = Instantiate(BulletPrefab , Vector3.zero , BulletPrefab.transform.rotation) as GameObject;
 			bulletPool[i].GetComponent<Bullet>().Damage = Damage;
 			bulletPool[i].GetComponent<Bullet>().Speed = ShootForce;
 			bulletPool[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
-			//bulletPool[i].GetComponent<MeshRenderer>().material.color = transform.FindChild("Model").GetComponent<MeshRenderer>().material.color;
 			bulletPool[i].SetActive(false);
         }
 
 		//super shoot
-        GameObject superBul = Instantiate(chargedBulletPrefab, Vector3.zero, chargedBulletPrefab.transform.rotation) as GameObject;
-        chargedBullet = superBul.GetComponent<SuperBullet>();
-       
+        GameObject superBul = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
+        chargedBullet = superBul.GetComponent<SuperBullet>(); 
 
+		inAirAim = Instantiate(MirinoPrefab , Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
+		inAirAim.SetActive (false);
+
+		//wall
+		wall = Instantiate(Wall , Vector3.zero, Wall.transform.rotation) as GameObject;
+		wall.SetActive (false);
     }
 
     void Start()
     {
-        //Assegnazione Stat
+		anim = GetComponentInChildren<Animator>();
+		//Assegnazione Stat
         currentHealth = MaxHealth;
         currentEnergy = MaxEnergy;
 
@@ -139,7 +124,6 @@ public class Player : MonoBehaviour {
         //Assegnazioni indici per sparo
         bulletIndex = 0;
         spawnpointIndex = 0;
-
     }
 
     void Update()
@@ -218,7 +202,7 @@ public class Player : MonoBehaviour {
             {
                
 
-                bulletPool[bulletIndex].transform.position = bulletSpawnPoint[spawnpointIndex].transform.position;
+                bulletPool[bulletIndex].transform.position = BulletSpawnPoint[spawnpointIndex].transform.position;
 				bulletPool[bulletIndex].transform.rotation = transform.rotation;
 				bulletPool[bulletIndex].SetActive(true);
 
@@ -227,7 +211,7 @@ public class Player : MonoBehaviour {
                 shootTimer = 0;
             }
 
-            if (spawnpointIndex == bulletSpawnPoint.Length)
+            if (spawnpointIndex == BulletSpawnPoint.Length)
                 spawnpointIndex = 0;
 
 			if (bulletIndex == bulletPool.Length)
@@ -246,7 +230,7 @@ public class Player : MonoBehaviour {
             {
                 isChargingShoot = true;
                 shootCharge = 0;
-                chargedBullet.transform.position = wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale);
+                chargedBullet.transform.position = WallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale);
                 chargedBullet.transform.rotation = transform.rotation;
             }       
         }
@@ -256,7 +240,7 @@ public class Player : MonoBehaviour {
     {
         
         chargedBullet.transform.rotation = transform.rotation;
-        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime * RotationSpeed);
+        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, WallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime * RotationSpeed);
         if (shootCharge < 1)
             chargedBullet.Charge(0);
         
@@ -286,7 +270,7 @@ public class Player : MonoBehaviour {
 		if (!onFly && currentEnergy >=2)
 		{
 			currentEnergy -= 2; 
-			wall.transform.position = wallSpawnPoint.transform.position;
+			wall.transform.position = WallSpawnPoint.transform.position;
 			wall.transform.rotation = transform.rotation;
 			wall.transform.SetParent (null);
 			wall.SetActive (true);

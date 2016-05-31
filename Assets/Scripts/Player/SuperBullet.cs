@@ -20,10 +20,8 @@ public class SuperBullet : MonoBehaviour {
     void Awake()
     {
         col = transform.FindChild("Collider").gameObject;
-        particle = transform.FindChild("Particle").gameObject;
-        partc = new ParticleSystem[3];
-        for(int i = 0; i < partc.Length; i++)
-            partc[i] = particle.transform.GetChild(i).GetComponent<ParticleSystem>();
+        partc = GetComponentsInChildren<ParticleSystem>();
+       
         
         
     }

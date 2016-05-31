@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
+
+        Debug.Log(players[0].name);
         //player 1
         if (GetAxis(0,"LeftRotationH") != 0 || GetAxis(0, "LeftRotationV") != 0 || GetAxis(0, "RightRotationH") != 0 || GetAxis(0, "RightRotationV") != 0 || GetAxis(0,"Shoot") != 0)
         {
@@ -28,22 +30,22 @@ public class PlayerController : MonoBehaviour {
         else
             players[0].anim.SetBool("Shoot", false);
 
-        if (GetAxis(0, "SuperShoot") > 0.5f || Input.GetKey(KeyCode.P))
+        if (GetAxis(0, "SuperShoot") > 0.5f)
             players[0].SuperShoot();
 
-        if (/*GetAxis(0, "SuperShoot") < 0.4f*/ Input.GetKeyUp(KeyCode.P))        
+        if (GetAxis(0, "SuperShoot") < 0.4f)        
             players[0].RelaseSuperShoot();
 
         if (GetButtonDown(0, "Dash") && GetButtonDown(0, "Wall"))
             players[0].SuperDash();
 
-        if (GetButtonDown(0, "Dash") && !players[0].onDash && !GetButton(0, "Wall"))
-            players[0].Dash() ;
+		if (GetButtonDown (0, "Dash") && !players [0].onDash && !GetButton (0, "Wall")) 			 
+			players [0].Dash (GetAxis (0, "LeftRotationH"), GetAxis (0, "LeftRotationV"));;
 
         if (GetButtonDown(0, "Wall") && !players[0].onDash && !GetButton(0, "Dash"))
             players[0].CreateWall();
 
-        //player 2
+       //player 2
         if (GetAxis(1, "LeftRotationH") != 0 || GetAxis(1, "LeftRotationV") != 0 || GetAxis(1, "RightRotationH") != 0 || GetAxis(1, "RightRotationV") != 0)
         {
             players[1].Move(GetAxis(1, "LeftRotationH"), GetAxis(1, "LeftRotationV"));
@@ -67,8 +69,8 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(1, "Dash") && GetButtonDown(1, "Wall"))
             players[1].SuperDash();
 
-        if (GetButtonDown(1, "Dash") && !players[1].onDash && !GetButton(1, "Wall"))
-            players[1].Dash();
+		if (GetButtonDown (1, "Dash") && !players [1].onDash && !GetButton (1, "Wall")) 			 
+			players [1].Dash (GetAxis (1, "LeftRotationH"), GetAxis (1, "LeftRotationV"));
 
         if (GetButtonDown(1, "Wall") && !players[1].onDash && !GetButton(1, "Dash"))
             players[1].CreateWall();
@@ -97,8 +99,8 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(2, "Dash") && GetButtonDown(2, "Wall"))
             players[2].SuperDash();
 
-        if (GetButtonDown(2, "Dash") && !players[2].onDash && !GetButton(2, "Wall"))
-            players[2].Dash();
+		if (GetButtonDown (2, "Dash") && !players [2].onDash && !GetButton (2, "Wall")) 			 
+			players [2].Dash (GetAxis (2, "LeftRotationH"), GetAxis (2, "LeftRotationV"));
 
         if (GetButtonDown(2, "Wall") && !players[2].onDash && !GetButton(2, "Dash"))
             players[2].CreateWall();
@@ -127,20 +129,27 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(3, "Dash") && GetButtonDown(3, "Wall"))
             players[3].SuperDash();
 
-        if (GetButtonDown(3, "Dash") && !players[3].onDash && !GetButton(3, "Wall"))
-            players[3].Dash();
+		if (GetButtonDown (3, "Dash") && !players [3].onDash && !GetButton (3, "Wall")) 			 
+			players [3].Dash (GetAxis (3, "LeftRotationH"), GetAxis (3, "LeftRotationV"));
 
         if (GetButtonDown(3, "Wall") && !players[3].onDash && !GetButton(3, "Dash"))
             players[3].CreateWall();
-
+            
     }
 
     private void AssignPlayers()
     {
-        players[0] = GameObject.Find("Player1").GetComponent<Player>();
-        players[1] = GameObject.Find("Player2").GetComponent<Player>();
-        players[2] = GameObject.Find("Player3").GetComponent<Player>();
-        players[3] = GameObject.Find("Player4").GetComponent<Player>();
+        if(GameObject.Find("Player1").activeInHierarchy)
+            players[0] = GameObject.Find("Player1").GetComponent<Player>();
+
+        if (GameObject.Find("Player2").activeInHierarchy)
+            players[1] = GameObject.Find("Player2").GetComponent<Player>();
+
+        if (GameObject.Find("Player3").activeInHierarchy)
+            players[2] = GameObject.Find("Player3").GetComponent<Player>();
+
+        if (GameObject.Find("Player4").activeInHierarchy)
+            players[3] = GameObject.Find("Player4").GetComponent<Player>();
     }
 
     bool GetButton(int player, string name)

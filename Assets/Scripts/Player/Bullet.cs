@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour {
 
     void Start()
     {
-        Physics.IgnoreCollision(GetComponent<Collider>(), ThisPlayer.GetComponent<Collider>());
+        Physics.IgnoreCollision(GetComponent<Collider>(), ThisPlayer.GetComponent<Collider>(), true);
     }
 
     void FixedUpdate()

@@ -254,9 +254,9 @@ public class Player : MonoBehaviour {
 
     private void ChargeBullet()
     {
-        for (int i = 0; i < chargedBullet.partc.Length; i++)
-            chargedBullet.partc[i].Play();
-        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime);
+        
+        chargedBullet.transform.rotation = transform.rotation;
+        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime * RotationSpeed);
         if (shootCharge < 1)
             chargedBullet.Charge(0);
         
@@ -272,6 +272,9 @@ public class Player : MonoBehaviour {
     {
         if (isChargingShoot)
         {
+            Debug.Log("qua");
+            for (int i = 0; i < chargedBullet.partc.Length; i++)
+                chargedBullet.partc[i].Play();
             chargedBullet.col.SetActive(true);    
             superShootTimer = 0;
             isChargingShoot = false;
@@ -290,16 +293,21 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-    public void Dash()
-    {
-        if (currentEnergy >= 1)
-        {
-            currentEnergy -= 1;
-            onDash = true;
-            rb.AddForce(transform.forward * DashSpeed, ForceMode.Impulse);
-            Invoke("EndDash", DashTime);
-        }        
-    }
+	public void Dash(float horizontal , float vertical)
+	{
+		if (currentEnergy >= 1)
+		{
+			currentEnergy -= 1;
+			onDash = true;
+			Vector3 direction = new Vector3(horizontal, 0, vertical);
+			
+			if (horizontal == 0 && vertical == 0)
+				direction = transform.forward;
+			
+			rb.AddForce(direction * DashSpeed, ForceMode.Impulse);
+			Invoke("EndDash", DashTime);
+		}        
+	}
 
     public void EndDash()
     {

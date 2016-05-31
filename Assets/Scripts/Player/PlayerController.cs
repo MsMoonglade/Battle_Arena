@@ -39,8 +39,8 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(0, "Dash") && GetButtonDown(0, "Wall"))
             players[0].SuperDash();
 
-        if (GetButtonDown(0, "Dash") && !players[0].onDash && !GetButton(0, "Wall"))
-            players[0].Dash() ;
+		if (GetButtonDown (0, "Dash") && !players [0].onDash && !GetButton (0, "Wall")) 			 
+			players [0].Dash (GetAxis (0, "LeftRotationH"), GetAxis (0, "LeftRotationV"));;
 
         if (GetButtonDown(0, "Wall") && !players[0].onDash && !GetButton(0, "Dash"))
             players[0].CreateWall();
@@ -69,8 +69,8 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(1, "Dash") && GetButtonDown(1, "Wall"))
             players[1].SuperDash();
 
-        if (GetButtonDown(1, "Dash") && !players[1].onDash && !GetButton(1, "Wall"))
-            players[1].Dash();
+		if (GetButtonDown (1, "Dash") && !players [1].onDash && !GetButton (1, "Wall")) 			 
+			players [1].Dash (GetAxis (1, "LeftRotationH"), GetAxis (1, "LeftRotationV"));
 
         if (GetButtonDown(1, "Wall") && !players[1].onDash && !GetButton(1, "Dash"))
             players[1].CreateWall();
@@ -99,8 +99,8 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(2, "Dash") && GetButtonDown(2, "Wall"))
             players[2].SuperDash();
 
-        if (GetButtonDown(2, "Dash") && !players[2].onDash && !GetButton(2, "Wall"))
-            players[2].Dash();
+		if (GetButtonDown (2, "Dash") && !players [2].onDash && !GetButton (2, "Wall")) 			 
+			players [2].Dash (GetAxis (2, "LeftRotationH"), GetAxis (2, "LeftRotationV"));
 
         if (GetButtonDown(2, "Wall") && !players[2].onDash && !GetButton(2, "Dash"))
             players[2].CreateWall();
@@ -129,8 +129,8 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(3, "Dash") && GetButtonDown(3, "Wall"))
             players[3].SuperDash();
 
-        if (GetButtonDown(3, "Dash") && !players[3].onDash && !GetButton(3, "Wall"))
-            players[3].Dash();
+		if (GetButtonDown (3, "Dash") && !players [3].onDash && !GetButton (3, "Wall")) 			 
+			players [3].Dash (GetAxis (3, "LeftRotationH"), GetAxis (3, "LeftRotationV"));
 
         if (GetButtonDown(3, "Wall") && !players[3].onDash && !GetButton(3, "Dash"))
             players[3].CreateWall();

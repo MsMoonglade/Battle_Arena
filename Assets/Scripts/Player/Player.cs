@@ -149,7 +149,6 @@ public class Player : MonoBehaviour {
         superShootTimer += Time.deltaTime;
         shootCharge += Time.deltaTime;
 
-        Debug.Log(superShootTimer);
         //Metodo per il recupero dell'energy
         RechargeEnergy();
     }
@@ -294,16 +293,21 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-    public void Dash()
-    {
-        if (currentEnergy >= 1)
-        {
-            currentEnergy -= 1;
-            onDash = true;
-            rb.AddForce(transform.forward * DashSpeed, ForceMode.Impulse);
-            Invoke("EndDash", DashTime);
-        }        
-    }
+	public void Dash(float horizontal , float vertical)
+	{
+		if (currentEnergy >= 1)
+		{
+			currentEnergy -= 1;
+			onDash = true;
+			Vector3 direction = new Vector3(horizontal, 0, vertical);
+			
+			if (horizontal == 0 && vertical == 0)
+				direction = transform.forward;
+			
+			rb.AddForce(direction * DashSpeed, ForceMode.Impulse);
+			Invoke("EndDash", DashTime);
+		}        
+	}
 
     public void EndDash()
     {

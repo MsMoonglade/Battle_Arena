@@ -149,6 +149,7 @@ public class Player : MonoBehaviour {
         superShootTimer += Time.deltaTime;
         shootCharge += Time.deltaTime;
 
+        Debug.Log(superShootTimer);
         //Metodo per il recupero dell'energy
         RechargeEnergy();
     }
@@ -254,9 +255,9 @@ public class Player : MonoBehaviour {
 
     private void ChargeBullet()
     {
-        for (int i = 0; i < chargedBullet.partc.Length; i++)
-            chargedBullet.partc[i].Play();
-        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime);
+        
+        chargedBullet.transform.rotation = transform.rotation;
+        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, wallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime * RotationSpeed);
         if (shootCharge < 1)
             chargedBullet.Charge(0);
         
@@ -272,6 +273,9 @@ public class Player : MonoBehaviour {
     {
         if (isChargingShoot)
         {
+            Debug.Log("qua");
+            for (int i = 0; i < chargedBullet.partc.Length; i++)
+                chargedBullet.partc[i].Play();
             chargedBullet.col.SetActive(true);    
             superShootTimer = 0;
             isChargingShoot = false;

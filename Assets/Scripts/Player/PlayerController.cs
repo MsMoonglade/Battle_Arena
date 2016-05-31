@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
+
+        Debug.Log(players[0].name);
         //player 1
         if (GetAxis(0,"LeftRotationH") != 0 || GetAxis(0, "LeftRotationV") != 0 || GetAxis(0, "RightRotationH") != 0 || GetAxis(0, "RightRotationV") != 0 || GetAxis(0,"Shoot") != 0)
         {
@@ -28,10 +30,10 @@ public class PlayerController : MonoBehaviour {
         else
             players[0].anim.SetBool("Shoot", false);
 
-        if (GetAxis(0, "SuperShoot") > 0.5f || Input.GetKey(KeyCode.P))
+        if (GetAxis(0, "SuperShoot") > 0.5f)
             players[0].SuperShoot();
 
-        if (/*GetAxis(0, "SuperShoot") < 0.4f*/ Input.GetKeyUp(KeyCode.P))        
+        if (GetAxis(0, "SuperShoot") < 0.4f)        
             players[0].RelaseSuperShoot();
 
         if (GetButtonDown(0, "Dash") && GetButtonDown(0, "Wall"))
@@ -43,7 +45,7 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(0, "Wall") && !players[0].onDash && !GetButton(0, "Dash"))
             players[0].CreateWall();
 
-        //player 2
+       //player 2
         if (GetAxis(1, "LeftRotationH") != 0 || GetAxis(1, "LeftRotationV") != 0 || GetAxis(1, "RightRotationH") != 0 || GetAxis(1, "RightRotationV") != 0)
         {
             players[1].Move(GetAxis(1, "LeftRotationH"), GetAxis(1, "LeftRotationV"));
@@ -132,15 +134,22 @@ public class PlayerController : MonoBehaviour {
 
         if (GetButtonDown(3, "Wall") && !players[3].onDash && !GetButton(3, "Dash"))
             players[3].CreateWall();
-
+            
     }
 
     private void AssignPlayers()
     {
-        players[0] = GameObject.Find("Player1").GetComponent<Player>();
-        players[1] = GameObject.Find("Player2").GetComponent<Player>();
-        players[2] = GameObject.Find("Player3").GetComponent<Player>();
-        players[3] = GameObject.Find("Player4").GetComponent<Player>();
+        if(GameObject.Find("Player1").activeInHierarchy)
+            players[0] = GameObject.Find("Player1").GetComponent<Player>();
+
+        if (GameObject.Find("Player2").activeInHierarchy)
+            players[1] = GameObject.Find("Player2").GetComponent<Player>();
+
+        if (GameObject.Find("Player3").activeInHierarchy)
+            players[2] = GameObject.Find("Player3").GetComponent<Player>();
+
+        if (GameObject.Find("Player4").activeInHierarchy)
+            players[3] = GameObject.Find("Player4").GetComponent<Player>();
     }
 
     bool GetButton(int player, string name)

@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
-
-	//variabili wall
-	public GameObject Wall;
-	public GameObject WallSpawnPoint;
+public class Player : MonoBehaviour {	
+	
 	//prefabs
 	public GameObject ChargedBulletPrefab;
 	public GameObject BulletPrefab;
-	public GameObject MirinoPrefab;
+    public GameObject WallPrefab;
+    public GameObject MirinoPrefab;
+
+    //spawnpoint
 	public GameObject[] BulletSpawnPoint;
-	//variabili statistiche
+    public GameObject WallSpawnPoint;
+
+    //variabili statistiche
     public float MaxHealth;
 	public float MaxEnergy;
 	public float EnergyRegen;
     public float Speed;
 	public float RotationSpeed;
     public float ShootForce;
+    public float Damage;
     public float FireRate;
+    public float SuperShootEnergyCost;
     public float SuperShootCD;
-    public float SuperShootMaxTimeCharge;
-    public float Damage;     
     public float DashSpeed;
     public float DashTime;
     public float SuperDashSpeed;
@@ -40,20 +42,18 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public bool onSuperDash;
     [HideInInspector]
-    public bool onFly;   
-	private bool onTurbo;
-    private bool imDied;
-	private GameObject inAirAim;
-   
+    public bool onFly;
+    private GameObject inAirAim;
 
     //components
-    private Rigidbody rb;
-	private Collider col;
     [HideInInspector]
     public Animator anim;
+    private Rigidbody rb;
+	private Collider col;
+    private bool imDied;
 
     //variabili shoot  
-	private SuperBullet chargedBullet;
+    private SuperBullet chargedBullet;
     private GameObject[] bulletPool; 
     private bool canShoot;
     private bool isChargingShoot;
@@ -67,11 +67,8 @@ public class Player : MonoBehaviour {
 	//variabili wall
 	private GameObject wall;
   
-
     //limiti mappa
     private GameObject[] mapLimit = new GameObject[4];
-    
-
 
     void Awake()
 	{        
@@ -104,16 +101,18 @@ public class Player : MonoBehaviour {
 		inAirAim.SetActive (false);
 
 		//wall
-		wall = Instantiate(Wall , Vector3.zero, Wall.transform.rotation) as GameObject;
+		wall = Instantiate(WallSpawnPoint, Vector3.zero, WallSpawnPoint.transform.rotation) as GameObject;
 		wall.SetActive (false);
     }
 
     void Start()
     {
 		anim = GetComponentInChildren<Animator>();
+
 		//Assegnazione Stat
         currentHealth = MaxHealth;
         currentEnergy = MaxEnergy;
+        superShootTimer = SuperShootCD;
 
         //bool varie
         onFly = false;
@@ -222,28 +221,28 @@ public class Player : MonoBehaviour {
 
     public void SuperShoot()
     {
-        if (!imDied && !onFly && superShootTimer > SuperShootCD)
+        if (!imDied && !onFly && superShootTimer > SuperShootCD && currentEnergy >= SuperShootEnergyCost)
         {
             if (isChargingShoot)
+            {
                 ChargeBullet();
+                currentEnergy -= SuperShootEnergyCost;
+            }
             else
             {
                 isChargingShoot = true;
                 shootCharge = 0;
-                chargedBullet.transform.position = WallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale);
-                chargedBullet.transform.rotation = transform.rotation;
             }       
         }
     }
 
     private void ChargeBullet()
-    {
-        
+    {       
         chargedBullet.transform.rotation = transform.rotation;
-        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, WallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime * RotationSpeed);
+        chargedBullet.transform.position = WallSpawnPoint.transform.position;
+
         if (shootCharge < 1)
             chargedBullet.Charge(0);
-        
 
         if (shootCharge < 2 && shootCharge > 1)
             chargedBullet.Charge(1);
@@ -256,7 +255,6 @@ public class Player : MonoBehaviour {
     {
         if (isChargingShoot)
         {
-            Debug.Log("qua");
             for (int i = 0; i < chargedBullet.partc.Length; i++)
                 chargedBullet.partc[i].Play();
             chargedBullet.col.SetActive(true);    
@@ -321,9 +319,7 @@ public class Player : MonoBehaviour {
     }
 
     public void AimMove(float horizontal, float vertical)
-    {        
-        
-
+    { 
         Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
 
         inAirAim.transform.position = inAirAim.transform.position + position;

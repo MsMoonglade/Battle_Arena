@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour {
 	
 	void FixedUpdate () {
 
-        Debug.Log(players[0].name);
         //player 1
         if (GetAxis(0,"LeftRotationH") != 0 || GetAxis(0, "LeftRotationV") != 0 || GetAxis(0, "RightRotationH") != 0 || GetAxis(0, "RightRotationV") != 0 || GetAxis(0,"Shoot") != 0)
         {

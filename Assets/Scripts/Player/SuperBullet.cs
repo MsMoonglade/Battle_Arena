@@ -20,10 +20,7 @@ public class SuperBullet : MonoBehaviour {
     void Awake()
     {
         col = transform.FindChild("Collider").gameObject;
-        partc = GetComponentsInChildren<ParticleSystem>();
-       
-        
-        
+        partc = GetComponentsInChildren<ParticleSystem>();       
     }
 
     void Start()
@@ -47,7 +44,8 @@ public class SuperBullet : MonoBehaviour {
 
     void Move()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        if(col.activeSelf)
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     void ScaleMetod()
@@ -79,8 +77,6 @@ public class SuperBullet : MonoBehaviour {
                 damage = Damage[2];
                 Debug.Log(2);
                 break;
-
-
         }
     }
 

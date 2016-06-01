@@ -44,12 +44,14 @@ public class SuperBullet : MonoBehaviour {
 
     void Move()
     {
+        //metodo del movimento
         if(col.activeSelf)
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     void ScaleMetod()
     {
+        //la scala del paricellare
         Debug.Log("Scale  : " + scale);
         for (int i = 0; i < partc.Length; i++)
             partc[i].startSize = scale;
@@ -57,6 +59,7 @@ public class SuperBullet : MonoBehaviour {
 
     public void Charge(int charge)
     {
+        //in base alla carica ho stats diverse
         switch (charge)
         {
             case 0:

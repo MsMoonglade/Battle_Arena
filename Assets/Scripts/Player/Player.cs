@@ -244,6 +244,7 @@ public class Player : MonoBehaviour {
                 bulletPool[bulletIndex].transform.position = BulletSpawnPoint[spawnpointIndex].transform.position;
 				bulletPool[bulletIndex].transform.rotation = transform.rotation;
 				bulletPool[bulletIndex].SetActive(true);
+                particellari.Play("shoot" + spawnpointIndex);
 
                 spawnpointIndex++;
                 bulletIndex++;

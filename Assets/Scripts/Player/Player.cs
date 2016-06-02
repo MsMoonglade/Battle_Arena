@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
     public float SuperDashSpeed;
     public float SuperDashTime;
     public float FallDownTime;
+    public float RespawnFallTime;
     public float RangeExplosion;
 
     [HideInInspector]
@@ -129,7 +130,6 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(isFalling);
         //Timer per lo sparo
         shootTimer += Time.deltaTime;
         superShootTimer += Time.deltaTime;
@@ -158,19 +158,35 @@ public class Player : MonoBehaviour {
             Invoke("FallDown", FallDownTime);
         }
 
-
-        if (col.transform.CompareTag("Arena") && isFalling && !onFly)
+        if (col.transform.CompareTag("Arena") && isFalling)
         {
-            Debug.Log("sono caduto");
+        
             FallDownDamage();
             isFalling = false;
-        }
+            onFly = false;
 
+            if (imDied)
+                imDied = false;
+        }
+        
         if (col.transform.CompareTag("Player") && isFalling)
         {
-            Debug.Log("sono caduto");
             FallDownDamage();
             isFalling = false;
+            onFly = false;
+
+            if (imDied)
+                imDied = false;
+        }
+
+        if (col.transform.CompareTag("PlayerWall") && isFalling)
+        {
+            FallDownDamage();
+            isFalling = false;
+            onFly = false;
+
+            if (imDied)
+                imDied = false;
         }
     }
 
@@ -194,12 +210,12 @@ public class Player : MonoBehaviour {
         clampedPositionZ.z = Mathf.Clamp(transform.position.z, mapLimit[3].transform.position.z, mapLimit[2].transform.position.z);
         transform.position = new Vector3(transform.position.x, transform.position.y, clampedPositionZ.z);
 
-        //movimento mirino quando si salta su un muro
-        if (onFly)           
-            AimMove(horizontal, vertical);
-
+        //movimento mirino
         if (inAirAim.transform.gameObject.activeInHierarchy)
+        {
+            AimMove(horizontal, vertical);
             transform.position = new Vector3(inAirAim.transform.position.x, transform.position.y, inAirAim.transform.position.z);
+        }
     }
 
     public void Rotate(float horizontal, float vertical)
@@ -343,73 +359,93 @@ public class Player : MonoBehaviour {
         onSuperDash = false;
     }
 
-    public void AimMove(float horizontal, float vertical)
-    { 
-        Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
-
-        inAirAim.transform.position = inAirAim.transform.position + position;
-    }
-
-    public void FallDown()
+    private void FallDown()
     {
-        //metodo per la cadutas
+        
+        //metodo per la caduta
         if (onFly)
         {
+           
             rb.useGravity = true;
             isFalling = true;
-            StartCoroutine(FallDownAnimation());                    
-        }
-    }
-
-    public IEnumerator FallDownAnimation()
-    {
-        //il player cade
-        while (transform.position.y > 1)
-        {
-            transform.Translate(Vector3.down * 30 * Time.deltaTime);
+            StartCoroutine(FallDownAnimation());
             inAirAim.SetActive(false);
-            onFly = false;
-            yield return null;
         }
     }
 
-    public IEnumerator WallHit()
-    {
-        //il player va verso l'alto
-        while (transform.position.y < 20)
-        {
-            transform.Translate(transform.up * 20 * Time.deltaTime);
-            yield return null;
-        }
-    }
-
-    public void FallDownDamage()
+    private void FallDownDamage()
     {
         //quando cade overlappa
         Collider[] col = Physics.OverlapSphere(transform.position, RangeExplosion);
 
         for(int i = 0; i < col.Length; i++)
         {
-            if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player"))
-                col[i].SendMessage("TakeDamage", 100);
+            if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && !imDied)
+                col[i].SendMessage("TakeDamage", MaxHealth);
+
+            else if (col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && imDied)
+                col[i].SendMessage("TakeDamage", MaxHealth /2);
         } 
+    }
+
+    private IEnumerator FallDownAnimation()
+    {
+        //il player cade
+        if(isFalling)
+        {
+            transform.Translate(Vector3.down * 30 * Time.deltaTime);
+            
+            yield return null;
+        }
+    }
+
+    private IEnumerator WallHit()
+    {
+        //il player va verso l'alto
+        while (transform.position.y < 20)
+        {
+            transform.Translate(transform.up * 30 * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    private void AimMove(float horizontal, float vertical)
+    {
+        Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
+
+        inAirAim.transform.position = inAirAim.transform.position + position;
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
         if (currentHealth <= 0)
-            gameObject.SetActive(false);
+            Respawn();
     }
-	void RechargeEnergy()
+
+    private void RechargeEnergy()
 	{
 		if ( currentEnergy < MaxEnergy ) 
 			currentEnergy += EnergyRegen * Time.deltaTime;
 	}
 
-    void Die()
+    private void Die()
     {
         imDied = true;
         gameObject.SetActive(false);
+    }
+
+    private void Respawn()
+    {
+        imDied = true;
+
+        transform.position = new Vector3(0, 20, 0);
+        onFly = true;
+        rb.useGravity = false;
+
+        inAirAim.transform.position = new Vector3(0, -4 , 0);
+        inAirAim.SetActive(true);         
+
+        Invoke("FallDown", RespawnFallTime);
     }
 }

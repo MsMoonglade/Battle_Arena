@@ -40,6 +40,14 @@ public class SuperBullet : MonoBehaviour {
         {
             collider.gameObject.SendMessage("TakeDamage", damage);
         }
+
+        if (collider.CompareTag("PlayerWall") && scale == Scale[3])
+        {
+            col.SetActive(false);
+            collider.gameObject.SetActive(false);
+        }
+        else if (collider.CompareTag("PlayerWall") && scale != Scale[3])
+            col.SetActive(false);
     }
 
     void Move()

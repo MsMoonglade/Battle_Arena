@@ -451,6 +451,8 @@ public class Player : MonoBehaviour {
         onFly = true;
         rb.useGravity = false;
 
+        currentHealth = MaxHealth;
+
         inAirAim.transform.position = new Vector3(0, -4 , 0);
         inAirAim.SetActive(true);         
 

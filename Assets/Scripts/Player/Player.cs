@@ -72,6 +72,9 @@ public class Player : MonoBehaviour {
     //limiti mappa
     private GameObject[] mapLimit = new GameObject[4];
 
+    //variabili particellari
+    private ParticleController particellari;
+
     void Awake()
 	{        
 		//components
@@ -105,6 +108,9 @@ public class Player : MonoBehaviour {
         //wall
         wall = Instantiate(WallPrefab, Vector3.zero, WallPrefab.transform.rotation) as GameObject;
         wall.SetActive (false);
+
+        //particellari
+        particellari = GetComponent<ParticleController>();
     }
 
     void Start()
@@ -192,6 +198,7 @@ public class Player : MonoBehaviour {
 
     public void Move(float horizontal, float vertical)
     {
+        
         //move base
         if (!onDash && !onSuperDash && !onFly && !imDied)
         {
@@ -377,6 +384,7 @@ public class Player : MonoBehaviour {
     {
         //quando cade overlappa
         Collider[] col = Physics.OverlapSphere(transform.position, RangeExplosion);
+        particellari.Play("impact");
 
         for(int i = 0; i < col.Length; i++)
         {

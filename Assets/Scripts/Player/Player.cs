@@ -98,7 +98,8 @@ public class Player : MonoBehaviour {
 
 		//super shoot
         GameObject superBul = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
-        chargedBullet = superBul.GetComponent<SuperBullet>(); 
+        chargedBullet = superBul.GetComponent<SuperBullet>();
+        chargedBullet.ThisPlayer = this.gameObject;
 
 		inAirAim = Instantiate(MirinoPrefab , Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
 		inAirAim.SetActive (false);
@@ -235,7 +236,7 @@ public class Player : MonoBehaviour {
 
     public void Shoot()
     {
-        if (!onFly && !imDied)
+        if (!onFly && !imDied && !isChargingShoot)
         {
             if (shootTimer > FireRate && canShoot)
             {     

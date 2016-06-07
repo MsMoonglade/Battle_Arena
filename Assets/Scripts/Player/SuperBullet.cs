@@ -10,6 +10,8 @@ public class SuperBullet : MonoBehaviour {
     [HideInInspector]
     public GameObject col;
     [HideInInspector]
+    public GameObject ThisPlayer;
+    [HideInInspector]
     public ParticleSystem[] partc;
     private GameObject particle;
     private float speed;
@@ -38,7 +40,7 @@ public class SuperBullet : MonoBehaviour {
     {
         if (collider.CompareTag("Player"))
         {
-            collider.gameObject.SendMessage("TakeDamage", damage);
+            collider.gameObject.GetComponent<Player>().TakeDamage(damage, ThisPlayer) ;
         }
 
         if (collider.CompareTag("PlayerWall") && scale == Scale[3])

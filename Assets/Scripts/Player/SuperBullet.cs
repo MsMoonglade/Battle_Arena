@@ -20,10 +20,7 @@ public class SuperBullet : MonoBehaviour {
     void Awake()
     {
         col = transform.FindChild("Collider").gameObject;
-        partc = GetComponentsInChildren<ParticleSystem>();
-       
-        
-        
+        partc = GetComponentsInChildren<ParticleSystem>();       
     }
 
     void Start()
@@ -47,11 +44,14 @@ public class SuperBullet : MonoBehaviour {
 
     void Move()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        //metodo del movimento
+        if(col.activeSelf)
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     void ScaleMetod()
     {
+        //la scala del paricellare
         Debug.Log("Scale  : " + scale);
         for (int i = 0; i < partc.Length; i++)
             partc[i].startSize = scale;
@@ -59,6 +59,7 @@ public class SuperBullet : MonoBehaviour {
 
     public void Charge(int charge)
     {
+        //in base alla carica ho stats diverse
         switch (charge)
         {
             case 0:
@@ -79,8 +80,6 @@ public class SuperBullet : MonoBehaviour {
                 damage = Damage[2];
                 Debug.Log(2);
                 break;
-
-
         }
     }
 

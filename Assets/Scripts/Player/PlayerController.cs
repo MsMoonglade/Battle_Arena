@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour {
 	
 	void FixedUpdate () {
 
-        Debug.Log(players[0].name);
         //player 1
         if (GetAxis(0,"LeftRotationH") != 0 || GetAxis(0, "LeftRotationV") != 0 || GetAxis(0, "RightRotationH") != 0 || GetAxis(0, "RightRotationV") != 0 || GetAxis(0,"Shoot") != 0)
         {
@@ -36,11 +35,11 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(0, "SuperShoot") < 0.4f)        
             players[0].RelaseSuperShoot();
 
-        if (GetButtonDown(0, "Dash") && GetButtonDown(0, "Wall"))
-            players[0].SuperDash();
+        if (GetButtonDown(0 , "SuperDash") && !players[0].onSuperDash)
+            players[0].SuperDash(GetAxis(0, "LeftRotationH"), GetAxis(0, "LeftRotationV"));
 
-		if (GetButtonDown (0, "Dash") && !players [0].onDash && !GetButton (0, "Wall")) 			 
-			players [0].Dash (GetAxis (0, "LeftRotationH"), GetAxis (0, "LeftRotationV"));;
+        if (GetButtonDown (0, "Dash") && !players [0].onDash && !GetButton (0, "Wall")) 			 
+			players [0].Dash (GetAxis (0, "LeftRotationH"), GetAxis (0, "LeftRotationV"));
 
         if (GetButtonDown(0, "Wall") && !players[0].onDash && !GetButton(0, "Dash"))
             players[0].CreateWall();
@@ -66,10 +65,10 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(1, "SuperShoot") < 0.4f)        
             players[1].RelaseSuperShoot();
 
-        if (GetButtonDown(1, "Dash") && GetButtonDown(1, "Wall"))
-            players[1].SuperDash();
+        if (GetButtonDown(1, "SuperDash") && !players[1].onSuperDash)
+            players[1].SuperDash(GetAxis(1 , "LeftRotationH"), GetAxis(1, "LeftRotationV"));
 
-		if (GetButtonDown (1, "Dash") && !players [1].onDash && !GetButton (1, "Wall")) 			 
+        if (GetButtonDown (1, "Dash") && !players [1].onDash && !GetButton (1, "Wall")) 			 
 			players [1].Dash (GetAxis (1, "LeftRotationH"), GetAxis (1, "LeftRotationV"));
 
         if (GetButtonDown(1, "Wall") && !players[1].onDash && !GetButton(1, "Dash"))
@@ -96,10 +95,10 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(2, "SuperShoot") < 0.4f)
             players[2].RelaseSuperShoot();
 
-        if (GetButtonDown(2, "Dash") && GetButtonDown(2, "Wall"))
-            players[2].SuperDash();
+        if (GetButtonDown(2, "SuperDash") && !players[2].onSuperDash)
+            players[2].SuperDash(GetAxis(2, "LeftRotationH"), GetAxis(2, "LeftRotationV"));
 
-		if (GetButtonDown (2, "Dash") && !players [2].onDash && !GetButton (2, "Wall")) 			 
+        if (GetButtonDown (2, "Dash") && !players [2].onDash && !GetButton (2, "Wall")) 			 
 			players [2].Dash (GetAxis (2, "LeftRotationH"), GetAxis (2, "LeftRotationV"));
 
         if (GetButtonDown(2, "Wall") && !players[2].onDash && !GetButton(2, "Dash"))
@@ -126,10 +125,10 @@ public class PlayerController : MonoBehaviour {
         if (GetAxis(3, "SuperShoot") < 0.4f)
             players[3].RelaseSuperShoot();
 
-        if (GetButtonDown(3, "Dash") && GetButtonDown(3, "Wall"))
-            players[3].SuperDash();
+        if (GetButtonDown(3 , "SuperDash") && !players[3].onSuperDash)
+            players[3].SuperDash(GetAxis(3, "LeftRotationH"), GetAxis(3, "LeftRotationV"));
 
-		if (GetButtonDown (3, "Dash") && !players [3].onDash && !GetButton (3, "Wall")) 			 
+        if (GetButtonDown (3, "Dash") && !players [3].onDash && !GetButton (3, "Wall")) 			 
 			players [3].Dash (GetAxis (3, "LeftRotationH"), GetAxis (3, "LeftRotationV"));
 
         if (GetButtonDown(3, "Wall") && !players[3].onDash && !GetButton(3, "Dash"))

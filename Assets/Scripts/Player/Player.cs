@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
-
-	//variabili wall
-	public GameObject Wall;
-	public GameObject WallSpawnPoint;
+public class Player : MonoBehaviour {	
+	
 	//prefabs
 	public GameObject ChargedBulletPrefab;
 	public GameObject BulletPrefab;
-	public GameObject MirinoPrefab;
+    public GameObject WallPrefab;
+    public GameObject MirinoPrefab;
+
+    //spawnpoint
 	public GameObject[] BulletSpawnPoint;
-	//variabili statistiche
+    public GameObject WallSpawnPoint;
+
+    //variabili statistiche
     public float MaxHealth;
 	public float MaxEnergy;
 	public float EnergyRegen;
     public float Speed;
 	public float RotationSpeed;
     public float ShootForce;
+    public float Damage;
     public float FireRate;
+    public float SuperShootEnergyCost;
     public float SuperShootCD;
-    public float SuperShootMaxTimeCharge;
-    public float Damage;     
     public float DashSpeed;
     public float DashTime;
     public float SuperDashSpeed;
@@ -40,20 +42,19 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public bool onSuperDash;
     [HideInInspector]
-    public bool onFly;   
-	private bool onTurbo;
-    private bool imDied;
-	private GameObject inAirAim;
-   
+    public bool onFly;
+    private GameObject inAirAim;
+    private bool isFalling;
 
     //components
-    private Rigidbody rb;
-	private Collider col;
     [HideInInspector]
     public Animator anim;
+    private Rigidbody rb;
+	private Collider col;
+    private bool imDied;
 
     //variabili shoot  
-	private SuperBullet chargedBullet;
+    private SuperBullet chargedBullet;
     private GameObject[] bulletPool; 
     private bool canShoot;
     private bool isChargingShoot;
@@ -67,11 +68,8 @@ public class Player : MonoBehaviour {
 	//variabili wall
 	private GameObject wall;
   
-
     //limiti mappa
     private GameObject[] mapLimit = new GameObject[4];
-    
-
 
     void Awake()
 	{        
@@ -103,23 +101,26 @@ public class Player : MonoBehaviour {
 		inAirAim = Instantiate(MirinoPrefab , Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
 		inAirAim.SetActive (false);
 
-		//wall
-		wall = Instantiate(Wall , Vector3.zero, Wall.transform.rotation) as GameObject;
-		wall.SetActive (false);
+        //wall
+        wall = Instantiate(WallPrefab, Vector3.zero, WallPrefab.transform.rotation) as GameObject;
+        wall.SetActive (false);
     }
 
     void Start()
     {
 		anim = GetComponentInChildren<Animator>();
+
 		//Assegnazione Stat
         currentHealth = MaxHealth;
         currentEnergy = MaxEnergy;
+        superShootTimer = SuperShootCD;
 
         //bool varie
         onFly = false;
         canShoot = true;
         isChargingShoot = false;
         imDied = false;
+        isFalling = false;
 
         //Assegnazioni indici per sparo
         bulletIndex = 0;
@@ -128,6 +129,7 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
+        Debug.Log(isFalling);
         //Timer per lo sparo
         shootTimer += Time.deltaTime;
         superShootTimer += Time.deltaTime;
@@ -141,7 +143,7 @@ public class Player : MonoBehaviour {
     void OnCollisionExit(Collision col)
     {
         if (col.transform.CompareTag ("Player") && onSuperDash)                
-            col.transform.GetComponent<Player>().TakeDamage(Damage);        
+            col.transform.GetComponent<Player>().TakeDamage(Damage);            
     }
 
     void OnCollisionEnter(Collision col)
@@ -149,17 +151,33 @@ public class Player : MonoBehaviour {
         if (col.transform.CompareTag("PlayerWall") && onSuperDash)
         {
             rb.useGravity = false;
+            inAirAim.transform.position = transform.position;
             inAirAim.SetActive(true);
             StartCoroutine (WallHit());
             onFly = true;
             Invoke("FallDown", FallDownTime);
-            Debug.Log("SonoQua");
+        }
+
+
+        if (col.transform.CompareTag("Arena") && isFalling && !onFly)
+        {
+            Debug.Log("sono caduto");
+            FallDownDamage();
+            isFalling = false;
+        }
+
+        if (col.transform.CompareTag("Player") && isFalling)
+        {
+            Debug.Log("sono caduto");
+            FallDownDamage();
+            isFalling = false;
         }
     }
 
     public void Move(float horizontal, float vertical)
     {
-        if (!onDash && !onFly && !imDied)
+        //move base
+        if (!onDash && !onSuperDash && !onFly && !imDied)
         {
             Vector3 movement = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
             rb.velocity = Vector3.zero;
@@ -199,9 +217,7 @@ public class Player : MonoBehaviour {
         if (!onFly && !imDied)
         {
             if (shootTimer > FireRate && canShoot)
-            {
-               
-
+            {     
                 bulletPool[bulletIndex].transform.position = BulletSpawnPoint[spawnpointIndex].transform.position;
 				bulletPool[bulletIndex].transform.rotation = transform.rotation;
 				bulletPool[bulletIndex].SetActive(true);
@@ -216,34 +232,35 @@ public class Player : MonoBehaviour {
 
 			if (bulletIndex == bulletPool.Length)
                 bulletIndex = 0;
-        } else
+        }
+        else
             anim.SetBool("Shoot", false);
     }
 
     public void SuperShoot()
     {
-        if (!imDied && !onFly && superShootTimer > SuperShootCD)
+        if (!imDied && !onFly && !imDied && superShootTimer > SuperShootCD && currentEnergy >= SuperShootEnergyCost)
         {
             if (isChargingShoot)
+            {
                 ChargeBullet();
+                currentEnergy -= SuperShootEnergyCost;
+            }
             else
             {
                 isChargingShoot = true;
                 shootCharge = 0;
-                chargedBullet.transform.position = WallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale);
-                chargedBullet.transform.rotation = transform.rotation;
             }       
         }
     }
 
     private void ChargeBullet()
-    {
-        
+    {       
         chargedBullet.transform.rotation = transform.rotation;
-        chargedBullet.transform.position = Vector3.Lerp(chargedBullet.transform.position, WallSpawnPoint.transform.position + (transform.forward * chargedBullet.scale/3), Time.deltaTime * RotationSpeed);
+        chargedBullet.transform.position = WallSpawnPoint.transform.position;
+
         if (shootCharge < 1)
             chargedBullet.Charge(0);
-        
 
         if (shootCharge < 2 && shootCharge > 1)
             chargedBullet.Charge(1);
@@ -256,7 +273,6 @@ public class Player : MonoBehaviour {
     {
         if (isChargingShoot)
         {
-            Debug.Log("qua");
             for (int i = 0; i < chargedBullet.partc.Length; i++)
                 chargedBullet.partc[i].Play();
             chargedBullet.col.SetActive(true);    
@@ -267,7 +283,7 @@ public class Player : MonoBehaviour {
 
 	public void CreateWall()
 	{
-		if (!onFly && currentEnergy >=2)
+		if (!onFly && !imDied && currentEnergy >=2)
 		{
 			currentEnergy -= 2; 
 			wall.transform.position = WallSpawnPoint.transform.position;
@@ -279,7 +295,7 @@ public class Player : MonoBehaviour {
 
 	public void Dash(float horizontal , float vertical)
 	{
-		if (currentEnergy >= 1)
+		if (currentEnergy >= 1 && !imDied && !onFly)
 		{
 			currentEnergy -= 1;
 			onDash = true;
@@ -300,13 +316,20 @@ public class Player : MonoBehaviour {
         onDash = false;
     }
 
-    public void SuperDash()
+    public void SuperDash(float horizontal, float vertical)
     {
-        if (!onFly && currentEnergy >= 4)
+        if (!onFly && !onDash && !imDied  && currentEnergy >= 4)
         {
 			currentEnergy -= 4;
             onSuperDash = true;
-            rb.AddForce(transform.forward * SuperDashSpeed, ForceMode.Impulse);
+        
+            Vector3 direction = new Vector3(horizontal, 0, vertical);
+
+            if (horizontal == 0 && vertical == 0)
+                direction = transform.forward;
+
+            rb.AddForce(direction * SuperDashSpeed, ForceMode.Impulse);
+
             inAirAim.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             inAirAim.SetActive(false);
             Invoke("EndSuperDash", SuperDashTime);
@@ -321,9 +344,7 @@ public class Player : MonoBehaviour {
     }
 
     public void AimMove(float horizontal, float vertical)
-    {        
-        
-
+    { 
         Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
 
         inAirAim.transform.position = inAirAim.transform.position + position;
@@ -331,31 +352,47 @@ public class Player : MonoBehaviour {
 
     public void FallDown()
     {
+        //metodo per la cadutas
         if (onFly)
         {
             rb.useGravity = true;
+            isFalling = true;
             StartCoroutine(FallDownAnimation());                    
-            inAirAim.SetActive(false);
-            onFly = false;
         }
     }
 
     public IEnumerator FallDownAnimation()
     {
+        //il player cade
         while (transform.position.y > 1)
         {
             transform.Translate(Vector3.down * 30 * Time.deltaTime);
+            inAirAim.SetActive(false);
+            onFly = false;
             yield return null;
         }
     }
 
     public IEnumerator WallHit()
     {
+        //il player va verso l'alto
         while (transform.position.y < 20)
         {
             transform.Translate(transform.up * 20 * Time.deltaTime);
             yield return null;
         }
+    }
+
+    public void FallDownDamage()
+    {
+        //quando cade overlappa
+        Collider[] col = Physics.OverlapSphere(transform.position, RangeExplosion);
+
+        for(int i = 0; i < col.Length; i++)
+        {
+            if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player"))
+                col[i].SendMessage("TakeDamage", 100);
+        } 
     }
 
     public void TakeDamage(float amount)

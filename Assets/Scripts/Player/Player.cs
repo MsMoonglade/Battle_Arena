@@ -48,8 +48,6 @@ public class Player : MonoBehaviour {
     private bool isFalling;
 
     //components
-    [HideInInspector]
-    public Animator anim;
     private Rigidbody rb;
 	private Collider col;
     private bool imDied;
@@ -115,7 +113,7 @@ public class Player : MonoBehaviour {
 
     void Start()
     {
-		anim = GetComponentInChildren<Animator>();
+		
 
 		//Assegnazione Stat
         currentHealth = MaxHealth;
@@ -257,8 +255,7 @@ public class Player : MonoBehaviour {
 			if (bulletIndex == bulletPool.Length)
                 bulletIndex = 0;
         }
-        else
-            anim.SetBool("Shoot", false);
+       
     }
 
     public void SuperShoot()

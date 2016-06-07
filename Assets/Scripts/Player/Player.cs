@@ -147,12 +147,12 @@ public class Player : MonoBehaviour {
     void OnCollisionExit(Collision col)
     {
         if (col.transform.CompareTag ("Player") && onSuperDash)                
-            col.transform.GetComponent<Player>().TakeDamage(Damage);            
+            col.transform.GetComponent<Player>().TakeDamage(Damage , this.gameObject);            
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.transform.CompareTag("PlayerWall") && onSuperDash)
+        /*if (col.transform.CompareTag("PlayerWall") && onSuperDash)
         {
             rb.useGravity = false;
             inAirAim.transform.position = transform.position;
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour {
             StartCoroutine (WallHit());
             onFly = true;
             Invoke("FallDown", FallDownTime);
-        }
+        }*/
 
         if (col.transform.CompareTag("Arena") && isFalling)
         {
@@ -397,10 +397,10 @@ public class Player : MonoBehaviour {
         for(int i = 0; i < col.Length; i++)
         {
             if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && !imDied)
-                col[i].SendMessage("TakeDamage", MaxHealth);
+                col[i].GetComponent<Player>().TakeDamage(MaxHealth , this.gameObject);
 
             else if (col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && imDied)
-                col[i].SendMessage("TakeDamage", MaxHealth /2);
+                col[i].GetComponent<Player>().TakeDamage( MaxHealth/2 , this.gameObject);
         } 
     }
 
@@ -432,11 +432,11 @@ public class Player : MonoBehaviour {
         inAirAim.transform.position = inAirAim.transform.position + position;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount , GameObject playerkill)
     {
         currentHealth -= amount;
         if (currentHealth <= 0)
-            Respawn();
+            Respawn(playerkill);
     }
 
     private void RechargeEnergy()
@@ -445,15 +445,10 @@ public class Player : MonoBehaviour {
 			currentEnergy += EnergyRegen * Time.deltaTime;
 	}
 
-    private void Die()
+    private void Respawn(GameObject playerkill)
     {
         imDied = true;
-        gameObject.SetActive(false);
-    }
-
-    private void Respawn()
-    {
-        imDied = true;
+        GameController.instance.AssignScore(playerkill, 100);
 
         transform.position = new Vector3(0, 20, 0);
         onFly = true;
@@ -461,7 +456,7 @@ public class Player : MonoBehaviour {
 
         currentHealth = MaxHealth;
 
-        inAirAim.transform.position = new Vector3(0, -4 , 0);
+        inAirAim.transform.position = Vector3.zero;
         inAirAim.SetActive(true);         
 
         Invoke("FallDown", RespawnFallTime);

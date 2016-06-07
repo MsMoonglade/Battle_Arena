@@ -5,8 +5,9 @@ public class GUIController : MonoBehaviour {
 	
 	public UISlider[] HealthBar=new UISlider[4];
 	public UISlider[] EnergyBar = new UISlider[4];
-	
-	private Player[] players;
+    public UILabel [] Score = new UILabel[4];
+
+    private Player[] players;
 	
 	
 	
@@ -14,6 +15,11 @@ public class GUIController : MonoBehaviour {
 	{
 		players = new Player[4];
 		AssignPlayers ();
+
+        for (int i = 0; i < Score.Length; i++)
+        {
+            Score[i].GetComponent<UILabel>();
+        }
 	}
 
 	private void AssignPlayers()
@@ -27,6 +33,7 @@ public class GUIController : MonoBehaviour {
 	void Update () 
 	{
 		ScreenBarsUpdate();
+        ScoreView();
 	}
 
 
@@ -42,6 +49,14 @@ public class GUIController : MonoBehaviour {
 		EnergyBar[2].value = players[2].currentEnergy/players[2].MaxEnergy;	
 		EnergyBar[3].value = players[3].currentEnergy/players[3].MaxEnergy;
 	}
+
+    void ScoreView()
+    {
+        Score[0].text = GameController.instance.Score[0].ToString();
+        Score[1].text = GameController.instance.Score[1].ToString();
+        Score[2].text = GameController.instance.Score[2].ToString();
+        Score[3].text = GameController.instance.Score[3].ToString();
+    }
 
 
 

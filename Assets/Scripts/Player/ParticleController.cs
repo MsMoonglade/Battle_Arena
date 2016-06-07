@@ -30,9 +30,9 @@ public class ParticleController : MonoBehaviour {
             impact.Play();             
 
         if (Particle.Equals("shoot0"))
-            shoot[0].Play();
-        if (Particle.Equals("shoot1"))
             shoot[1].Play();
+        if (Particle.Equals("shoot1"))
+            shoot[0].Play();
 
 
     }

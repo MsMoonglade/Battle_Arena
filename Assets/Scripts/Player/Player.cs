@@ -281,13 +281,22 @@ public class Player : MonoBehaviour {
         chargedBullet.transform.position = WallSpawnPoint.transform.position;
 
         if (shootCharge < 1)
+        {
+            particellari.Play("charge1");
             chargedBullet.Charge(0);
+        }
 
         if (shootCharge < 2 && shootCharge > 1)
+        {
+            particellari.Play("charge2");
             chargedBullet.Charge(1);
+        }
 
         if (shootCharge < 3 && shootCharge > 2)
+        {
+            particellari.Play("charge3");
             chargedBullet.Charge(2);
+        }
     }
 
     public void RelaseSuperShoot()
@@ -299,6 +308,7 @@ public class Player : MonoBehaviour {
             chargedBullet.col.SetActive(true);    
             superShootTimer = 0;
             isChargingShoot = false;
+            particellari.Stop("charge");
         }
     }
 

@@ -77,6 +77,7 @@ public class Player : MonoBehaviour {
 	{        
 		//components
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
         
 
         //limitatori di movimento
@@ -145,10 +146,12 @@ public class Player : MonoBehaviour {
     }
 
 
-    void OnCollisionExit(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if (col.transform.CompareTag ("Player") && onSuperDash)                
-            col.transform.GetComponent<Player>().TakeDamage(Damage , this.gameObject);            
+            col.transform.GetComponent<Player>().TakeDamage(Damage , this.gameObject);
+        if (col.transform.CompareTag("EnvironmentWall") && onSuperDash)
+            EndSuperDash();       
     }
 
     void OnCollisionEnter(Collision col)
@@ -354,6 +357,8 @@ public class Player : MonoBehaviour {
         {
 			currentEnergy -= 4;
             onSuperDash = true;
+            col.isTrigger = true;
+            rb.useGravity = false;
         
             Vector3 direction = new Vector3(horizontal, 0, vertical);
 
@@ -373,6 +378,8 @@ public class Player : MonoBehaviour {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         onSuperDash = false;
+        col.isTrigger = false;
+        rb.useGravity = true;
     }
 
     private void FallDown()

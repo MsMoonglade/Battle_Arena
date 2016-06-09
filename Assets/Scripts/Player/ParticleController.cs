@@ -6,9 +6,14 @@ public class ParticleController : MonoBehaviour {
     GameObject ps;
     GameObject psModel;
 
+    GameObject impactGo;
     ParticleSystem impact;
+
     ParticleSystem[] shoot;
     ParticleSystem[] charge;
+
+    GameObject explosionGo;
+    ParticleSystem explosion;
 
 
 
@@ -16,7 +21,14 @@ public class ParticleController : MonoBehaviour {
     {
         ps = transform.FindChild("PS").gameObject;
 
+        impactGo = ps.transform.FindChild("PS_Impact").gameObject;
         impact = ps.transform.FindChild("PS_Impact").GetComponent<ParticleSystem>();
+        impactGo.transform.SetParent(null);
+
+        explosionGo = ps.transform.FindChild("Ps_Explosion").gameObject;
+        explosion = ps.transform.FindChild("Ps_Explosion").GetComponent<ParticleSystem>();
+        explosionGo.transform.SetParent(null);
+       
 
         shoot = new ParticleSystem[2];
         shoot[0] = ps.transform.FindChild("PS_ShootDX").GetComponent<ParticleSystem>();
@@ -36,12 +48,20 @@ public class ParticleController : MonoBehaviour {
         Debug.Log(Particle);
 
         if (Particle.Equals("impact"))
-            impact.Play();             
-
+        {
+            impactGo.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            impact.Play();
+        }
         if (Particle.Equals("shoot0"))
             shoot[1].Play();
-        if (Particle.Equals("shoot1"))
-            shoot[0].Play();
+
+        if (Particle.Equals("explosion"))
+        {
+            explosionGo.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            explosion.Play();
+        }
+
+
 
         //Caricamento super colpo
         if (Particle.Equals("charge1"))

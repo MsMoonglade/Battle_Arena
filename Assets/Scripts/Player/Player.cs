@@ -50,7 +50,8 @@ public class Player : MonoBehaviour {
     //components
     private Rigidbody rb;
 	private Collider col;
-    private bool imDied;
+    [HideInInspector]
+    public bool imDied;
 
     //variabili shoot  
     private SuperBullet chargedBullet;
@@ -444,7 +445,10 @@ public class Player : MonoBehaviour {
     {
         currentHealth -= amount;
         if (currentHealth <= 0)
+        {
+            particellari.Play("explosion");
             Respawn(playerkill);
+        }
     }
 
     private void RechargeEnergy()

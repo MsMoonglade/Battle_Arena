@@ -8,8 +8,12 @@ public class GameController : MonoBehaviour {
     [HideInInspector]
     public float[] Score;
 
+	public float timer;
+	public UILabel timeLabel;
+
     void Awake()
     {
+		Time.timeScale = 1.0f; 
         instance = this;
     }
 
@@ -24,7 +28,13 @@ public class GameController : MonoBehaviour {
 
     void Update ()
     {
+		timer -= 1 * Time.deltaTime;
+		timeLabel.text = timer.ToString ("F2");
+
         ResetGame();
+
+		if (timer < 0)
+			EndGame ();
 	}
 
     public void AssignScore(GameObject player , float value)
@@ -44,5 +54,11 @@ public class GameController : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space))
             Application.LoadLevel(Application.loadedLevel);
     }
+
+	private void EndGame()
+	{
+		Debug.Log ("gioco finito");
+		Time.timeScale = 0.0f;
+	}
 
 }

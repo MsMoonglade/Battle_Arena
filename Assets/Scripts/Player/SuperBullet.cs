@@ -91,6 +91,8 @@ public class SuperBullet : MonoBehaviour {
                 Debug.Log(2);
                 break;
         }
+
+        StartCoroutine(Disable());
     }
 
     IEnumerator Disable()
@@ -99,5 +101,6 @@ public class SuperBullet : MonoBehaviour {
         col.SetActive(false);
         for (int i = 0; i < partc.Length; i++)
             partc[i].Stop();
+        StopAllCoroutines();
     }
 }

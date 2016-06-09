@@ -11,6 +11,7 @@ public class CameraFollow : MonoBehaviour {
     public float MaxZoom;
     float maxDist;
     float minZoom;
+    Vector3 offSet;
 
 
     void Awake()
@@ -38,8 +39,12 @@ public class CameraFollow : MonoBehaviour {
         float z = (players[0].transform.position.z + players[1].transform.position.z + players[2].transform.position.z + players[3].transform.position.z) / 4;
         
         pos = new Vector3(x, 0, z);
+        if (offSet == Vector3.zero)
+            offSet = transform.position - pos;
+        
+
        // transform.LookAt(look);
-        transform.position = Vector3.Lerp(transform.position, pos + new Vector3(0,transform.position.y,0), Time.deltaTime);                       
+        transform.position = Vector3.Lerp(transform.position, pos  + offSet, Time.deltaTime);                       
     }
 
     void Zoom()

@@ -14,14 +14,8 @@ public class Player : MonoBehaviour {
     public GameObject WallSpawnPoint;
 
     //variabili statistiche
-    public float MaxHealth;
-	public float MaxEnergy;
-	public float EnergyRegen;
-    public float Speed;
-	public float RotationSpeed;
-    public float ShootForce;
-    public float Damage;
-    public float FireRate;
+    public float RotationSpeed;
+    public float ShootForce;  
     public float SuperShootEnergyCost;
     public float SuperShootCD;
     public float DashSpeed;
@@ -52,6 +46,9 @@ public class Player : MonoBehaviour {
 	private Collider col;
     [HideInInspector]
     public bool imDied;
+    [HideInInspector]
+    public ModelStat stat;
+    private AnimatorController anim;
 
     //variabili shoot  
     private SuperBullet chargedBullet;
@@ -79,6 +76,8 @@ public class Player : MonoBehaviour {
 		//components
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        stat = transform.GetComponentInChildren<ModelStat>();
+        anim = GetComponent<AnimatorController>();
         
 
         //limitatori di movimento
@@ -92,7 +91,7 @@ public class Player : MonoBehaviour {
         for (int i = 0; i < 30; i++)
         {
 			bulletPool[i] = Instantiate(BulletPrefab , Vector3.zero , BulletPrefab.transform.rotation) as GameObject;
-			bulletPool[i].GetComponent<Bullet>().Damage = Damage;
+			bulletPool[i].GetComponent<Bullet>().Damage = stat.Damage;
 			bulletPool[i].GetComponent<Bullet>().Speed = ShootForce;
 			bulletPool[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
 			bulletPool[i].SetActive(false);
@@ -119,8 +118,8 @@ public class Player : MonoBehaviour {
 		
 
 		//Assegnazione Stat
-        currentHealth = MaxHealth;
-        currentEnergy = MaxEnergy;
+        currentHealth = stat.MaxHealth;
+        currentEnergy = stat.MaxEnergy;
         superShootTimer = SuperShootCD;
 
         //bool varie
@@ -150,7 +149,7 @@ public class Player : MonoBehaviour {
     void OnTriggerEnter(Collider col)
     {
         if (col.transform.CompareTag ("Player") && onSuperDash)                
-            col.transform.GetComponent<Player>().TakeDamage(Damage , this.gameObject);
+            col.transform.GetComponent<Player>().TakeDamage(stat.Damage , this.gameObject);
         if (col.transform.CompareTag("EnvironmentWall") && onSuperDash)
             EndSuperDash();       
     }
@@ -205,7 +204,7 @@ public class Player : MonoBehaviour {
         //move base
         if (!onDash && !onSuperDash && !onFly && !imDied)
         {
-            Vector3 movement = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
+            Vector3 movement = new Vector3(horizontal, 0, vertical) * stat.Speed * Time.deltaTime;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             rb.MovePosition(transform.position + movement);
@@ -242,12 +241,13 @@ public class Player : MonoBehaviour {
     {
         if (!onFly && !imDied && !isChargingShoot)
         {
-            if (shootTimer > FireRate && canShoot)
+            if (shootTimer > stat.FireRate && canShoot)
             {     
                 bulletPool[bulletIndex].transform.position = BulletSpawnPoint[spawnpointIndex].transform.position;
 				bulletPool[bulletIndex].transform.rotation = transform.rotation;
 				bulletPool[bulletIndex].SetActive(true);
                 particellari.Play("shoot" + spawnpointIndex);
+                anim.Play("shoot" + spawnpointIndex);
 
                 spawnpointIndex++;
                 bulletIndex++;
@@ -406,10 +406,10 @@ public class Player : MonoBehaviour {
         for(int i = 0; i < col.Length; i++)
         {
             if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && !imDied)
-                col[i].GetComponent<Player>().TakeDamage(MaxHealth , this.gameObject);
+                col[i].GetComponent<Player>().TakeDamage(stat.MaxHealth , this.gameObject);
 
             else if (col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && imDied)
-                col[i].GetComponent<Player>().TakeDamage( MaxHealth/2 , this.gameObject);
+                col[i].GetComponent<Player>().TakeDamage(stat.MaxHealth /2 , this.gameObject);
         } 
     }
 
@@ -436,7 +436,7 @@ public class Player : MonoBehaviour {
 
     private void AimMove(float horizontal, float vertical)
     {
-        Vector3 position = new Vector3(horizontal, 0, vertical) * Speed * Time.deltaTime;
+        Vector3 position = new Vector3(horizontal, 0, vertical) * stat.Speed * Time.deltaTime;
 
         inAirAim.transform.position = inAirAim.transform.position + position;
     }
@@ -453,8 +453,8 @@ public class Player : MonoBehaviour {
 
     private void RechargeEnergy()
 	{
-		if ( currentEnergy < MaxEnergy ) 
-			currentEnergy += EnergyRegen * Time.deltaTime;
+		if ( currentEnergy < stat.MaxEnergy ) 
+			currentEnergy += stat.EnergyRegen * Time.deltaTime;
 	}
 
     private void Respawn(GameObject playerkill)
@@ -466,7 +466,7 @@ public class Player : MonoBehaviour {
         onFly = true;
         rb.useGravity = false;
 
-        currentHealth = MaxHealth;
+        currentHealth = stat.MaxHealth;
 
         inAirAim.transform.position = Vector3.zero;
         inAirAim.SetActive(true);         

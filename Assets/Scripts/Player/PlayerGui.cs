@@ -17,7 +17,7 @@ public class PlayerGui : MonoBehaviour {
     {
         transform.rotation = Quaternion.identity;
 
-        HealthBar.value = player.currentHealth / player.MaxHealth;
-        EnergyBar.value = player.currentEnergy / player.MaxEnergy;
+        HealthBar.value = player.currentHealth / player.stat.MaxHealth;
+        EnergyBar.value = player.currentEnergy / player.stat.MaxEnergy;
     }   
 }

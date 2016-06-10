@@ -45,15 +45,18 @@ public class ParticleController : MonoBehaviour {
 
     public void Play(string Particle)
     {
-        Debug.Log(Particle);
+
 
         if (Particle.Equals("impact"))
         {
             impactGo.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             impact.Play();
         }
+        //effetto sparo
         if (Particle.Equals("shoot0"))
             shoot[1].Play();
+        if (Particle.Equals("shoot1"))
+            shoot[0].Play();
 
         if (Particle.Equals("explosion"))
         {

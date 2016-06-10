@@ -45,11 +45,14 @@ public class SuperBullet : MonoBehaviour {
 
         if (collider.CompareTag("PlayerWall") && scale == Scale[3])
         {
-            col.SetActive(false);
             collider.gameObject.SetActive(false);
+            Disable();
         }
         else if (collider.CompareTag("PlayerWall") && scale != Scale[3])
-            col.SetActive(false);
+            Disable();
+
+        if (collider.CompareTag("EnvironmentWall"))
+            Disable();
     }
 
     void Move()
@@ -92,12 +95,17 @@ public class SuperBullet : MonoBehaviour {
                 break;
         }
 
-        StartCoroutine(Disable());
+        StartCoroutine(DisableCor());
     }
 
-    IEnumerator Disable()
+    IEnumerator DisableCor()
     {
         yield return new WaitForSeconds(DeactivationTime);
+        Disable();
+    }
+
+    void Disable()
+    {
         col.SetActive(false);
         for (int i = 0; i < partc.Length; i++)
             partc[i].Stop();

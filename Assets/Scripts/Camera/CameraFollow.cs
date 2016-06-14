@@ -28,7 +28,7 @@ public class CameraFollow : MonoBehaviour {
         minZoom = Camera.main.fieldOfView;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         LookFollow();
         Zoom();      
@@ -42,9 +42,10 @@ public class CameraFollow : MonoBehaviour {
         pos = new Vector3(x, 0, z);
         if (offSet == Vector3.zero)
             offSet = transform.position - pos;
-        
 
-       // transform.LookAt(look);
+
+        // transform.LookAt(look);
+        target.transform.position = pos;
         transform.position = Vector3.Lerp(transform.position, pos  + offSet, Time.deltaTime * Speed);                       
     }
 
@@ -54,7 +55,7 @@ public class CameraFollow : MonoBehaviour {
 
         float currentZoom = (minZoom * currentDistance) / maxDist;
         if (currentZoom >= MaxZoom)
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, currentZoom, Time.deltaTime);
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, currentZoom, Time.deltaTime * Speed);
     }
 
     float MaxDistPlayers()

@@ -8,8 +8,12 @@ public class GameController : MonoBehaviour {
     [HideInInspector]
     public float[] Score;
 
-	public float timer;
-	public UILabel timeLabel;
+	public float timerSecond;
+	public float timerMinute;
+
+	public UILabel timeSecondLabel;
+	public UILabel timeMinuteLabel;
+
 
 	public GameObject rewiredInputControllerPrefab;
 
@@ -38,13 +42,20 @@ public class GameController : MonoBehaviour {
 
     void Update ()
     {
-		timer -= 1 * Time.deltaTime;
-		timeLabel.text = timer.ToString ("F2");
+		timerSecond -= 1 * Time.deltaTime;
+		
 
-        ResetGame();
-
-		if (timer < 0)
-			EndGame ();
+		timeMinuteLabel.text = timerMinute.ToString ("F0") + ":" + timerSecond.ToString ("F1");
+		
+		if (timerSecond <= 0 && timerMinute > 0)  
+		{ 
+			timerMinute -= 1.0f;
+			timerSecond = 59.0f;
+		}
+		if (timerMinute == 0.0f) {
+			if (timerSecond < 0.0f) 
+				EndGame ();
+		}
 	}
 
     public void AssignScore(GameObject player , float value)

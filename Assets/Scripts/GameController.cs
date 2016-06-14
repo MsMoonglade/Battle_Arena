@@ -11,10 +11,20 @@ public class GameController : MonoBehaviour {
 	public float timer;
 	public UILabel timeLabel;
 
+	public GameObject rewiredInputControllerPrefab;
+
+	private GameObject rewiredInputController;
+
     void Awake()
     {
 		Time.timeScale = 1.0f; 
         instance = this;
+
+		rewiredInputController = GameObject.FindGameObjectWithTag ("Rewired");
+		
+		if (rewiredInputController == null) {
+			Instantiate(rewiredInputControllerPrefab , Vector3.zero , Quaternion.identity);
+		}
     }
 
     void Start()

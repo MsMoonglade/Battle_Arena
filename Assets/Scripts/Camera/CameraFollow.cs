@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
     public GameObject target;
+    public float Speed;
 
     GameObject[] players;
     Player[] playersScript;
@@ -44,7 +45,7 @@ public class CameraFollow : MonoBehaviour {
         
 
        // transform.LookAt(look);
-        transform.position = Vector3.Lerp(transform.position, pos  + offSet, Time.deltaTime);                       
+        transform.position = Vector3.Lerp(transform.position, pos  + offSet, Time.deltaTime * Speed);                       
     }
 
     void Zoom()
@@ -59,21 +60,26 @@ public class CameraFollow : MonoBehaviour {
     float MaxDistPlayers()
     {
         float distance;
+        //converto le pos con y a 0
+        Vector3 posPl1 = new Vector3(players[0].transform.position.x, 0, players[0].transform.position.z);
+        Vector3 posPl2 = new Vector3(players[1].transform.position.x, 0, players[1].transform.position.z);
+        Vector3 posPl3 = new Vector3(players[2].transform.position.x, 0, players[2].transform.position.z);
+        Vector3 posPl4 = new Vector3(players[3].transform.position.x, 0, players[3].transform.position.z);
+
+
         //Assegno la distanza di un player a caso
-        if (!playersScript[0].imDied)
-            distance = Mathf.Abs(Vector3.Distance(players[0].transform.position, pos));
-        else
-            distance = 0f;
+            distance = Mathf.Abs(Vector3.Distance(posPl4, pos));
+       
 
         //controllo quale è la più grande
-        if(Mathf.Abs(Vector3.Distance(players[1].transform.position, pos)) > distance && !playersScript[1].imDied)
-            distance = Vector3.Distance(players[1].transform.position, pos);
+        if(Mathf.Abs(Vector3.Distance(posPl1, pos)) > distance)
+            distance = Vector3.Distance(posPl1, pos);
 
-        if (Mathf.Abs(Vector3.Distance(players[2].transform.position, pos)) > distance && !playersScript[2].imDied)
-            distance = Vector3.Distance(players[2].transform.position, pos);
+        if (Mathf.Abs(Vector3.Distance(posPl2, pos)) > distance)
+            distance = Vector3.Distance(posPl2, pos);
 
-        if (Mathf.Abs(Vector3.Distance(players[3].transform.position, pos)) > distance && !playersScript[2].imDied)
-            distance = Vector3.Distance(players[3].transform.position, pos);
+        if (Mathf.Abs(Vector3.Distance(posPl3, pos)) > distance)
+            distance = Vector3.Distance(posPl3, pos);
 
 
         return distance;

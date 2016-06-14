@@ -20,10 +20,12 @@ public class CharacterSelection : MonoBehaviour {
 	}
 	
 	void Update(){
-		
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if(!Application.loadedLevelName.Equals("Scena_Marco")){
+
+            if (Input.GetKeyDown (KeyCode.Space)) {
 			Application.LoadLevel("Scena_Marco");
-		}
+
+            }
 		
 //		
 //		if(GetButtonDown(0,"SelectA")){
@@ -48,20 +50,25 @@ public class CharacterSelection : MonoBehaviour {
 				selectionRight (0); 
 			}
 		}
-		
-		if (GetAxis (1, "LeftRotationH") < 0 ) {
-			SelectionTimer[1] += Time.deltaTime;
-			if (SelectionTimer[1] > deadZone) {
-				Debug.Log ("sinistra");
-				selectionLeft (1);
-			}
-		}
-		
-		else if (GetAxis (1, "LeftRotationH") > 0) {
-			SelectionTimer[1] += Time.deltaTime;
-			if (SelectionTimer[1] > deadZone) {
-				selectionRight (1); 
-			}
+
+            if (GetAxis(1, "LeftRotationH") < 0)
+            {
+                SelectionTimer[1] += Time.deltaTime;
+                if (SelectionTimer[1] > deadZone)
+                {
+                    Debug.Log("sinistra");
+                    selectionLeft(1);
+                }
+            }
+
+            else if (GetAxis(1, "LeftRotationH") > 0)
+            {
+                SelectionTimer[1] += Time.deltaTime;
+                if (SelectionTimer[1] > deadZone)
+                {
+                    selectionRight(1);
+                }
+            }
 		}
 		
 		

@@ -38,13 +38,13 @@ public class GameController : MonoBehaviour {
 
     void Update ()
     {
-		/*timer -= 1 * Time.deltaTime;
-		//timeLabel.text = timer.ToString ("F2");
+		timer -= 1 * Time.deltaTime;
+		timeLabel.text = timer.ToString ("F2");
 
         ResetGame();
 
 		if (timer < 0)
-			EndGame ();*/
+			EndGame ();
 	}
 
     public void AssignScore(GameObject player , float value)

@@ -54,7 +54,7 @@ public class CameraFollow : MonoBehaviour {
         float currentDistance = MaxDistPlayers();
 
         float currentZoom = (minZoom * currentDistance) / maxDist;
-        if (currentZoom >= MaxZoom)
+        if (currentZoom >= MaxZoom && currentZoom<= minZoom)
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, currentZoom, Time.deltaTime * Speed);
     }
 

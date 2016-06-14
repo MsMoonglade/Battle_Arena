@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
     public float ShootForce;  
     public float SuperShootEnergyCost;
     public float SuperShootCD;
+    public float DashCost;
     public float DashSpeed;
     public float DashTime;
     public float SuperDashSpeed;
@@ -284,6 +285,7 @@ public class Player : MonoBehaviour {
     {       
         chargedBullet.transform.rotation = transform.rotation;
         chargedBullet.transform.position = WallSpawnPoint.transform.position;
+        particellari.Play("charge");
 
         if (shootCharge < 1)
         {
@@ -331,9 +333,9 @@ public class Player : MonoBehaviour {
 
 	public void Dash(float horizontal , float vertical)
 	{
-		if (currentEnergy >= 1 && !imDied && !onFly)
+		if (currentEnergy >= DashCost && !imDied && !onFly)
 		{
-			currentEnergy -= 1;
+			currentEnergy -= DashCost;
 			onDash = true;
 			Vector3 direction = new Vector3(horizontal, 0, vertical);
 			
@@ -360,6 +362,7 @@ public class Player : MonoBehaviour {
             onSuperDash = true;
             col.isTrigger = true;
             rb.useGravity = false;
+            particellari.Play("superDash");
         
             Vector3 direction = new Vector3(horizontal, 0, vertical);
 
@@ -381,6 +384,7 @@ public class Player : MonoBehaviour {
         onSuperDash = false;
         col.isTrigger = false;
         rb.useGravity = true;
+        particellari.Stop("superDash");
     }
 
     private void FallDown()

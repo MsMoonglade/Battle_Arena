@@ -8,9 +8,11 @@ public class CharacterSelection : MonoBehaviour {
 	public UIButton[] ModelButton=new UIButton[4];
 	public int[] counter = new int[4];    
 	public float[] SelectionTimer = new float[4];
-	
+	public bool[] PlayerIsSelected = new bool[4];
+
 	private float deadZone = 0.15f;
-	
+
+
 	
 	
 	void Awake()
@@ -27,12 +29,35 @@ public class CharacterSelection : MonoBehaviour {
 
             }
 		
-//		
-//		if(GetButtonDown(0,"SelectA")){
-//						if(counter=0){
-//			
-//						}
-//		}
+		
+			if(GetButtonDown(0,"SelectA")){
+				PlayerIsSelected[0]=true;
+			}
+			if(GetButtonDown(1,"SelectA")){
+				PlayerIsSelected[1]=true;
+			}
+			if(GetButtonDown(2,"SelectA")){
+				PlayerIsSelected[2]=true;
+			}
+			if(GetButtonDown(3,"SelectA")){
+				PlayerIsSelected[3]=true;
+			}
+
+
+			if(GetButtonDown(0,"DeselectB")){
+				PlayerIsSelected[0]=false;
+			}
+			if(GetButtonDown(1,"DeselectB")){
+				PlayerIsSelected[1]=false;
+			}
+			if(GetButtonDown(2,"DeselectB")){
+				PlayerIsSelected[2]=false;
+			}
+			if(GetButtonDown(3,"DeselectB")){
+				PlayerIsSelected[3]=false;
+			}
+
+	
 		
 		
 		
@@ -79,7 +104,7 @@ public class CharacterSelection : MonoBehaviour {
 		
 	}
 	public void selectionRight(int playerId){
-		
+		if(PlayerIsSelected[playerId]!=true){
 		
 		if (counter[playerId] < 3) {
 			CursorSelect[playerId].transform.position = ModelButton[counter[playerId] + 1].transform.position;
@@ -90,10 +115,11 @@ public class CharacterSelection : MonoBehaviour {
 			counter[playerId] = 0; 
 			CursorSelect[playerId].transform.position = ModelButton [counter[playerId]].transform.position;
 			SelectionTimer[playerId]=0;
-			
+			}
 		}
 	}
 	public void selectionLeft(int playerId){
+		if(PlayerIsSelected[playerId]!=true){
 		if (counter[playerId] != 0) {
 			CursorSelect[playerId].transform.position = ModelButton [counter[playerId] - 1].transform.position;
 			counter[playerId]--;
@@ -104,7 +130,7 @@ public class CharacterSelection : MonoBehaviour {
 			CursorSelect[playerId].transform.position = ModelButton [counter[playerId]].transform.position;
 			Debug.Log ("workmnA");
 			SelectionTimer[playerId]=0;
-			
+			}
 		}
 	}
 	

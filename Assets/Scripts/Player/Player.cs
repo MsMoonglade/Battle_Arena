@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
     public float DashCost;
     public float DashSpeed;
     public float DashTime;
+    public float SuperDashCost;
     public float SuperDashSpeed;
     public float SuperDashTime;
     public float RespawnFallTime;
@@ -323,7 +324,7 @@ public class Player : MonoBehaviour {
 	{
 		if (!onFly && !imDied && currentEnergy >= WallCost)
 		{
-			currentEnergy -= 2; 
+			currentEnergy -= WallCost; 
 			wall.transform.position = WallSpawnPoint.transform.position;
 			wall.transform.rotation = transform.rotation;
 			wall.transform.SetParent (null);
@@ -356,9 +357,9 @@ public class Player : MonoBehaviour {
 
     public void SuperDash(float horizontal, float vertical)
     {
-        if (!onFly && !onDash && !imDied  && currentEnergy >= 4)
+        if (!onFly && !onDash && !imDied  && currentEnergy >= SuperDashCost)
         {
-			currentEnergy -= 4;
+			currentEnergy -= SuperDashCost;
             onSuperDash = true;
             col.isTrigger = true;
             rb.useGravity = false;

@@ -32,9 +32,9 @@ public class LoadCharacter : MonoBehaviour {
 
 
 		ModelSelected = GameObject.FindGameObjectWithTag ("CharacterController");
-		Debug.Log (ModelSelected.name);
+//		Debug.Log (ModelSelected.name);
 //		Debug.Log (ModelSelected.GetComponent<CharacterSelection> ().counter [playerModelIndex]);
-		Debug.Log ("index"+playerModelIndex);
+//		Debug.Log ("index"+playerModelIndex);
 
 
 

@@ -9,8 +9,6 @@ public class GUIController : MonoBehaviour {
 
     private Player[] players;
 	
-	
-	
 	void Awake()
 	{
 		players = new Player[4];
@@ -57,8 +55,4 @@ public class GUIController : MonoBehaviour {
         Score[2].text = GameController.instance.Score[2].ToString();
         Score[3].text = GameController.instance.Score[3].ToString();
     }
-
-
-
-
 }

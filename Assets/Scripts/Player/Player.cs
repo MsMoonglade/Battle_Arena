@@ -23,9 +23,10 @@ public class Player : MonoBehaviour {
     public float DashTime;
     public float SuperDashSpeed;
     public float SuperDashTime;
-    public float FallDownTime;
     public float RespawnFallTime;
     public float RangeExplosion;
+    public float fallDownSpeed;
+    public float WallCost;
 
     [HideInInspector]
     public float currentHealth;
@@ -164,7 +165,7 @@ public class Player : MonoBehaviour {
             inAirAim.SetActive(true);
             StartCoroutine (WallHit());
             onFly = true;
-            Invoke("FallDown", FallDownTime);
+            Invoke("FallDown", RespawnFallDown);
         }*/
 
         if (col.transform.CompareTag("Arena") && isFalling)
@@ -260,8 +261,7 @@ public class Player : MonoBehaviour {
 
 			if (bulletIndex == bulletPool.Length)
                 bulletIndex = 0;
-        }
-       
+        } 
     }
 
     public void SuperShoot()
@@ -321,7 +321,7 @@ public class Player : MonoBehaviour {
 
 	public void CreateWall()
 	{
-		if (!onFly && !imDied && currentEnergy >=2)
+		if (!onFly && !imDied && currentEnergy >= WallCost)
 		{
 			currentEnergy -= 2; 
 			wall.transform.position = WallSpawnPoint.transform.position;
@@ -388,12 +388,10 @@ public class Player : MonoBehaviour {
     }
 
     private void FallDown()
-    {
-        
+    {     
         //metodo per la caduta
         if (onFly)
-        {
-           
+        {  
             rb.useGravity = true;
             isFalling = true;
             StartCoroutine(FallDownAnimation());
@@ -422,7 +420,7 @@ public class Player : MonoBehaviour {
         //il player cade
         if(isFalling)
         {
-            transform.Translate(Vector3.down * 30 * Time.deltaTime);
+            transform.Translate(Vector3.down * fallDownSpeed * Time.deltaTime);
             
             yield return null;
         }
@@ -448,6 +446,7 @@ public class Player : MonoBehaviour {
     public void TakeDamage(float amount , GameObject playerkill)
     {
         currentHealth -= amount;
+
         if (currentHealth <= 0)
         {
             particellari.Play("explosion");
@@ -466,14 +465,17 @@ public class Player : MonoBehaviour {
         imDied = true;
         GameController.instance.AssignScore(playerkill, 100);
 
+
+        //sposto il player in aria
         transform.position = new Vector3(0, 20, 0);
         onFly = true;
         rb.useGravity = false;
 
-        currentHealth = stat.MaxHealth;
-
         inAirAim.transform.position = Vector3.zero;
-        inAirAim.SetActive(true);         
+        inAirAim.SetActive(true);
+
+        currentHealth = stat.MaxHealth;
+        shootCharge = 0;           
 
         Invoke("FallDown", RespawnFallTime);
     }

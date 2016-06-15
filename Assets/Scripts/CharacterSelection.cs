@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Rewired;
 
 public class CharacterSelection : MonoBehaviour {
 	
@@ -9,27 +10,37 @@ public class CharacterSelection : MonoBehaviour {
 	public int[] counter = new int[4];    
 	public float[] SelectionTimer = new float[4];
 	public bool[] PlayerIsSelected = new bool[4];
+	public int PlayersInGame;
+
+	public UISprite[] ModelsSprite = new UISprite[4];
+
 
 	private float deadZone = 0.15f;
 
 
-	
-	
-	void Awake()
-	{ 
-		
+	private Player player;
+
+	void Awake() {
+		Debug.Log (ReInput.controllers.Joysticks.Count);
 		DontDestroyOnLoad (this);
 	}
-	
+
 	void Update(){
+
 		if(!Application.loadedLevelName.Equals("Scena_Marco")){
+
 
             if (Input.GetKeyDown (KeyCode.Space)) {
 			Application.LoadLevel("Scena_Marco");
 
             }
 		
-		
+			if(GetButtonDown(0,"StartButton")){
+				Debug.Log("ciao");
+				CursorSelect[0].SetActive(true);
+			}
+
+
 			if(GetButtonDown(0,"SelectA")){
 				PlayerIsSelected[0]=true;
 			}

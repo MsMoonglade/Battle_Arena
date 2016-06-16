@@ -12,7 +12,8 @@ public class CharacterSelection : MonoBehaviour {
 	public bool[] PlayerIsSelected = new bool[4];
 	public int PlayersInGame;
 
-	public UISprite[] ModelsSprite = new UISprite[4];
+	public UISprite[] PlayerModelSprite = new UISprite[4];
+	public string[] ModelsSprite = new string[4];
 
 
 	private float deadZone = 0.15f;
@@ -21,6 +22,9 @@ public class CharacterSelection : MonoBehaviour {
 	private Player player;
 
 	void Awake() {
+//		fosr (int i =0; i<CursorSelect.Length; i++) {
+//			CursorSelect[i].transform.position=ModelButton[0].transform.position;
+//		}
 		Debug.Log (ReInput.controllers.Joysticks.Count);
 		DontDestroyOnLoad (this);
 	}
@@ -121,26 +125,34 @@ public class CharacterSelection : MonoBehaviour {
 			CursorSelect[playerId].transform.position = ModelButton[counter[playerId] + 1].transform.position;
 			counter[playerId]++;
 			SelectionTimer[playerId]=0;
+			PlayerModelSprite[playerId].spriteName=ModelsSprite[counter[playerId]];
 			
 		} else if (counter[playerId] == 3) {
 			counter[playerId] = 0; 
 			CursorSelect[playerId].transform.position = ModelButton [counter[playerId]].transform.position;
 			SelectionTimer[playerId]=0;
+			PlayerModelSprite[playerId].spriteName=ModelsSprite[counter[0]];
 			}
 		}
 	}
 	public void selectionLeft(int playerId){
+
 		if(PlayerIsSelected[playerId]!=true){
 		if (counter[playerId] != 0) {
 			CursorSelect[playerId].transform.position = ModelButton [counter[playerId] - 1].transform.position;
 			counter[playerId]--;
 			SelectionTimer[playerId]=0;
+			PlayerModelSprite[playerId].spriteName=ModelsSprite[counter[playerId]];
 			
-		} else if (counter[playerId] == 0) {
+			
+		} 
+			else if (counter[playerId] == 0) {
 			counter[playerId] = 3;
 			CursorSelect[playerId].transform.position = ModelButton [counter[playerId]].transform.position;
 			Debug.Log ("workmnA");
 			SelectionTimer[playerId]=0;
+			PlayerModelSprite[playerId].spriteName=ModelsSprite[counter[3]];
+
 			}
 		}
 	}

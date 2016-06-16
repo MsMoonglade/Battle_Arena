@@ -9,6 +9,12 @@ public class Player : MonoBehaviour {
     public GameObject WallPrefab;
     public GameObject MirinoPrefab;
 
+     public string shotSound = "S_Shot";
+     public string dashSound = "S_Dash";
+    public string explosionSound = "S_Explosion";
+    public string crackSound = "S_Crack";
+
+
     //spawnpoint
 	public GameObject[] BulletSpawnPoint;
     public GameObject WallSpawnPoint;
@@ -32,8 +38,7 @@ public class Player : MonoBehaviour {
     public float WallCost;
 	public float AssisTime;
 
-    public string shotSound = "S_Shot";
-    public string dashSound = "S_Dash";
+    
 
     [HideInInspector]
     public float currentHealth;
@@ -478,6 +483,7 @@ public class Player : MonoBehaviour {
 
         if (currentHealth <= 0)
         {
+            AudioManager.instance.PlaySound(explosionSound);
             particellari.Play("explosion");
             Respawn();
         }

@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour {
             Score[i] = 0;
         }
 
-        Random.Range(0, battleThemesName.Length);
+        musicSelector= Random.Range(0, battleThemesName.Length);
         Invoke("Mooseca", 0.05f);
 
     }

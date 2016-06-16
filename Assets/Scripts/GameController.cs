@@ -14,10 +14,9 @@ public class GameController : MonoBehaviour {
 	public UILabel timeSecondLabel;
 	public UILabel timeMinuteLabel;
 
-
 	public GameObject rewiredInputControllerPrefab;
-
 	private GameObject rewiredInputController;
+
 
     void Awake()
     {
@@ -45,7 +44,7 @@ public class GameController : MonoBehaviour {
 		timerSecond -= 1 * Time.deltaTime;
 		
 
-		timeMinuteLabel.text = timerMinute.ToString ("F0") + ":" + timerSecond.ToString ("F1");
+		timeMinuteLabel.text = timerMinute.ToString ("00") + ":" + timerSecond.ToString ("00");
 		
 		if (timerSecond <= 0 && timerMinute > 0)  
 		{ 
@@ -53,7 +52,7 @@ public class GameController : MonoBehaviour {
 			timerSecond = 59.0f;
 		}
 		if (timerMinute == 0.0f) {
-			if (timerSecond < 0.0f) 
+			if (timerSecond <= 0.0f) 
 				EndGame ();
 		}
 	}
@@ -81,5 +80,4 @@ public class GameController : MonoBehaviour {
 		Debug.Log ("gioco finito");
 		Time.timeScale = 0.0f;
 	}
-
 }

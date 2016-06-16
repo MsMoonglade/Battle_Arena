@@ -57,15 +57,14 @@ public class SuperBullet : MonoBehaviour {
 
     void Move()
     {
-        //metodo del movimento
-        if(col.activeSelf)
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        //metodo del movimento      
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     void ScaleMetod()
     {
         //la scala del paricellare
-        Debug.Log("Scale  : " + scale);
+       
         for (int i = 0; i < partc.Length; i++)
             partc[i].startSize = scale;
     }

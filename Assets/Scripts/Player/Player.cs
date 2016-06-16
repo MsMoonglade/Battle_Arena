@@ -21,13 +21,16 @@ public class Player : MonoBehaviour {
     public float DashCost;
     public float DashSpeed;
     public float DashTime;
+	public float SuperDashDamage;
     public float SuperDashCost;
     public float SuperDashSpeed;
     public float SuperDashTime;
     public float RespawnFallTime;
     public float RangeExplosion;
     public float fallDownSpeed;
+	public float FallDownDmg;
     public float WallCost;
+	public float AssisTime;
 
     [HideInInspector]
     public float currentHealth;
@@ -74,6 +77,11 @@ public class Player : MonoBehaviour {
     //variabili particellari
     private ParticleController particellari;
 
+	//variabili score
+	private GameObject[] playersGO;
+	private Player[] players;
+	private float[] percDmg;
+
     void Awake()
 	{        
 		//components
@@ -114,13 +122,27 @@ public class Player : MonoBehaviour {
 
         //particellari
         particellari = GetComponent<ParticleController>();
+
+		//score
+		GameObject[] playersTemp = GameObject.FindGameObjectsWithTag("Player");
+		playersGO = new GameObject[playersTemp.Length - 1];
+		players = new Player[playersGO.Length];
+		percDmg = new float[playersGO.Length];
+
+		int index = 0;
+		for (int i = 0 ; i < playersTemp.Length; i++)
+		{
+			if(playersTemp[i] != this.gameObject)
+			{				 
+				playersGO[index] = playersTemp[i];
+				players[index] = playersGO[index].GetComponent<Player>();
+				index ++;
+			}		
+		}
     }
 
     void Start()
-    {
-		
-
-		//Assegnazione Stat
+	{	//Assegnazione Stat
         currentHealth = stat.MaxHealth;
         currentEnergy = stat.MaxEnergy;
         superShootTimer = SuperShootCD;
@@ -151,10 +173,11 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.transform.CompareTag ("Player") && onSuperDash)                
-            col.transform.GetComponent<Player>().TakeDamage(stat.Damage , this.gameObject);
-        if (col.transform.CompareTag("EnvironmentWall") && onSuperDash)
-            EndSuperDash();       
+        if (col.transform.CompareTag ("Player") && onSuperDash) {               
+			col.SendMessage("TakeDamage", SuperDashDamage);
+			HitScore(col.name);
+		}
+        
     }
 
     void OnCollisionEnter(Collision col)
@@ -408,11 +431,12 @@ public class Player : MonoBehaviour {
 
         for(int i = 0; i < col.Length; i++)
         {
-            if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && !imDied)
-                col[i].GetComponent<Player>().TakeDamage(stat.MaxHealth , this.gameObject);
+            if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && imDied)
+			{
+				col[i].SendMessage("TakeDamage", FallDownDmg);
+				HitScore(col[i].name);
 
-            else if (col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && imDied)
-                col[i].GetComponent<Player>().TakeDamage(stat.MaxHealth /2 , this.gameObject);
+			}
         } 
     }
 
@@ -444,14 +468,14 @@ public class Player : MonoBehaviour {
         inAirAim.transform.position = inAirAim.transform.position + position;
     }
 
-    public void TakeDamage(float amount , GameObject playerkill)
+    public void TakeDamage(float amount)
     {
         currentHealth -= amount;
 
         if (currentHealth <= 0)
         {
             particellari.Play("explosion");
-            Respawn(playerkill);
+            Respawn();
         }
     }
 
@@ -461,10 +485,9 @@ public class Player : MonoBehaviour {
 			currentEnergy += stat.EnergyRegen * Time.deltaTime;
 	}
 
-    private void Respawn(GameObject playerkill)
+    private void Respawn()
     {
-        imDied = true;
-        GameController.instance.AssignScore(playerkill, 100);
+        imDied = true;       
 
 
         //sposto il player in aria
@@ -476,8 +499,43 @@ public class Player : MonoBehaviour {
         inAirAim.SetActive(true);
 
         currentHealth = stat.MaxHealth;
+		currentEnergy = stat.MaxEnergy;
+
         shootCharge = 0;           
 
         Invoke("FallDown", RespawnFallTime);
     }
+
+	private void HitScore(string name) 
+	{
+		for (int i = 0 ; i < playersGO.Length ; i ++)
+		{
+			if(name.Equals ( playersGO[i].name))
+		    {
+
+				percDmg[i] += (stat.Damage * 100) / players[i].stat.MaxHealth;  
+				StartCoroutine("ScoreCorutine", i);
+
+		    }
+		}
+	}
+
+	private IEnumerator ScoreCorutine(int i)
+	{
+		float timer = 0;
+		while(timer <= AssisTime)
+		{
+			timer += Time.deltaTime;
+
+			if(players[i].imDied){			
+				GameController.instance.AssignScore(gameObject.name, percDmg[i]);
+				percDmg[i] = 0;
+				StopCoroutine("ScoreCorutine");
+
+			}
+			yield return null;
+		}
+		percDmg[i] = 0;
+
+	}
 }

@@ -57,15 +57,15 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-    public void AssignScore(GameObject player , float value)
+    public void AssignScore(string player , float value)
     {
-        if (player.name == ("Player1"))
+        if (player == ("Player1"))
             Score[0] += value;
-        if (player.name == ("Player2"))
+        if (player == ("Player2"))
             Score[1] += value;
-        if (player.name == ("Player3"))
+        if (player == ("Player3"))
             Score[2] += value;
-        if (player.name == ("Player4"))
+        if (player == ("Player4"))
             Score[3] += value;
     }
 

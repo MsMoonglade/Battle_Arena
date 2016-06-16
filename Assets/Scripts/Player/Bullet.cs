@@ -29,7 +29,8 @@ public class Bullet : MonoBehaviour {
 
         if (col.transform.CompareTag("Player"))
         {
-            col.GetComponent<Player>().TakeDamage(Damage , ThisPlayer) ; 
+			col.SendMessage("TakeDamage", Damage);
+			ThisPlayer.SendMessage("HitScore", col.name);
             gameObject.SetActive(false);            
         }
 

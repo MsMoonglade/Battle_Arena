@@ -16,7 +16,7 @@ public class LoadCharacter : MonoBehaviour {
 
 	void Awake()
 	{
-		if (this.gameObject.name == "Player1") {
+	/*	if (this.gameObject.name == "Player1") {
 			playerModelIndex=0;
 		}
 		if (this.gameObject.name == "Player2") {
@@ -27,7 +27,7 @@ public class LoadCharacter : MonoBehaviour {
 		}
 		if (this.gameObject.name == "Player4") {
 			playerModelIndex=3;
-		}
+		}*/
 
 
 

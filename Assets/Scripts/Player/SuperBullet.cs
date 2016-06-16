@@ -40,7 +40,8 @@ public class SuperBullet : MonoBehaviour {
     {
         if (collider.CompareTag("Player"))
         {
-            collider.gameObject.GetComponent<Player>().TakeDamage(damage, ThisPlayer) ;
+            collider.SendMessage("TakeDamage", damage);
+            ThisPlayer.SendMessage("HitScore", collider.name);          
         }
 
         if (collider.CompareTag("PlayerWall") && scale == Scale[3])
@@ -78,19 +79,19 @@ public class SuperBullet : MonoBehaviour {
                 speed = Speed[0];
                 scale = Scale[0];
                 damage = Damage[0];
-                Debug.Log(0);
+                
                 break;
             case 1:
                 speed = Speed[1];
                 scale = Scale[1];
                 damage = Damage[1];
-                Debug.Log(1);
+                
                 break;
             case 2:
                 speed = Speed[2];
                 scale = Scale[2];
                 damage = Damage[2];
-                Debug.Log(2);
+              
                 break;
         }
 

@@ -25,7 +25,6 @@ public class CharacterSelection : MonoBehaviour {
 //		fosr (int i =0; i<CursorSelect.Length; i++) {
 //			CursorSelect[i].transform.position=ModelButton[0].transform.position;
 //		}
-		Debug.Log (ReInput.controllers.Joysticks.Count);
 		DontDestroyOnLoad (this);
 	}
 

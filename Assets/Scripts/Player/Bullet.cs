@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour {
 
+    public float deactivationTime = 1;
+
     [HideInInspector]
     public float Damage;
     [HideInInspector]
@@ -10,10 +12,9 @@ public class Bullet : MonoBehaviour {
     [HideInInspector]
     public GameObject ThisPlayer;
 
-
     void Start()
     {
-        Physics.IgnoreCollision(GetComponent<Collider>(), ThisPlayer.GetComponent<Collider>(), true);
+        StartCoroutine(Deactivate());
     }
 
     void FixedUpdate()
@@ -23,15 +24,30 @@ public class Bullet : MonoBehaviour {
     }
   
     void OnTriggerEnter(Collider col)
-    {    
+    {
         if (col.transform.CompareTag("PlayerWall"))
+        {
             gameObject.SetActive(false);
+         //   StopAllCoroutines();
+        }
 
         if (col.transform.CompareTag("Player"))
         {
-            col.GetComponent<Player>().TakeDamage(Damage , ThisPlayer) ; 
+            col.SendMessage("TakeDamage", Damage);
+            ThisPlayer.SendMessage("HitScore", col.name);
+
+           // StopAllCoroutines();
             gameObject.SetActive(false);            
         }
+    }
 
+    private IEnumerator Deactivate()
+    {
+        yield return new WaitForSeconds(deactivationTime);
+
+        if (this.gameObject.activeSelf)
+            this.gameObject.SetActive(false);
+
+     //   StopAllCoroutines();
     }
 }

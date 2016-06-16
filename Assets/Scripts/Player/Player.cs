@@ -27,19 +27,17 @@ public class Player : MonoBehaviour {
     public float DashCost;
     public float DashSpeed;
     public float DashTime;
+    public float SuperDashDamage;
     public float SuperDashCost;
     public float SuperDashSpeed;
     public float SuperDashTime;
     public float RespawnFallTime;
     public float RangeExplosion;
     public float fallDownSpeed;
+    public float FallDownDmg;
     public float WallCost;
-<<<<<<< HEAD
-	public float AssisTime;
+    public float AssisTime;
 
-    
-=======
->>>>>>> 8db6441c338ee4ea6d8c759c531f98d99e4b2d11
 
     [HideInInspector]
     public float currentHealth;
@@ -77,8 +75,13 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public float shootCharge;
 
-	//variabili wall
-	private GameObject wall;
+    //variabili score
+    private GameObject[] playersGO;
+    private Player[] players;
+    private float[] percDmg;
+
+    //variabili wall
+    private GameObject wall;
   
     //limiti mappa
     private GameObject[] mapLimit = new GameObject[4];
@@ -120,6 +123,23 @@ public class Player : MonoBehaviour {
 		inAirAim = Instantiate(MirinoPrefab , Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
 		inAirAim.SetActive (false);
 
+        //score
+        GameObject[] playersTemp = GameObject.FindGameObjectsWithTag("Player");
+        playersGO = new GameObject[playersTemp.Length - 1];
+        players = new Player[playersGO.Length];
+        percDmg = new float[playersGO.Length];
+
+        int index = 0;
+        for (int i = 0; i < playersTemp.Length; i++)
+        {
+            if (playersTemp[i] != this.gameObject)
+            {
+                playersGO[index] = playersTemp[i];
+                players[index] = playersGO[index].GetComponent<Player>();
+                index++;
+            }
+        }
+
         //wall
         wall = Instantiate(WallPrefab, Vector3.zero, WallPrefab.transform.rotation) as GameObject;
         wall.SetActive (false);
@@ -130,8 +150,6 @@ public class Player : MonoBehaviour {
 
     void Start()
     {
-		
-
 		//Assegnazione Stat
         currentHealth = stat.MaxHealth;
         currentEnergy = stat.MaxEnergy;
@@ -163,10 +181,11 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.transform.CompareTag ("Player") && onSuperDash)                
-            col.transform.GetComponent<Player>().TakeDamage(stat.Damage , this.gameObject);
-        if (col.transform.CompareTag("EnvironmentWall") && onSuperDash)
-            EndSuperDash();       
+        if (col.transform.CompareTag("Player") && onSuperDash)
+        {
+            col.SendMessage("TakeDamage", SuperDashDamage);
+            HitScore(col.name);    
+        }
     }
 
     void OnCollisionEnter(Collision col)
@@ -418,14 +437,14 @@ public class Player : MonoBehaviour {
         Collider[] col = Physics.OverlapSphere(transform.position, RangeExplosion);
         particellari.Play("impact");
 
-        for(int i = 0; i < col.Length; i++)
+        for (int i = 0; i < col.Length; i++)
         {
-            if(col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && !imDied)
-                col[i].GetComponent<Player>().TakeDamage(stat.MaxHealth , this.gameObject);
-
-            else if (col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && imDied)
-                col[i].GetComponent<Player>().TakeDamage(stat.MaxHealth /2 , this.gameObject);
-        } 
+            if (col[i] != transform.GetComponent<Collider>() && col[i].transform.CompareTag("Player") && imDied)
+            {
+                col[i].SendMessage("TakeDamage", FallDownDmg);
+                HitScore(col[i].name);
+            }
+        }
     }
 
     private IEnumerator FallDownAnimation()
@@ -456,7 +475,7 @@ public class Player : MonoBehaviour {
         inAirAim.transform.position = inAirAim.transform.position + position;
     }
 
-    public void TakeDamage(float amount , GameObject playerkill)
+    public void TakeDamage(float amount)
     {
         currentHealth -= amount;
 
@@ -464,7 +483,7 @@ public class Player : MonoBehaviour {
         {
             AudioManager.instance.PlaySound(explosionSound);
             particellari.Play("explosion");
-            Respawn(playerkill);
+            Respawn();
         }
     }
 
@@ -474,11 +493,10 @@ public class Player : MonoBehaviour {
 			currentEnergy += stat.EnergyRegen * Time.deltaTime;
 	}
 
-    private void Respawn(GameObject playerkill)
+    private void Respawn()
     {
         imDied = true;
-        GameController.instance.AssignScore(playerkill, 100);
-
+   
 
         //sposto il player in aria
         transform.position = new Vector3(0, 20, 0);
@@ -489,8 +507,44 @@ public class Player : MonoBehaviour {
         inAirAim.SetActive(true);
 
         currentHealth = stat.MaxHealth;
+        currentEnergy = stat.MaxEnergy;
         shootCharge = 0;           
 
         Invoke("FallDown", RespawnFallTime);
+    }
+
+    private void HitScore(string name)
+    {
+        for (int i = 0; i < playersGO.Length; i++)
+        {
+            if (name.Equals(playersGO[i].name))
+            {
+                if (stat.Damage > players[i].currentHealth)
+                    percDmg[i] += ((players[i].currentHealth * 100) / players[i].stat.MaxHealth);
+                else
+                    percDmg[i] += ((stat.Damage * 100) / players[i].stat.MaxHealth);
+
+                StartCoroutine("ScoreCorutine", i);
+            }
+        }       
+    }
+
+    private IEnumerator ScoreCorutine(int i)
+    {
+        float timer = 0;
+        while (timer <= AssisTime)
+        {
+            timer += Time.deltaTime;
+
+            if (players[i].imDied)
+            {
+                GameController.instance.AssignScore(gameObject.name, percDmg[i]);
+                percDmg[i] = 0;
+                StopCoroutine("ScoreCorutine");
+
+            }
+            yield return null;
+        }
+        percDmg[i] = 0;
     }
 }

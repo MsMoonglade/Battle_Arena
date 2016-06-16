@@ -32,6 +32,9 @@ public class Player : MonoBehaviour {
     public float WallCost;
 	public float AssisTime;
 
+    public string shotSound = "S_Shot";
+    public string dashSound = "S_Dash";
+
     [HideInInspector]
     public float currentHealth;
 	[HideInInspector]
@@ -274,7 +277,7 @@ public class Player : MonoBehaviour {
 				bulletPool[bulletIndex].SetActive(true);
                 particellari.Play("shoot" + spawnpointIndex);
                 anim.Play("shoot" + spawnpointIndex);
-
+                AudioManager.instance.PlaySound(shotSound);
                 spawnpointIndex++;
                 bulletIndex++;
                 shootTimer = 0;
@@ -368,6 +371,7 @@ public class Player : MonoBehaviour {
 			
 			rb.AddForce(direction * DashSpeed, ForceMode.Impulse);
 			Invoke("EndDash", DashTime);
+            AudioManager.instance.PlaySound(dashSound);
 		}        
 	}
 

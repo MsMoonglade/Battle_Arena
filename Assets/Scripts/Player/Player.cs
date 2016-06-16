@@ -512,9 +512,14 @@ public class Player : MonoBehaviour {
 		{
 			if(name.Equals ( playersGO[i].name))
 		    {
-
-				percDmg[i] += (stat.Damage * 100) / players[i].stat.MaxHealth;  
+				Debug.Log("Robot spara : " + gameObject.name + " robot sparato : " + playersGO[i].name + " Vita corrente dello sparato : " + players[i].currentHealth);
+				if(stat.Damage > players[i].currentHealth)
+					percDmg[i] +=(( players[i].currentHealth* 100) / players[i].stat.MaxHealth);
+				else
+					percDmg[i] +=((stat.Damage * 100) / players[i].stat.MaxHealth);  
+					
 				StartCoroutine("ScoreCorutine", i);
+				
 
 		    }
 		}

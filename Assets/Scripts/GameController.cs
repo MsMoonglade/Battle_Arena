@@ -10,13 +10,8 @@ public class GameController : MonoBehaviour {
 
 	public float timerSecond;
 	public float timerMinute;
-    public string[] battleThemesName;
-    public string countdown;
 
-    int musicSelector;
-
-
-    public UILabel timeSecondLabel;
+	public UILabel timeSecondLabel;
 	public UILabel timeMinuteLabel;
 
 	public GameObject rewiredInputControllerPrefab;
@@ -42,6 +37,7 @@ public class GameController : MonoBehaviour {
         {
             Score[i] = 0;
         }
+<<<<<<< HEAD
 
         musicSelector= Random.Range(0, battleThemesName.Length);
         Invoke("Mooseca", 0.05f);
@@ -64,6 +60,8 @@ public class GameController : MonoBehaviour {
         AudioManager.instance.setVolume(battleThemesName[musicSelector], 0.7f);
 
 
+=======
+>>>>>>> 8db6441c338ee4ea6d8c759c531f98d99e4b2d11
     }
 
     void Update ()
@@ -84,15 +82,15 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-    public void AssignScore(string player , float value)
+    public void AssignScore(GameObject player , float value)
     {
-        if (player == ("Player1"))
+        if (player.name == ("Player1"))
             Score[0] += value;
-        if (player == ("Player2"))
+        if (player.name == ("Player2"))
             Score[1] += value;
-        if (player == ("Player3"))
+        if (player.name == ("Player3"))
             Score[2] += value;
-        if (player == ("Player4"))
+        if (player.name == ("Player4"))
             Score[3] += value;
     }
 

@@ -10,8 +10,13 @@ public class GameController : MonoBehaviour {
 
 	public float timerSecond;
 	public float timerMinute;
+    public string[] battleThemesName;
+    public string countdown;
 
-	public UILabel timeSecondLabel;
+    int musicSelector;
+
+
+    public UILabel timeSecondLabel;
 	public UILabel timeMinuteLabel;
 
 	public GameObject rewiredInputControllerPrefab;
@@ -37,6 +42,28 @@ public class GameController : MonoBehaviour {
         {
             Score[i] = 0;
         }
+
+        Random.Range(0, battleThemesName.Length);
+        Invoke("Mooseca", 0.05f);
+
+    }
+
+
+    void Mooseca()
+    {
+        AudioManager.instance.PlaySound(countdown);
+        AudioManager.instance.PlaySound(battleThemesName[musicSelector]);
+        AudioManager.instance.setVolume(battleThemesName[musicSelector], 0.2f);
+        Invoke("BattleThemeVolume", 4);
+
+    }
+
+    void BattleThemeVolume()
+    {
+
+        AudioManager.instance.setVolume(battleThemesName[musicSelector], 0.7f);
+
+
     }
 
     void Update ()

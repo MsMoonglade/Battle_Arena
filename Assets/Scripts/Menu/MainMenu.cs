@@ -8,10 +8,17 @@ public class MainMenu : MonoBehaviour {
     public GameObject credits;
     public GameObject exit;
     public GameObject pressAnyKey;
+    public string mainTheme = "M_Main";
+
 	// Use this for initialization
 	void Start () {
-		
+        Invoke("StartMainTheme",0.01f);
 	}
+
+    void StartMainTheme()
+    {
+        AudioManager.instance.PlaySound(mainTheme);
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -33,6 +40,8 @@ public class MainMenu : MonoBehaviour {
     {
         Application.LoadLevel(1);
     }
+
+    
 
     public void Settings()
     {

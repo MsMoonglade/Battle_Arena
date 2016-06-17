@@ -282,7 +282,7 @@ public class Player : MonoBehaviour {
 				bulletPool[bulletIndex].SetActive(true);
                 particellari.Play("shoot" + spawnpointIndex);
                 anim.Play("shoot" + spawnpointIndex);
-
+                AudioManager.instance.PlaySound(shotSound);
                 spawnpointIndex++;
                 bulletIndex++;
                 shootTimer = 0;
@@ -360,7 +360,8 @@ public class Player : MonoBehaviour {
 			wall.transform.rotation = transform.rotation;
 			wall.transform.SetParent (null);
 			wall.SetActive (true);
-		}
+            AudioManager.instance.PlaySound(crackSound);
+        }
 	}
 
 	public void Dash(float horizontal , float vertical)
@@ -373,8 +374,8 @@ public class Player : MonoBehaviour {
 			
 			if (horizontal == 0 && vertical == 0)
 				direction = transform.forward;
-			
-			rb.AddForce(direction * DashSpeed, ForceMode.Impulse);
+            AudioManager.instance.PlaySound(dashSound);
+            rb.AddForce(direction * DashSpeed, ForceMode.Impulse);
 			Invoke("EndDash", DashTime);
 		}        
 	}
@@ -435,6 +436,7 @@ public class Player : MonoBehaviour {
     {
         //quando cade overlappa
         Collider[] col = Physics.OverlapSphere(transform.position, RangeExplosion);
+        AudioManager.instance.PlaySound(crackSound);
         particellari.Play("impact");
 
         for (int i = 0; i < col.Length; i++)
@@ -484,6 +486,7 @@ public class Player : MonoBehaviour {
             AudioManager.instance.PlaySound(explosionSound);
             particellari.Play("explosion");
             Respawn();
+            AudioManager.instance.PlaySound(explosionSound);
         }
     }
 

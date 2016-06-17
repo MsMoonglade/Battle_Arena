@@ -56,7 +56,6 @@ public class Player : MonoBehaviour {
 
     //components
     private Rigidbody rb;
-	private Collider col;
     [HideInInspector]
     public bool imDied;
     [HideInInspector]
@@ -92,8 +91,7 @@ public class Player : MonoBehaviour {
     void Awake()
 	{        
 		//components
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();      
         stat = transform.GetComponentInChildren<ModelStat>();
         anim = GetComponent<AnimatorController>();
         
@@ -181,10 +179,10 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.transform.CompareTag("Player") && onSuperDash)
+        if (col.transform.CompareTag("PlayerCollider") && onSuperDash)
         {
-            col.SendMessage("TakeDamage", SuperDashDamage);
-            HitScore(col.name);    
+            HitScore(col.name);
+            col.SendMessageUpwards("TakeDamage", SuperDashDamage);
         }
     }
 
@@ -392,9 +390,7 @@ public class Player : MonoBehaviour {
         if (!onFly && !onDash && !imDied  && currentEnergy >= SuperDashCost)
         {
 			currentEnergy -= SuperDashCost;
-            onSuperDash = true;
-            col.isTrigger = true;
-            rb.useGravity = false;
+            onSuperDash = true;                    
             particellari.Play("superDash");
         
             Vector3 direction = new Vector3(horizontal, 0, vertical);
@@ -414,9 +410,7 @@ public class Player : MonoBehaviour {
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        onSuperDash = false;
-        col.isTrigger = false;
-        rb.useGravity = true;
+        onSuperDash = false;     
         particellari.Stop("superDash");
     }
 
@@ -452,7 +446,7 @@ public class Player : MonoBehaviour {
     private IEnumerator FallDownAnimation()
     {
         //il player cade
-        if(isFalling)
+        while(isFalling)
         {
             transform.Translate(Vector3.down * fallDownSpeed * Time.deltaTime);
             

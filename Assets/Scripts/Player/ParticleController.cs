@@ -17,6 +17,9 @@ public class ParticleController : MonoBehaviour {
     //Particellare SuperDash
     GameObject superDashGo;
     ParticleSystem superDash;
+    //Particellare Dash
+    GameObject dashGo;
+    ParticleSystem dash;
 
 
 
@@ -34,6 +37,9 @@ public class ParticleController : MonoBehaviour {
 
         superDashGo = ps.transform.FindChild("Ps_SuperDash").gameObject;
         superDash = superDashGo.GetComponent<ParticleSystem>();
+
+        dashGo = ps.transform.FindChild("Ps_Dash").gameObject;
+        dash = dashGo.GetComponent<ParticleSystem>();
 
 
         shoot = new ParticleSystem[2];
@@ -76,6 +82,12 @@ public class ParticleController : MonoBehaviour {
             superDash.Play();
         }
 
+        if (Particle.Equals("dash"))
+        {
+            dashGo.transform.rotation = Quaternion.Inverse(transform.rotation);
+            dash.Play();
+        }
+
 
 
 
@@ -104,5 +116,8 @@ public class ParticleController : MonoBehaviour {
 
         if (Particle.Equals("superDash"))
             superDash.Stop();
+
+        if (Particle.Equals("dash"))
+            dash.Stop();
     }
 }

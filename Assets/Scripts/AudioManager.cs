@@ -31,7 +31,7 @@ public class Sound
 
         //inizializzazione suono
         source = _source;
-        Debug.Log(source.name);
+
 
 
         source.clip = clip;
@@ -172,7 +172,7 @@ public class AudioManager : MonoBehaviour
                 {
 
                     //stop suono
-                    Debug.Log(soundName + " . " + musics[i].name);
+                    
                     musics[i].PlaySound();
                     return;
                 }

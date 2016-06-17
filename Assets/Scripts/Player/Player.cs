@@ -366,6 +366,7 @@ public class Player : MonoBehaviour {
 	{
 		if (currentEnergy >= DashCost && !imDied && !onFly)
 		{
+            particellari.Play("dash");
 			currentEnergy -= DashCost;
 			onDash = true;
 			Vector3 direction = new Vector3(horizontal, 0, vertical);
@@ -380,6 +381,7 @@ public class Player : MonoBehaviour {
 
     public void EndDash()
     {
+        particellari.Stop("dash");
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         onDash = false;

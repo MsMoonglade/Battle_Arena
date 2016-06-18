@@ -50,9 +50,10 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public bool onSuperDash;
     [HideInInspector]
-    public bool onFly;
+  //  public bool onFly;
     private GameObject inAirAim;
-    private bool isFalling;
+    //private bool isFalling;
+    public bool isGrunded;
 
     //components
     private Rigidbody rb;
@@ -154,11 +155,12 @@ public class Player : MonoBehaviour {
         superShootTimer = SuperShootCD;
 
         //bool varie
-        onFly = false;
+        //onFly = false;
         canShoot = true;
         isChargingShoot = false;
         imDied = false;
-        isFalling = false;
+        isGrunded = true;
+       // isFalling = false;
 
         //Assegnazioni indici per sparo
         bulletIndex = 0;
@@ -198,32 +200,35 @@ public class Player : MonoBehaviour {
             Invoke("FallDown", RespawnFallDown);
         }*/
 
-        if (col.transform.CompareTag("Arena") && isFalling)
+        if (col.transform.CompareTag("Arena") && !isGrunded)
         {
+
+            FallDownDamage();
+            isGrunded = true;
+            // isFalling = false;
+            //onFly = false;
+
+            if (imDied)
+                imDied = false;
+        }
+       
         
+/*if (col.transform.CompareTag("Player") && isFalling)
+        {
             FallDownDamage();
             isFalling = false;
             onFly = false;
 
             if (imDied)
                 imDied = false;
-        }
-        
-        if (col.transform.CompareTag("Player") && isFalling)
+        }*/
+
+        if (col.transform.CompareTag("PlayerWall") && !isGrunded)
         {
             FallDownDamage();
-            isFalling = false;
-            onFly = false;
-
-            if (imDied)
-                imDied = false;
-        }
-
-        if (col.transform.CompareTag("PlayerWall") && isFalling)
-        {
-            FallDownDamage();
-            isFalling = false;
-            onFly = false;
+            // isFalling = false;
+            //onFly = false;
+            isGrunded = true;
 
             if (imDied)
                 imDied = false;
@@ -234,7 +239,7 @@ public class Player : MonoBehaviour {
     {
         
         //move base
-        if (!onDash && !onSuperDash && !onFly && !imDied)
+        if (!onDash && !onSuperDash && isGrunded)
         {
             Vector3 movement = new Vector3(horizontal, 0, vertical) * stat.Speed * Time.deltaTime;
             rb.velocity = Vector3.zero;
@@ -271,7 +276,7 @@ public class Player : MonoBehaviour {
 
     public void Shoot()
     {
-        if (!onFly && !imDied && !isChargingShoot)
+        if (isGrunded && !isChargingShoot)
         {
             if (shootTimer > stat.FireRate && canShoot)
             {     
@@ -296,7 +301,7 @@ public class Player : MonoBehaviour {
 
     public void SuperShoot()
     {
-        if (!imDied && !onFly && !imDied && superShootTimer > SuperShootCD && currentEnergy >= SuperShootEnergyCost)
+        if (isGrunded &&  !imDied && superShootTimer > SuperShootCD && currentEnergy >= SuperShootEnergyCost)
         {
             if (isChargingShoot)
             {
@@ -351,7 +356,7 @@ public class Player : MonoBehaviour {
 
 	public void CreateWall()
 	{
-		if (!onFly && !imDied && currentEnergy >= WallCost)
+		if (isGrunded && !imDied && currentEnergy >= WallCost)
 		{
 			currentEnergy -= WallCost; 
 			wall.transform.position = WallSpawnPoint.transform.position;
@@ -364,7 +369,7 @@ public class Player : MonoBehaviour {
 
 	public void Dash(float horizontal , float vertical)
 	{
-		if (currentEnergy >= DashCost && !imDied && !onFly)
+		if (currentEnergy >= DashCost && !imDied && isGrunded)
 		{
             particellari.Play("dash");
 			currentEnergy -= DashCost;
@@ -389,7 +394,7 @@ public class Player : MonoBehaviour {
 
     public void SuperDash(float horizontal, float vertical)
     {
-        if (!onFly && !onDash && !imDied  && currentEnergy >= SuperDashCost)
+        if (isGrunded && !onDash && !imDied  && currentEnergy >= SuperDashCost)
         {
 			currentEnergy -= SuperDashCost;
             onSuperDash = true;                    
@@ -419,12 +424,12 @@ public class Player : MonoBehaviour {
     private void FallDown()
     {     
         //metodo per la caduta
-        if (onFly)
+        if (!isGrunded)
         {  
             rb.useGravity = true;
-            isFalling = true;
+           // isFalling = true;
             StartCoroutine(FallDownAnimation());
-            inAirAim.SetActive(false);
+           // inAirAim.SetActive(false);
         }
     }
 
@@ -448,7 +453,7 @@ public class Player : MonoBehaviour {
     private IEnumerator FallDownAnimation()
     {
         //il player cade
-        while(isFalling)
+        while(!isGrunded)
         {
             transform.Translate(Vector3.down * fallDownSpeed * Time.deltaTime);
             
@@ -499,8 +504,9 @@ public class Player : MonoBehaviour {
 
         //sposto il player in aria
         transform.position = new Vector3(0, 20, 0);
-        onFly = true;
+        isGrunded = false;
         rb.useGravity = false;
+        
 
         inAirAim.transform.position = Vector3.zero;
         inAirAim.SetActive(true);

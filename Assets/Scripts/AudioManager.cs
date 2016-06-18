@@ -1,22 +1,29 @@
 ﻿using UnityEngine;
+using System.Collections;
+
 
 [System.Serializable]
 
 public class Sound
 {
 
-    public string name;
+    public string theName;
     public AudioClip clip;
 
+    public int quantity = 1;
+
     AudioSource source;
+
 
     [Range(0f, 1f)]
     public float defaultVolume = 0.7f;
 
+    public float duration;
     float volume;
 
     [Range(0.5f, 1.5f)]
     public float pitch = 1;
+
 
     [Range(0f, 0.5f)]
     public float randomVolume = 0.1f;
@@ -25,34 +32,65 @@ public class Sound
 
     public bool loop;
 
+   
+    public Sound(Sound s)
+    {
+        theName = s.theName;
+        clip = s.clip;
+        defaultVolume= s.defaultVolume;
+        duration = s.duration;
+        pitch = s.pitch;
+        randomPitch = s.randomPitch;
+        randomVolume = s.randomVolume;
+        loop = s.loop;
+    }
 
     public void SetSource(AudioSource _source)
     {
-
         //inizializzazione suono
         source = _source;
-
 
 
         source.clip = clip;
         source.volume = defaultVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
         source.pitch = pitch * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f));
         source.loop = loop;
+       // duration = clip.length;
 
 
     }
 
-    public void PlaySound()
+    public bool PlaySound()
     {
 
+
         //riproduzione
-        source.Play();
+        if (source.isPlaying)
+        {
+            return false;
+
+        }
+        else
+            source.Play();
+
+        return true;
     }
+
+
 
     public void StopSound()
     {
-
         source.Stop();
+
+    }
+
+    public IEnumerator StopSoundDelay()
+    {
+        yield return new WaitForSeconds(duration);
+
+        if (duration > 0)
+            source.Stop();
+
     }
 
     public void SetVolume(float _volume)
@@ -86,9 +124,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     Sound[] sounds;
 
+    Sound[] usingSounds;
+    int soundPointer = 0;
+
 
     [SerializeField]
     Sound[] musics;
+
 
     public static AudioManager instance;
     void Awake()
@@ -115,42 +157,76 @@ public class AudioManager : MonoBehaviour
     {
 
 
+        int requiredSounds = 0;
+
         //creazione audio source con i suoni inseriti
         for (int i = 0; i < sounds.Length; i++)
         {
 
-            GameObject _go = new GameObject("Sound_" + i + sounds[i].name);
-            sounds[i].SetSource(_go.AddComponent<AudioSource>());
-            _go.transform.SetParent(this.transform);
+            requiredSounds += sounds[i].quantity;
+
+          
+        }
+
+        usingSounds = new Sound[requiredSounds];
+
+
+        for (int i = 0; i < sounds.Length; i++)
+        {
+
+
+
+            for (int j = 0; j < sounds[i].quantity; j++)
+            {
+
+                usingSounds[soundPointer] = new Sound(sounds[i]);
+                usingSounds[soundPointer].theName = usingSounds[soundPointer].theName + "_" + j;
+                GameObject _go = new GameObject("Sound_" + (soundPointer) + usingSounds[soundPointer].theName);
+                usingSounds[soundPointer].SetSource(_go.AddComponent<AudioSource>());
+                _go.transform.SetParent(this.transform);
+                soundPointer++;
+
+            }
+
         }
 
         for (int i = 0; i < musics.Length; i++)
         {
 
-            GameObject _go = new GameObject("Music_" + i + musics[i].name);
+
+            GameObject _go = new GameObject("Music_" + i + musics[i].theName);
             musics[i].SetSource(_go.AddComponent<AudioSource>());
             _go.transform.SetParent(this.transform);
+
+         
         }
 
 
     }
 
 
+
     public void PlaySound(string soundName)
     {
-
 
         //chiamata del suono tramite nome
 
         if (soundName.ToCharArray()[0] == 'S')
         {
-            for (int i = 0; i < sounds.Length; i++)
+            for (int i = 0; i < soundPointer; i++)
             {
 
-                if (sounds[i].name == soundName)
+
+
+                if (usingSounds[i].theName.Contains(soundName))
                 {
-                    sounds[i].PlaySound();
-                    return;
+                    if (usingSounds[i].PlaySound())
+                    {
+                  //      StartCoroutine(usingSounds[i].StopSoundDelay());
+                        return;
+                    }
+
+
                 }
 
 
@@ -168,21 +244,26 @@ public class AudioManager : MonoBehaviour
 
                 //ricerca del suono
 
-                if (musics[i].name == soundName)
+                if (musics[i].theName.Contains(soundName))
                 {
 
                     //stop suono
-                    
-                    musics[i].PlaySound();
-                    return;
+                    if (musics[i].PlaySound())
+                        return;
                 }
             }
         }
 
 
-
         Debug.LogError("Sound " + soundName + " doesn't exist");
     }
+
+
+
+
+
+
+
 
     public void StopSound(string soundName)
     {
@@ -193,17 +274,17 @@ public class AudioManager : MonoBehaviour
         if (soundName.ToCharArray()[0] == 'S')
         {
 
-            for (int i = 0; i < sounds.Length; i++)
+            for (int i = 0; i < usingSounds.Length; i++)
             {
                 //ricerca del suono
 
 
-                if (sounds[i].name == soundName)
+                if (usingSounds[i].theName == soundName)
                 {
                     //ricerca del suono
 
 
-                    sounds[i].StopSound();
+                    usingSounds[i].StopSound();
                     return;
                 }
             }
@@ -217,7 +298,7 @@ public class AudioManager : MonoBehaviour
                 //ricerca del suono
 
 
-                if (musics[i].name == soundName)
+                if (musics[i].theName == soundName)
                 {
                     //stop suono
 
@@ -233,6 +314,8 @@ public class AudioManager : MonoBehaviour
     }
 
 
+
+
     public void setVolume(string soundName, float volume)
     {
 
@@ -244,7 +327,7 @@ public class AudioManager : MonoBehaviour
 
             //ricerca del suono
 
-            if (musics[i].name == soundName)
+            if (musics[i].theName == soundName)
             {
 
                 //modifica volume
@@ -260,17 +343,21 @@ public class AudioManager : MonoBehaviour
     public void SoundsActivation(bool setOn)
     {
 
-        for (int i = 0; i < sounds.Length; i++)
+        for (int i = 0; i < usingSounds.Length; i++)
         {
 
             if (!setOn)
-                sounds[i].SetVolume(0);
+                usingSounds[i].SetVolume(0);
             else
-                sounds[i].CurrentVolume();
+                usingSounds[i].CurrentVolume();
 
         }
 
     }
+
+
+
+
 
     public void MusicsActivation(bool setOn)
     {
@@ -296,7 +383,7 @@ public class AudioManager : MonoBehaviour
 
             //ricerca del suono
 
-            if (musics[i].name == soundName)
+            if (musics[i].theName == soundName)
             {
 
                 //modifica volume

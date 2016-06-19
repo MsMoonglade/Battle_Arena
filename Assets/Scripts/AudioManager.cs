@@ -31,7 +31,8 @@ public class Sound
     public float randomPitch = 0.1f;
 
     public bool loop;
-
+    float fadeFrom, fadeTo, fadeStep;
+    bool fadeIn;
    
     public Sound(Sound s)
     {
@@ -84,14 +85,14 @@ public class Sound
 
     }
 
-    public IEnumerator StopSoundDelay()
-    {
-        yield return new WaitForSeconds(duration);
+    //public IEnumerator StopSoundDelay()
+    //{
+    //    yield return new WaitForSeconds(duration);
 
-        if (duration > 0)
-            source.Stop();
+    //    if (duration > 0)
+    //        source.Stop();
 
-    }
+    //}
 
     public void SetVolume(float _volume)
     {
@@ -114,6 +115,54 @@ public class Sound
         else source.UnPause();
     }
 
+    public void Fade(float to, float step)
+    {
+        //fadeFrom = from;
+        if (to == 0)
+            fadeTo = to + step * Time.deltaTime;
+        else
+            fadeTo = to;
+        fadeStep = step;
+        if (to > source.volume)
+        {
+            fadeIn = true;
+        }
+
+        else fadeIn = false;
+
+    }
+
+    public bool Fading()
+    {
+        float tmpVol; 
+        if (fadeIn)
+        {
+            if (source.volume <= fadeTo)
+            {
+                source.volume += fadeStep * Time.deltaTime;
+                return false;
+            }
+            else return true;
+        }
+        else {
+
+            if (source.volume >= fadeTo)
+            {
+                tmpVol = source.volume - fadeStep * Time.deltaTime;
+                if (tmpVol < 0)
+                    tmpVol = 0;
+
+                source.volume = tmpVol;
+                Debug.Log("in");
+                return false;
+
+            }
+            else {
+                source.volume = fadeTo;
+                return true; }
+        }
+    }
+    
 }
 
 public class AudioManager : MonoBehaviour
@@ -130,6 +179,8 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField]
     Sound[] musics;
+
+    Sound[] fadingMusics = new Sound[2];
 
 
     public static AudioManager instance;
@@ -205,6 +256,22 @@ public class AudioManager : MonoBehaviour
     }
 
 
+
+    void Update()
+    {
+        for(int p=0; p<fadingMusics.Length; p++)
+        {
+            if(fadingMusics[p] != null)
+            {
+                Debug.Log(fadingMusics[p].theName);
+                if (fadingMusics[p].Fading())
+                {
+                    fadingMusics[p] = null;
+                    Debug.Log("done");
+                }
+            }
+        }
+    }
 
     public void PlaySound(string soundName)
     {
@@ -393,6 +460,40 @@ public class AudioManager : MonoBehaviour
         }
 
     }
+
+
+    public void FadeMusic(string soundName, float to, float fadeSpeed)
+    {
+
+        for (int i = 0; i < musics.Length; i++)
+        {
+
+            //ricerca del suono
+
+            if (musics[i].theName == soundName)
+            {
+
+                //modifica volume
+                musics[i].Fade(to, fadeSpeed);
+                for(int k=0; k<fadingMusics.Length; k++)
+                {
+                    Debug.Log(k);
+                    if (fadingMusics[k] == null)
+                    {
+                        fadingMusics[k] = musics[i];
+                        return;
+                    }
+                }
+                return;
+            }
+        }
+
+    }
+
+
+    
+
+
 }
 
 

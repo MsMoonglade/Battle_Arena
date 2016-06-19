@@ -8,6 +8,10 @@ public class SuperBullet : MonoBehaviour {
     public float DeactivationTime;
 
     [HideInInspector]
+    public string SuperShotSound = "S_SuperShot";
+
+
+    [HideInInspector]
     public GameObject col;
     [HideInInspector]
     public GameObject ThisPlayer;
@@ -18,6 +22,8 @@ public class SuperBullet : MonoBehaviour {
     private float damage;
     [HideInInspector]
     public float scale;
+    [HideInInspector]
+    public int shotID;
 
     void Awake()
     {
@@ -28,8 +34,9 @@ public class SuperBullet : MonoBehaviour {
     void Start()
     {
         col.SetActive(false);
+
     }
-  
+
     void FixedUpdate()
     {
         Move();
@@ -68,6 +75,7 @@ public class SuperBullet : MonoBehaviour {
        
         for (int i = 0; i < partc.Length; i++)
             partc[i].startSize = scale;
+
     }
 
     public void Charge(int charge)
@@ -91,21 +99,24 @@ public class SuperBullet : MonoBehaviour {
                 speed = Speed[2];
                 scale = Scale[2];
                 damage = Damage[2];
-              
+
                 break;
         }
-
         StartCoroutine(DisableCor());
     }
 
     IEnumerator DisableCor()
     {
+
         yield return new WaitForSeconds(DeactivationTime);
         Disable();
+
     }
 
     void Disable()
     {
+        AudioManager.instance.StopSound(SuperShotSound, shotID);
+        shotID = -1;
         col.SetActive(false);
         for (int i = 0; i < partc.Length; i++)
             partc[i].Stop();

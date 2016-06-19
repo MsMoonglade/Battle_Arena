@@ -13,10 +13,13 @@ public class Player : MonoBehaviour {
      public string dashSound = "S_Dash";
     public string explosionSound = "S_Explosion";
     public string crackSound = "S_Crack";
+    public string SuperShotSound = "S_SuperShot";
+
+    int shotID;
 
 
     //spawnpoint
-	public GameObject[] BulletSpawnPoint;
+    public GameObject[] BulletSpawnPoint;
     public GameObject WallSpawnPoint;
 
     //variabili statistiche
@@ -351,6 +354,9 @@ public class Player : MonoBehaviour {
             superShootTimer = 0;
             isChargingShoot = false;
             particellari.Stop("charge");
+            chargedBullet.shotID = AudioManager.instance.PlaySoundWithID(SuperShotSound);
+
+            Debug.Log("ID " + chargedBullet.shotID);
         }
     }
 

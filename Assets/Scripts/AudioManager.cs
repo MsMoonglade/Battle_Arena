@@ -12,6 +12,9 @@ public class Sound
 
     public int quantity = 1;
 
+    [HideInInspector]
+    public int ID=-1;
+
     AudioSource source;
 
 
@@ -77,22 +80,40 @@ public class Sound
         return true;
     }
 
+    public bool PlaySound(int soundID)
+    {
+
+
+        //riproduzione
+        if (source.isPlaying)
+        {
+            return false;
+
+        }
+        else
+        {
+            ID = soundID;
+            source.Play();
+        }
+
+        return true;
+    }
 
 
     public void StopSound()
     {
         source.Stop();
-
+        ID = -1;
     }
 
-    //public IEnumerator StopSoundDelay()
-    //{
-    //    yield return new WaitForSeconds(duration);
+    public IEnumerator StopSoundDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
 
-    //    if (duration > 0)
-    //        source.Stop();
+        
+            source.Stop();
 
-    //}
+    }
 
     public void SetVolume(float _volume)
     {
@@ -175,7 +196,7 @@ public class AudioManager : MonoBehaviour
 
     Sound[] usingSounds;
     int soundPointer = 0;
-
+    int currentID = 0;
 
     [SerializeField]
     Sound[] musics;
@@ -327,7 +348,37 @@ public class AudioManager : MonoBehaviour
 
 
 
+    public int PlaySoundWithID(string soundName)
+    {
+        int tmpID;
 
+        if (soundName.ToCharArray()[0] == 'S')
+        {
+            for (int i = 0; i < soundPointer; i++)
+            {
+
+
+
+                if (usingSounds[i].theName.Contains(soundName) && usingSounds[i].ID==-1)
+                {
+                    if (usingSounds[i].PlaySound(currentID))
+                    {
+                        tmpID = currentID;
+                        if (currentID > 2)
+                            currentID = 0;
+                        else
+                            currentID++;
+                        return tmpID;
+                    }
+
+
+                }
+
+
+            }
+        }
+        return -1;
+    }
 
 
 
@@ -346,7 +397,7 @@ public class AudioManager : MonoBehaviour
                 //ricerca del suono
 
 
-                if (usingSounds[i].theName == soundName)
+                if (usingSounds[i].theName.Contains(soundName))
                 {
                     //ricerca del suono
 
@@ -380,6 +431,32 @@ public class AudioManager : MonoBehaviour
         Debug.LogError("Sound " + soundName + " doesn't exist");
     }
 
+    public void StopSound(string soundName, int soundID)
+    {
+
+
+        //chiamata del suono tramite nome
+
+        if (soundName.ToCharArray()[0] == 'S')
+        {
+
+            for (int i = 0; i < usingSounds.Length; i++)
+            {
+                //ricerca del suono
+
+                if (usingSounds[i].theName.Contains(soundName) && soundID==usingSounds[i].ID)
+                {
+                    Debug.Log("QUI");
+
+                    //ricerca del suono
+                    usingSounds[i].StopSound();
+                    return;
+                }
+            }
+        }
+        
+        Debug.LogError("Sound " + soundName + " doesn't exist");
+    }
 
 
 

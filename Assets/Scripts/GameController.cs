@@ -55,21 +55,23 @@ public class GameController : MonoBehaviour {
 void Mooseca()
 {
     AudioManager.instance.PlaySound(countdown);
+        musicSelector = Random.Range(0, battleThemesName.Length);
     AudioManager.instance.PlaySound(battleThemesName[musicSelector]);
-    AudioManager.instance.setVolume(battleThemesName[musicSelector], 0.2f);
-    Invoke("BattleThemeVolume", 4);
+    AudioManager.instance.setVolume(battleThemesName[musicSelector], 0.05f);
+        Invoke("BattleThemeVolume", 1);
 
-}
 
-void BattleThemeVolume()
+    }
+
+    void BattleThemeVolume()
 {
 
-    AudioManager.instance.setVolume(battleThemesName[musicSelector], 0.7f);
+        AudioManager.instance.FadeMusic(battleThemesName[musicSelector], 0.7f, .09f);
 
 
-}
+    }
 
-void Update ()
+    void Update ()
     {
         GameTimer();
 	}

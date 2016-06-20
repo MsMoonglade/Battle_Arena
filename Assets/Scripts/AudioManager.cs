@@ -446,7 +446,7 @@ public class AudioManager : MonoBehaviour
 
                 if (usingSounds[i].theName.Contains(soundName) && soundID==usingSounds[i].ID)
                 {
-                    Debug.Log("QUI");
+                    Debug.Log(soundName);
 
                     //ricerca del suono
                     usingSounds[i].StopSound();
@@ -554,7 +554,7 @@ public class AudioManager : MonoBehaviour
                 musics[i].Fade(to, fadeSpeed);
                 for(int k=0; k<fadingMusics.Length; k++)
                 {
-                    Debug.Log(k);
+
                     if (fadingMusics[k] == null)
                     {
                         fadingMusics[k] = musics[i];

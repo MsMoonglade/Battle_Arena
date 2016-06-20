@@ -354,8 +354,25 @@ public class Player : MonoBehaviour {
             superShootTimer = 0;
             isChargingShoot = false;
             particellari.Stop("charge");
-            chargedBullet.shotID = AudioManager.instance.PlaySoundWithID(SuperShotSound);
 
+            if(chargedBullet.isFull)
+            {
+                AudioManager.instance.StopSound(chargedBullet.FullSound, chargedBullet.fullID);
+                chargedBullet.fullID = -1;
+                chargedBullet.isFull = false;
+            }
+
+            chargedBullet.isShot = true;
+
+            chargedBullet.shotID = AudioManager.instance.PlaySoundWithID(SuperShotSound);
+            if (chargedBullet.isAbsorbing)
+            {
+                AudioManager.instance.StopSound(chargedBullet.AbsorbSound, chargedBullet.absorbID);
+                chargedBullet.isAbsorbing = false;
+                chargedBullet.absorbID = -1;
+
+
+            }
             Debug.Log("ID " + chargedBullet.shotID);
         }
     }

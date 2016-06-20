@@ -9,7 +9,15 @@ public class SuperBullet : MonoBehaviour {
 
     [HideInInspector]
     public string SuperShotSound = "S_SuperShot";
+    public string AbsorbSound = "S_Absorb";
+    public string FullSound = "S_Full";
 
+    [HideInInspector]
+    public bool isAbsorbing;
+    [HideInInspector]
+    public bool isFull;
+    [HideInInspector]
+    public bool isShot;
 
     [HideInInspector]
     public GameObject col;
@@ -23,7 +31,7 @@ public class SuperBullet : MonoBehaviour {
     [HideInInspector]
     public float scale;
     [HideInInspector]
-    public int shotID;
+    public int shotID, absorbID, fullID;
 
     void Awake()
     {
@@ -87,7 +95,11 @@ public class SuperBullet : MonoBehaviour {
                 speed = Speed[0];
                 scale = Scale[0];
                 damage = Damage[0];
-                
+                if (!isAbsorbing)
+                {
+                    absorbID = AudioManager.instance.PlaySoundWithID(AbsorbSound);
+                    isAbsorbing = true;
+                }
                 break;
             case 1:
                 speed = Speed[1];
@@ -99,7 +111,14 @@ public class SuperBullet : MonoBehaviour {
                 speed = Speed[2];
                 scale = Scale[2];
                 damage = Damage[2];
-
+                if (!isFull)
+                {
+                    AudioManager.instance.StopSound(AbsorbSound, absorbID);
+                    absorbID = -1;
+                    fullID = AudioManager.instance.PlaySoundWithID(FullSound);
+                    isAbsorbing = false;
+                    isFull = true;
+                }
                 break;
         }
         StartCoroutine(DisableCor());
@@ -115,8 +134,13 @@ public class SuperBullet : MonoBehaviour {
 
     void Disable()
     {
+        if(isShot)
+        {
+        
         AudioManager.instance.StopSound(SuperShotSound, shotID);
         shotID = -1;
+            isShot = false;
+        }
         col.SetActive(false);
         for (int i = 0; i < partc.Length; i++)
             partc[i].Stop();

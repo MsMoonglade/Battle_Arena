@@ -100,11 +100,7 @@ public class Player : MonoBehaviour {
         anim = GetComponent<AnimatorController>();
         
 
-        //limitatori di movimento
-        for (int i = 0; i < 4; i++)
-        {
-            mapLimit[i] = GameObject.FindGameObjectWithTag("EnvironmentLimit").transform.GetChild(i).gameObject;
-        }
+       
 
         //shoot     
         bulletPool = new GameObject[30];
@@ -208,6 +204,7 @@ public class Player : MonoBehaviour {
 
             FallDownDamage();
             isGrunded = true;
+            inAirAim.SetActive(false);
             // isFalling = false;
             //onFly = false;
 
@@ -231,6 +228,7 @@ public class Player : MonoBehaviour {
             FallDownDamage();
             // isFalling = false;
             //onFly = false;
+            inAirAim.SetActive(false);
             isGrunded = true;
 
             if (imDied)
@@ -252,11 +250,11 @@ public class Player : MonoBehaviour {
 
         //limite del movimento
         Vector3 clampedPositionX = transform.position;
-        clampedPositionX.x = Mathf.Clamp(transform.position.x, mapLimit[1].transform.position.x, mapLimit[0].transform.position.x);
+      //  clampedPositionX.x = Mathf.Clamp(transform.position.x, mapLimit[1].transform.position.x, mapLimit[0].transform.position.x);
         transform.position = new Vector3 (clampedPositionX.x , transform.position.y , transform.position.z);
 
         Vector3 clampedPositionZ = transform.position;
-        clampedPositionZ.z = Mathf.Clamp(transform.position.z, mapLimit[3].transform.position.z, mapLimit[2].transform.position.z);
+      //  clampedPositionZ.z = Mathf.Clamp(transform.position.z, mapLimit[3].transform.position.z, mapLimit[2].transform.position.z);
         transform.position = new Vector3(transform.position.x, transform.position.y, clampedPositionZ.z);
 
         //movimento mirino

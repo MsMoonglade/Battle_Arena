@@ -30,11 +30,11 @@ public class CharacterSelection : MonoBehaviour {
 
 	void Update(){
 
-		if(!Application.loadedLevelName.Equals("Scena_Marco")){
+		if(!Application.loadedLevelName.Equals("GameScene")){
 
 
             if (Input.GetKeyDown (KeyCode.Space)) {
-			Application.LoadLevel("Scena_Marco");
+			Application.LoadLevel("GameScene");
 
             }
 		

@@ -121,6 +121,11 @@ public class SuperBullet : MonoBehaviour {
                 }
                 break;
         }
+        
+    }
+
+    void Relase()
+    {
         StartCoroutine(DisableCor());
     }
 

@@ -185,6 +185,19 @@ public class Player : MonoBehaviour {
             HitScore(col.name);
             col.SendMessageUpwards("TakeDamage", SuperDashDamage);
         }
+
+        if (col.transform.CompareTag("PlayerCollider") && !isGrunded)
+        {
+
+            FallDownDamage();
+            isGrunded = true;
+            inAirAim.SetActive(false);
+            // isFalling = false;
+            //onFly = false;
+
+            if (imDied)
+                imDied = false;
+        }
     }
 
     void OnCollisionEnter(Collision col)
@@ -211,17 +224,19 @@ public class Player : MonoBehaviour {
             if (imDied)
                 imDied = false;
         }
-       
-        
-/*if (col.transform.CompareTag("Player") && isFalling)
-        {
-            FallDownDamage();
-            isFalling = false;
-            onFly = false;
 
-            if (imDied)
-                imDied = false;
-        }*/
+       
+
+
+        /*if (col.transform.CompareTag("Player") && isFalling)
+                {
+                    FallDownDamage();
+                    isFalling = false;
+                    onFly = false;
+
+                    if (imDied)
+                        imDied = false;
+                }*/
 
         if (col.transform.CompareTag("PlayerWall") && !isGrunded)
         {
@@ -351,6 +366,7 @@ public class Player : MonoBehaviour {
             chargedBullet.col.SetActive(true);    
             superShootTimer = 0;
             isChargingShoot = false;
+            chargedBullet.SendMessage("Relase");
             particellari.Stop("charge");
 
             if(chargedBullet.isFull)
@@ -507,6 +523,7 @@ public class Player : MonoBehaviour {
         {
             AudioManager.instance.PlaySound(explosionSound);
             particellari.Play("explosion");
+            RelaseSuperShoot();
             Respawn();
             AudioManager.instance.PlaySound(explosionSound);
         }

@@ -594,4 +594,86 @@ public class Player : MonoBehaviour {
         }
         percDmg[i] = 0;
     }
+
+    private void DamagePUP(float[] value)
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            bulletPool[i].GetComponent<Bullet>().Damage += ((stat.Damage * value[0]) / 100);
+        }
+
+        StartCoroutine("DamageReset", value[1]);
+    }
+
+    private IEnumerator DamageReset(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        for (int i = 0; i < 30; i++)
+        {
+            bulletPool[i].GetComponent<Bullet>().Damage = stat.Damage;
+        }
+    }
+
+    private void HealthRegen(float[] value)
+    {
+        StartCoroutine("HealthRegenPowerUP", value);
+    }
+
+    private IEnumerator HealthRegenPowerUP(float[] value)
+    {
+        float timer = 0;
+        float hotTime = 0;
+
+        while (timer <= value[2])
+        {
+            timer += Time.deltaTime;
+
+            hotTime += Time.deltaTime;
+
+            if (hotTime >= value[1])
+            {
+                if ((stat.MaxHealth - currentHealth) <= value[0])
+                    currentHealth += (stat.MaxHealth - currentHealth);
+
+
+                if ((stat.MaxHealth - currentHealth) > value[0])
+                    currentHealth += value[0];
+
+                hotTime = 0;
+            }
+            yield return null;
+        }
+    }
+
+    private void EnergyRegen(float[] value)
+    {
+        StartCoroutine("EnergyRegenPowerUP", value);
+    }
+
+    private IEnumerator EnergyRegenPowerUP(float[] value)
+    {
+        float timer = 0;
+        float hotTime = 0;
+
+        while (timer <= value[2])
+        {
+            timer += Time.deltaTime;
+
+            hotTime += Time.deltaTime;
+
+            if (hotTime >= value[1])
+            {
+                if ((stat.MaxEnergy - currentEnergy) <= value[0])
+                    currentEnergy += (stat.MaxEnergy - currentEnergy);
+
+
+                if ((stat.MaxEnergy - currentEnergy) > value[0])
+                    currentEnergy += value[0];
+
+                hotTime = 0;
+            }
+            yield return null;
+        }
+    }
 }

@@ -106,14 +106,17 @@ public class Sound
         ID = -1;
     }
 
-    public IEnumerator StopSoundDelay(float time)
-    {
-        yield return new WaitForSeconds(time);
+    //public IEnumerator StopSoundDelay(float time)
+    //{
+    //    if (duration <= 0)
+    //        yield break;
+    //    else { 
+    //    yield return new WaitForSeconds(time);
 
         
-            source.Stop();
+    //        source.Stop();}
 
-    }
+    //}
 
     public void SetVolume(float _volume)
     {

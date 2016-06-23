@@ -50,9 +50,9 @@ public class MainMenu : MonoBehaviour {
 //		if (Input.GetKeyDown (KeyCode.Q)) {
 //			activePlay = true;
 //		}
-		if (activePlay == true) {
+	/*	if (activePlay == true) {
 			Application.LoadLevel (1);
-		}
+		}*/
     }
 
     public void Settings()

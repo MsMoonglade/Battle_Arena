@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 13b7e8add75093e4bb800f4b57a5eb68
-timeCreated: 1466255459
+guid: 79953a737ec755d41b033c062e74a410
+timeCreated: 1466438511
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -17,12 +17,12 @@ ModelImporter:
     3300002: robHeavy_cannonR
     4300000: robHeavy_cannonL
     4300002: robHeavy_cannonR
-    7400000: FireRHeavy
-    7400002: FireLHeavy
+    7400000: anim_robHeavy_fireL
+    7400002: anim_robHeavy_fireR
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -41,10 +41,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: FireLHeavy
+      name: anim_robHeavy_fireL
       takeName: Take 001
       firstFrame: 1
-      lastFrame: 7.5
+      lastFrame: 7
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -73,9 +73,9 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: FireRHeavy
+      name: anim_robHeavy_fireR
       takeName: Take 001
-      firstFrame: 7.5
+      firstFrame: 7
       lastFrame: 13
       wrapMode: 0
       orientationOffsetY: 0
@@ -126,7 +126,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

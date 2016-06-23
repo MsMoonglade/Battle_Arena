@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 963fe56dd55e9ca41923064880ca43cb
-timeCreated: 1466254462
+guid: 57ed61e163838b04a9a1f7e27b311fc5
+timeCreated: 1466524388
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -10,11 +10,11 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: robSpeed_body
-    7400000: SpeedLevit
+    7400000: anim_robSpeed_float
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -33,7 +33,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: SpeedLevit
+      name: anim_robSpeed_float
       takeName: Take 001
       firstFrame: 1
       lastFrame: 25
@@ -82,7 +82,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

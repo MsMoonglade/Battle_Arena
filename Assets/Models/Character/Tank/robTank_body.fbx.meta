@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e08eaa5dadceb5c41ba6d231b64016f9
-timeCreated: 1466253515
+guid: 751045bdd4e3cb94ca95f5766a269494
+timeCreated: 1466417086
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -10,11 +10,11 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: robTank_body
-    7400000: TankLevit
+    7400000: anim_robTank_float
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -33,7 +33,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: TankLevit
+      name: anim_robTank_float
       takeName: Take 001
       firstFrame: 1
       lastFrame: 25
@@ -82,7 +82,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

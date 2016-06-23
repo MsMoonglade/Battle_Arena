@@ -21,10 +21,14 @@ public class GUIController : MonoBehaviour {
 
 	private void AssignPlayers()
 	{
-		players [0] = GameObject.Find ("Player1").GetComponent<Player> ();
-		players [1] = GameObject.Find ("Player2").GetComponent<Player> ();
-		players [2] = GameObject.Find ("Player3").GetComponent<Player> ();
-		players [3] = GameObject.Find ("Player4").GetComponent<Player> ();
+       
+		    players [0] = GameObject.Find ("Player1").GetComponent<Player> ();
+        
+            players [1] = GameObject.Find ("Player2").GetComponent<Player> ();
+       
+            players [2] = GameObject.Find ("Player3").GetComponent<Player> ();
+       
+            players [3] = GameObject.Find ("Player4").GetComponent<Player> ();
 	}
 
     void Update()

@@ -12,7 +12,8 @@ public class CharacterSelection : MonoBehaviour {
 
 
 	public int[] counter = new int[4];
-	Rewired.Controller[] control;
+    [HideInInspector]
+    public Rewired.Controller[] control;
 	int[] index = new int[4];
 	float delay = 0.1f;
 	bool[] ready;
@@ -23,13 +24,14 @@ public class CharacterSelection : MonoBehaviour {
 		if (GameObject.FindGameObjectWithTag ("CharacterController") != this.gameObject)
 			Destroy (this.gameObject);
 
-		DontDestroyOnLoad (this);
+       
+
+
+        DontDestroyOnLoad (this);
 		if(Application.loadedLevelName.Equals("CharacterSelection"))
 		{
-
-
-		control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
-		AbilitySelector ();
+            control = ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
+            AbilitySelector ();
 		ready = new bool[control.Length];
 		timer = new float[control.Length];
 		for (int i =0; i< timer.Length; i++)

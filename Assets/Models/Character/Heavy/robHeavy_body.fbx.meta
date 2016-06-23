@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d276c8dda3aefa64cafabe9485dcf800
-timeCreated: 1466255459
+guid: 4e3b25fac22185a4fb43d61a960521dd
+timeCreated: 1466416713
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -10,11 +10,11 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: robHeavy_body
-    7400000: HeavyLevit
+    7400000: anim_robHeavy_float
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -33,7 +33,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: HeavyLevit
+      name: anim_robHeavy_float
       takeName: Take 001
       firstFrame: 1
       lastFrame: 25
@@ -82,7 +82,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

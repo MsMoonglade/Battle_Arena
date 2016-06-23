@@ -20,7 +20,8 @@ public class CameraFollow : MonoBehaviour {
         players = GameObject.FindGameObjectsWithTag("Player");
         playersScript = new Player[4];
         for (int i = 0; i < playersScript.Length; i++)
-            playersScript[i] = players[i].GetComponent<Player>();
+            if (players[1].gameObject.activeInHierarchy)
+                playersScript[i] = players[i].GetComponent<Player>();
 
         LookFollow();
 

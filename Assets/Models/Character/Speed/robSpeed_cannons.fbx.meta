@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8d02a436b4675684bbbeb784cd0bc31c
-timeCreated: 1466254462
+guid: 10ca0d597ab67ec4281e19c5ba5f7679
+timeCreated: 1466524677
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -15,14 +15,14 @@ ModelImporter:
     2300002: robSpeed_cannonR
     3300000: robSpeed_cannonL
     3300002: robSpeed_cannonR
-    4300000: robSpeed_cannonL
-    4300002: robSpeed_cannonR
-    7400000: FireLSpeed
-    7400002: FireRSpeed
+    4300000: robSpeed_cannonR
+    4300002: robSpeed_cannonL
+    7400000: anim_robSpeed_fireL
+    7400002: anim_robSpeed_fireR
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -41,7 +41,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: FireLSpeed
+      name: anim_robSpeed_fireL
       takeName: Take 001
       firstFrame: 1
       lastFrame: 7
@@ -73,7 +73,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: FireRSpeed
+      name: anim_robSpeed_fireR
       takeName: Take 001
       firstFrame: 7
       lastFrame: 13
@@ -126,7 +126,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

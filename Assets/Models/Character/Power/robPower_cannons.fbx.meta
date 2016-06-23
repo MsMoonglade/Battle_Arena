@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0fe5ff219521c304f8d86e8f292af867
-timeCreated: 1466254910
+guid: 6be01445db48de14c9a5443369892ef5
+timeCreated: 1466441258
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -17,8 +17,8 @@ ModelImporter:
     3300002: robPower_cannonR
     4300000: robPower_cannonL
     4300002: robPower_cannonR
-    7400000: FireLPower
-    7400002: FireRPower
+    7400000: anim_robPower_fireL
+    7400002: anim_robPower_fireR
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -41,7 +41,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: FireLPower
+      name: anim_robPower_fireL
       takeName: Take 001
       firstFrame: 1
       lastFrame: 7
@@ -73,7 +73,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: FireRPower
+      name: anim_robPower_fireR
       takeName: Take 001
       firstFrame: 7
       lastFrame: 13

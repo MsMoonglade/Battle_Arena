@@ -5,7 +5,6 @@ public class Player : MonoBehaviour {
 	
 	//prefabs
 	public GameObject ChargedBulletPrefab;
-	public GameObject BulletPrefab;
     public GameObject WallPrefab;
     public GameObject MirinoPrefab;
 
@@ -68,7 +67,7 @@ public class Player : MonoBehaviour {
 
     //variabili shoot  
     private SuperBullet chargedBullet;
-    private GameObject[] bulletPool; 
+    private GameObject[] bulletPool;
     private bool canShoot;
     private bool isChargingShoot;
     private float shootTimer;
@@ -98,22 +97,21 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();      
         stat = transform.GetComponentInChildren<ModelStat>();
         anim = GetComponent<AnimatorController>();
-        
 
-       
+
+
 
         //shoot     
         bulletPool = new GameObject[30];
         for (int i = 0; i < 30; i++)
         {
-			bulletPool[i] = Instantiate(BulletPrefab , Vector3.zero , BulletPrefab.transform.rotation) as GameObject;
-			bulletPool[i].GetComponent<Bullet>().Damage = stat.Damage;
-			bulletPool[i].GetComponent<Bullet>().Speed = ShootForce;
-			bulletPool[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
-			bulletPool[i].SetActive(false);
+            bulletPool[i] = Instantiate(stat.BulletPrefab, Vector3.zero, stat.BulletPrefab.transform.rotation) as GameObject;
+            bulletPool[i].GetComponent<Bullet>().Damage = stat.Damage;
+            bulletPool[i].GetComponent<Bullet>().Speed = ShootForce;
+            bulletPool[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
+            bulletPool[i].SetActive(false);
         }
-
-		//super shoot
+        //super shoot
         GameObject superBul = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
         chargedBullet.ThisPlayer = this.gameObject;
@@ -186,7 +184,7 @@ public class Player : MonoBehaviour {
             col.SendMessageUpwards("TakeDamage", SuperDashDamage);
         }
 
-        if (col.transform.CompareTag("PlayerCollider") && !isGrunded)
+      /*  if (col.transform.CompareTag("PlayerCollider") && !isGrunded)
         {
 
             FallDownDamage();
@@ -197,7 +195,7 @@ public class Player : MonoBehaviour {
 
             if (imDied)
                 imDied = false;
-        }
+        }*/
     }
 
     void OnCollisionEnter(Collision col)
@@ -489,6 +487,7 @@ public class Player : MonoBehaviour {
 
     private IEnumerator FallDownAnimation()
     {
+        yield return new WaitForSeconds(RespawnFallTime);
         //il player cade
         while(!isGrunded)
         {
@@ -521,12 +520,18 @@ public class Player : MonoBehaviour {
 
         if (currentHealth <= 0)
         {
-            AudioManager.instance.PlaySound(explosionSound);
-            particellari.Play("explosion");
-            RelaseSuperShoot();
-            Respawn();
-            AudioManager.instance.PlaySound(explosionSound);
+            Die();   
         }
+    }
+
+     void Die()
+    {
+        imDied = true;
+        AudioManager.instance.PlaySound(explosionSound);
+        particellari.Play("explosion");
+        RelaseSuperShoot();
+        Respawn();
+        AudioManager.instance.PlaySound(explosionSound);
     }
 
     private void RechargeEnergy()
@@ -537,7 +542,7 @@ public class Player : MonoBehaviour {
 
     private void Respawn()
     {
-        imDied = true;
+        
    
 
         //sposto il player in aria
@@ -551,9 +556,8 @@ public class Player : MonoBehaviour {
 
         currentHealth = stat.MaxHealth;
         currentEnergy = stat.MaxEnergy;
-        shootCharge = 0;           
-
-        Invoke("FallDown", RespawnFallTime);
+        shootCharge = 0;
+        FallDown(); 
     }
 
     private void HitScore(string name)

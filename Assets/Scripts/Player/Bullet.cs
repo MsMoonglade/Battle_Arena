@@ -14,13 +14,14 @@ public class Bullet : MonoBehaviour {
 
     void Start()
     {
-        StartCoroutine(Deactivate());
+        //StartCoroutine(Deactivate());
     }
 
     void FixedUpdate()
     {
         if (transform.gameObject.activeInHierarchy)
             transform.Translate(Vector3.forward * Speed * Time.deltaTime);
+            StartCoroutine(Deactivate());
     }
   
     void OnTriggerEnter(Collider col)

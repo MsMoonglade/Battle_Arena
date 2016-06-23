@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 863e02ebd2ae6524c9c39397cf2d6d36
-timeCreated: 1466254910
+guid: 5864cab58a391d04086d18ca154e3343
+timeCreated: 1466607455
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -10,11 +10,11 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: robPower_body
-    7400000: PowerLevit
+    7400000: anim_robPower_float
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -33,7 +33,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: PowerLevit
+      name: anim_robPower_float
       takeName: Take 001
       firstFrame: 1
       lastFrame: 25
@@ -82,7 +82,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

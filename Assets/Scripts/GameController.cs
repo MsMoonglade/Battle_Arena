@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
 
     int musicSelector;
 
+    private CharacterSelection characterSel;
+    private GameObject[] players;
 
 
     public UILabel timeSecondLabel;
@@ -25,10 +27,16 @@ public class GameController : MonoBehaviour {
 	private GameObject rewiredInputController;
 
 
+
     void Awake()
     {
 		Time.timeScale = 1.0f; 
         instance = this;
+
+        characterSel = GameObject.FindGameObjectWithTag("CharacterController").GetComponent<CharacterSelection>();
+        players = GameObject.FindGameObjectsWithTag("Player");
+
+       
 
 		rewiredInputController = GameObject.FindGameObjectWithTag ("Rewired");
 		

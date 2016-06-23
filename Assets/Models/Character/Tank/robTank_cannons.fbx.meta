@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 08d710897079354449976c63cd4cd34a
-timeCreated: 1466253515
+guid: a861e77261dbaa144ac36d5dab73166a
+timeCreated: 1466444954
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -17,12 +17,12 @@ ModelImporter:
     3300002: robTank_cannonR
     4300000: robTank_cannonL
     4300002: robTank_cannonR
-    7400000: FireLTank
-    7400002: FireRTank
+    7400000: anim_robTank_fireL
+    7400002: anim_robTank_fireR
     9500000: //RootNode
   materials:
     importMaterials: 1
-    materialName: 1
+    materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
@@ -41,7 +41,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: FireLTank
+      name: anim_robTank_fireL
       takeName: Take 001
       firstFrame: 1
       lastFrame: 7
@@ -73,7 +73,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: FireRTank
+      name: anim_robTank_fireR
       takeName: Take 001
       firstFrame: 7
       lastFrame: 13
@@ -126,7 +126,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

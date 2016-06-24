@@ -59,15 +59,15 @@ public class SuperBullet : MonoBehaviour {
             ThisPlayer.SendMessage("HitScore", collider.name);          
         }
 
-        if (collider.CompareTag("PlayerWall") && scale == Scale[3])
+        else if (collider.CompareTag("PlayerWall") && scale == 3)
         {
             collider.gameObject.SetActive(false);
             Disable();
         }
-        else if (collider.CompareTag("PlayerWall") && scale != Scale[3])
+        else if (collider.CompareTag("PlayerWall") && scale != 3)
             Disable();
 
-        if (collider.CompareTag("EnvironmentWall"))
+       else  if (collider.CompareTag("EnvironmentWall"))
             Disable();
     }
 

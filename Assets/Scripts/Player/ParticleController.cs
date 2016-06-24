@@ -61,7 +61,7 @@ public class ParticleController : MonoBehaviour {
 
         if (Particle.Equals("impact"))
         {
-            impactGo.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            impactGo.transform.position = new Vector3(transform.position.x, -6.5f, transform.position.z);
             impact.Play();
         }
         //effetto sparo
@@ -72,7 +72,7 @@ public class ParticleController : MonoBehaviour {
         //effetto morte
         if (Particle.Equals("explosion"))
         {
-            explosionGo.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            explosionGo.transform.position = new Vector3(transform.position.x, -6.5f, transform.position.z);
             explosion.Play();
         }
         //effetto super dash

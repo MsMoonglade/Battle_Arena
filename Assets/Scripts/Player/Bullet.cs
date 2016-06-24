@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour {
     {
         if (col.transform.CompareTag("PlayerWall"))
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(false);            
          //   StopAllCoroutines();
         }
 

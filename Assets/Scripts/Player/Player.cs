@@ -83,7 +83,8 @@ public class Player : MonoBehaviour {
     private float[] percDmg;
 
     //variabili wall
-    private GameObject wall;
+    private GameObject[] wall;
+    private int wallIndex;
   
     //limiti mappa
     private GameObject[] mapLimit = new GameObject[4];
@@ -137,8 +138,13 @@ public class Player : MonoBehaviour {
         }
 
         //wall
-        wall = Instantiate(WallPrefab, Vector3.zero, WallPrefab.transform.rotation) as GameObject;
-        wall.SetActive (false);
+        wall = new GameObject[3];
+        for (int i = 0; i < wall.Length; i++)
+        {
+            wall[i] = Instantiate(WallPrefab, Vector3.zero, WallPrefab.transform.rotation) as GameObject;
+            wall[i].SetActive(false);
+        }
+        wallIndex = 0;
 
         //particellari
         particellari = GetComponent<ParticleController>();
@@ -256,8 +262,8 @@ public class Player : MonoBehaviour {
         if (!onDash && !onSuperDash && isGrunded)
         {
             Vector3 movement = new Vector3(horizontal, 0, vertical) * stat.Speed * Time.deltaTime;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+          //  rb.velocity = Vector3.zero;
+            //rb.angularVelocity = Vector3.zero;
             rb.MovePosition(transform.position + movement);
         }
 
@@ -393,13 +399,21 @@ public class Player : MonoBehaviour {
 	{
 		if (isGrunded && !imDied && currentEnergy >= WallCost)
 		{
-			currentEnergy -= WallCost; 
-			wall.transform.position = WallSpawnPoint.transform.position;
-			wall.transform.rotation = transform.rotation;
-			wall.transform.SetParent (null);
-			wall.SetActive (true);
-            AudioManager.instance.PlaySound(crackSound);
+			currentEnergy -= WallCost;
+
+            if (wallIndex > wall.Length)
+                wallIndex = 0;
+            
+                wall[wallIndex].transform.position = WallSpawnPoint.transform.position;
+                wall[wallIndex].transform.rotation = transform.rotation;
+                wall[wallIndex].transform.SetParent(null);
+                wall[wallIndex].SetActive(true);
+                AudioManager.instance.PlaySound(crackSound);
+            
+
+
         }
+        
 	}
 
 	public void Dash(float horizontal , float vertical)
@@ -546,12 +560,12 @@ public class Player : MonoBehaviour {
    
 
         //sposto il player in aria
-        transform.position = new Vector3(0, 20, 0);
+        transform.position = new Vector3(transform.position.x, 20, transform.position.z);
         isGrunded = false;
         rb.useGravity = false;
         
 
-        inAirAim.transform.position = Vector3.zero;
+        inAirAim.transform.position = new Vector3(transform.position.x,-6.5f,transform.position.z);
         inAirAim.SetActive(true);
 
         currentHealth = stat.MaxHealth;

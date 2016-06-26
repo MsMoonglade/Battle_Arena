@@ -8,8 +8,8 @@ public class Player : MonoBehaviour {
     public GameObject WallPrefab;
     public GameObject MirinoPrefab;
 
-     public string shotSound = "S_Shot";
-     public string dashSound = "S_Dash";
+    public string shotSound = "S_Shot";
+    public string dashSound = "S_Dash";
     public string explosionSound = "S_Explosion";
     public string crackSound = "S_Crack";
     public string SuperShotSound = "S_SuperShot";
@@ -52,9 +52,9 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public bool onSuperDash;
     [HideInInspector]
-  //  public bool onFly;
+ // public bool onFly;
     private GameObject inAirAim;
-    //private bool isFalling;
+ // private bool isFalling;
     public bool isGrunded;
 
     //components
@@ -92,14 +92,22 @@ public class Player : MonoBehaviour {
     //variabili particellari
     private ParticleController particellari;
 
+    //variabili PowerUp
+    private Bullet[] bullPuP;
+    [HideInInspector]
+    public bool penetrationPuP;
+    [HideInInspector]
+    public bool explosionPuP;
+    [HideInInspector]
+    public bool bouncePuP;
+
+
     void Awake()
 	{        
 		//components
         rb = GetComponent<Rigidbody>();      
         stat = transform.GetComponentInChildren<ModelStat>();
         anim = GetComponent<AnimatorController>();
-
-
 
 
         //shoot     
@@ -112,6 +120,14 @@ public class Player : MonoBehaviour {
             bulletPool[i].GetComponent<Bullet>().ThisPlayer = this.gameObject;
             bulletPool[i].SetActive(false);
         }
+
+        bullPuP = new Bullet[bulletPool.Length];
+        for (int i = 0; i < bullPuP.Length; i++)
+        {
+            bullPuP[i] = bulletPool[i].GetComponent<Bullet>();
+        }
+
+        
         //super shoot
         GameObject superBul = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
@@ -157,17 +173,25 @@ public class Player : MonoBehaviour {
         currentEnergy = stat.MaxEnergy;
         superShootTimer = SuperShootCD;
 
-        //bool varie
-        //onFly = false;
+      //bool varie
+      //onFly = false;
         canShoot = true;
         isChargingShoot = false;
         imDied = false;
         isGrunded = true;
-       // isFalling = false;
+        // isFalling = false;
+
+
+        //bool PowerUp
+        penetrationPuP = false;
+        explosionPuP = false;
+        bouncePuP = false;
 
         //Assegnazioni indici per sparo
         bulletIndex = 0;
         spawnpointIndex = 0;
+
+
     }
 
     void Update()
@@ -228,9 +252,6 @@ public class Player : MonoBehaviour {
             if (imDied)
                 imDied = false;
         }
-
-       
-
 
         /*if (col.transform.CompareTag("Player") && isFalling)
                 {
@@ -388,10 +409,7 @@ public class Player : MonoBehaviour {
                 AudioManager.instance.StopSound(chargedBullet.AbsorbSound, chargedBullet.absorbID);
                 chargedBullet.isAbsorbing = false;
                 chargedBullet.absorbID = -1;
-
-
             }
-            Debug.Log("ID " + chargedBullet.shotID);
         }
     }
 
@@ -409,9 +427,6 @@ public class Player : MonoBehaviour {
                 wall[wallIndex].transform.SetParent(null);
                 wall[wallIndex].SetActive(true);
                 AudioManager.instance.PlaySound(crackSound);
-            
-
-
         }
         
 	}
@@ -556,9 +571,6 @@ public class Player : MonoBehaviour {
 
     private void Respawn()
     {
-        
-   
-
         //sposto il player in aria
         transform.position = new Vector3(transform.position.x, 20, transform.position.z);
         isGrunded = false;
@@ -689,5 +701,39 @@ public class Player : MonoBehaviour {
             }
             yield return null;
         }
+    }
+
+    private void BulletPowerUp(string[] value)
+    {
+        if(value[1] == "PenetrationPowerUp")
+            StartCoroutine(PenetrationPowerUP(float.Parse(value[0])));
+
+        if (value[1] == "ExplosionPowerUp")        
+            StartCoroutine(ExplosionPowerUp(float.Parse(value[0])));
+
+        if (value[1] == "BouncePowerUp")
+            StartCoroutine(BouncePowerUp(float.Parse(value[0])));
+
+    }
+
+    private IEnumerator PenetrationPowerUP (float duration)
+    {
+        penetrationPuP = true;
+        yield return new WaitForSeconds(duration);
+        penetrationPuP = false;
+    }
+
+    private IEnumerator ExplosionPowerUp(float duration)
+    {
+        explosionPuP = true;
+        yield return new WaitForSeconds(duration);
+        explosionPuP = false;
+    }
+
+    private IEnumerator BouncePowerUp(float duration)
+    {
+        bouncePuP = true;
+        yield return new WaitForSeconds(duration);
+        bouncePuP = false;
     }
 }

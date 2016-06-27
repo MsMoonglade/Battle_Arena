@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
 	{
 		if (Input.anyKeyDown) {
 			pressAnyKey.SetActive(false);
-			gameTitle.GetComponent<TweenPosition> ().PlayForward ();
+			gameTitle.GetComponent<TweenAlpha> ().PlayForward ();
 			play.GetComponent<TweenPosition>().PlayForward();
 			settings.GetComponent<TweenPosition>().PlayForward();
 			credits.GetComponent<TweenPosition>().PlayForward();
@@ -47,26 +47,17 @@ public class MainMenu : MonoBehaviour {
 
     public void Play()
 	{
-//		if (Input.GetKeyDown (KeyCode.Q)) {
-//			activePlay = true;
-//		}
-	/*	if (activePlay == true) {
-			Application.LoadLevel (1);
-		}*/
+//		Application.LoadLevel ("CharacterSelection");
     }
 
     public void Settings()
     {
-        gameTitle.SetActive(false);
-        play.SetActive(false);
-        settings.SetActive(false);
-        credits.SetActive(false);
-        exit.SetActive(false);
+        
     }
 
     public void Credits()
     {
-
+		Application.LoadLevel ("Credits");
     }
 
     public void Exit()

@@ -35,9 +35,13 @@ public class MainMenu : MonoBehaviour {
 			pressAnyKey.SetActive(false);
 			gameTitle.GetComponent<TweenAlpha> ().PlayForward ();
 			play.GetComponent<TweenPosition>().PlayForward();
+			play.GetComponent<TweenAlpha> ().PlayForward ();
 			settings.GetComponent<TweenPosition>().PlayForward();
+			settings.GetComponent<TweenAlpha> ().PlayForward ();
 			credits.GetComponent<TweenPosition>().PlayForward();
+			credits.GetComponent<TweenAlpha> ().PlayForward ();
 			exit.GetComponent<TweenPosition>().PlayForward();
+			exit.GetComponent<TweenAlpha> ().PlayForward ();
 
 		}
 

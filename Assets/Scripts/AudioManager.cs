@@ -291,7 +291,7 @@ public class AudioManager : MonoBehaviour
                 if (fadingMusics[p].Fading())
                 {
                     fadingMusics[p] = null;
-                    Debug.Log("done");
+
                 }
             }
         }
@@ -449,7 +449,7 @@ public class AudioManager : MonoBehaviour
 
                 if (usingSounds[i].theName.Contains(soundName) && soundID==usingSounds[i].ID)
                 {
-                    Debug.Log(soundName);
+
 
                     //ricerca del suono
                     usingSounds[i].StopSound();

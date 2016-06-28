@@ -705,15 +705,30 @@ public class Player : MonoBehaviour {
 
     private void BulletPowerUp(string[] value)
     {
-        if(value[1] == "PenetrationPowerUp")
+        if (value[1] == "PenetrationPowerUp")        
             StartCoroutine(PenetrationPowerUP(float.Parse(value[0])));
 
-        if (value[1] == "ExplosionPowerUp")        
+        if (value[1] == "ExplosionPowerUp")
+        {
+            for (int i = 0; i < bullPuP.Length; i++)
+            {
+                bullPuP[i].explosionDamage = int.Parse(value[2]);
+                bullPuP[i].explosionRange = int.Parse(value[3]);
+            }
+
             StartCoroutine(ExplosionPowerUp(float.Parse(value[0])));
+        }
 
         if (value[1] == "BouncePowerUp")
-            StartCoroutine(BouncePowerUp(float.Parse(value[0])));
+        {         
+            for (int i = 0; i < bullPuP.Length; i++)
+            {
+                bullPuP[i].numberOfBounce = int.Parse(value[2]);
+                bullPuP[i].bounceRange = int.Parse(value[3]);
+            }
 
+            StartCoroutine(BouncePowerUp(float.Parse(value[0])));
+        }
     }
 
     private IEnumerator PenetrationPowerUP (float duration)

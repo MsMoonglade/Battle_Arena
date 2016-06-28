@@ -14,6 +14,16 @@ public class Bullet : MonoBehaviour {
 
     private Player player;
 
+    //stats PowerUP
+    [HideInInspector]
+    public int numberOfBounce;
+    [HideInInspector]
+    public float bounceRange;
+    [HideInInspector]
+    public float explosionRange;
+    [HideInInspector]
+    public float explosionDamage;
+
     void Start()
     {
         //StartCoroutine(Deactivate());
@@ -22,7 +32,7 @@ public class Bullet : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (transform.gameObject.activeInHierarchy)
+        if (transform.gameObject.activeInHierarchy)        
             transform.Translate(Vector3.forward * Speed * Time.deltaTime);
             StartCoroutine(Deactivate());
     }
@@ -59,26 +69,13 @@ public class Bullet : MonoBehaviour {
                 gameObject.SetActive(false);
 
             if (col.transform.CompareTag("Player"))
-            {   
-                Collider[] collider = Physics.OverlapSphere(transform.position, 1);
-
-                for (int i = 0; i < collider.Length; i++)
-                {
-                    if (collider[i] != transform.GetComponent<Collider>() && collider[i].transform.CompareTag("Player"))
-                    {
-                        collider[i].SendMessage("TakeDamage", Damage);
-                        ThisPlayer.SendMessage("HitScore", collider[i].name);
-                    }
-                }
-
-                gameObject.SetActive(false);
+            {
+                Explosion();
             }
         }
 
         else if (player.bouncePuP)
         {
-            int numberOfBounce = 3;
-
             if (col.transform.CompareTag("PlayerWall"))
                 gameObject.SetActive(false);
 
@@ -87,14 +84,8 @@ public class Bullet : MonoBehaviour {
                 col.SendMessage("TakeDamage", Damage);
                 ThisPlayer.SendMessage("HitScore", col.name);
 
-                Collider[] collider = Physics.OverlapSphere(transform.position, 6);
-
-                transform.LookAt(collider[0].transform);
-                numberOfBounce--;
+                Bounce();
             }
-
-            if (numberOfBounce == 0)
-                gameObject.SetActive(false);
         }
     }
 
@@ -106,5 +97,39 @@ public class Bullet : MonoBehaviour {
             this.gameObject.SetActive(false);
 
      //   StopAllCoroutines();
+    }
+
+    private void Bounce()
+    {
+        Collider[] collider = Physics.OverlapSphere(transform.position, bounceRange);
+
+        for (int i = 0; i < collider.Length; i++)
+        {
+            if (collider[i] != player.GetComponent<Collider>() && collider[i].transform.CompareTag("Player") && collider[i].GetComponent<Player>().isGrunded)
+            {
+                transform.LookAt(collider[i].transform);
+                numberOfBounce--;
+                break;
+            }
+        }    
+
+        if (numberOfBounce == 0)
+            gameObject.SetActive(false);
+    }
+
+    private void Explosion()
+    {
+        Collider[] collider = Physics.OverlapSphere(transform.position, explosionRange);
+
+        for (int i = 0; i < collider.Length; i++)
+        {
+            if (collider[i] != transform.GetComponent<Collider>() && collider[i].transform.CompareTag("Player"))
+            {
+                collider[i].SendMessage("TakeDamage", explosionDamage);
+                ThisPlayer.SendMessage("HitScore", collider[i].name);
+            }
+        }
+
+        gameObject.SetActive(false);
     }
 }

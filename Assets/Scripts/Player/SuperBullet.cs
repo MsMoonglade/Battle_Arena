@@ -24,7 +24,7 @@ public class SuperBullet : MonoBehaviour {
     [HideInInspector]
     public GameObject ThisPlayer;
     [HideInInspector]
-    public ParticleSystem[] partc;
+    public ParticleSystem partc;
     private GameObject particle;
     private float speed;
     private float damage;
@@ -36,8 +36,9 @@ public class SuperBullet : MonoBehaviour {
     void Awake()
     {
         col = transform.FindChild("Collider").gameObject;
-        partc = GetComponentsInChildren<ParticleSystem>();       
+        partc = GetComponentInChildren<ParticleSystem>();       
     }
+
 
     void Start()
     {
@@ -56,19 +57,27 @@ public class SuperBullet : MonoBehaviour {
         if (collider.CompareTag("Player"))
         {
             collider.SendMessage("TakeDamage", damage);
-            ThisPlayer.SendMessage("HitScore", collider.name);          
+            ThisPlayer.SendMessage("HitScore", collider.name);
         }
 
         else if (collider.CompareTag("PlayerWall") && scale == 3)
         {
+            Debug.Log("jeses");
             collider.gameObject.SetActive(false);
+            partc.Stop();
             Disable();
         }
-        else if (collider.CompareTag("PlayerWall") && scale != 3)
-            Disable();
+        else if (collider.CompareTag("PlayerWall") && scale != 3) { 
+                    
+                    Disable();
+        }
 
-       else  if (collider.CompareTag("EnvironmentWall"))
+        else if (collider.CompareTag("EnvironmentWall"))
+        {
             Disable();
+          
+        }
+            
     }
 
     void Move()
@@ -80,9 +89,7 @@ public class SuperBullet : MonoBehaviour {
     void ScaleMetod()
     {
         //la scala del paricellare
-       
-        for (int i = 0; i < partc.Length; i++)
-            partc[i].startSize = scale;
+            partc.startSize = scale;
 
     }
 
@@ -139,16 +146,18 @@ public class SuperBullet : MonoBehaviour {
 
     void Disable()
     {
-        if(isShot)
+        if (isShot)
         {
-        
-        AudioManager.instance.StopSound(SuperShotSound, shotID);
-        shotID = -1;
+
+            AudioManager.instance.StopSound(SuperShotSound, shotID);
+            shotID = -1;
             isShot = false;
+
         }
+
         col.SetActive(false);
-        for (int i = 0; i < partc.Length; i++)
-            partc[i].Stop();
+        partc.gameObject.SetActive(false);
+        partc.gameObject.SetActive(true);
         StopAllCoroutines();
     }
 }

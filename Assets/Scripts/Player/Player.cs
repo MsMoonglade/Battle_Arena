@@ -386,8 +386,8 @@ public class Player : MonoBehaviour {
     {
         if (isChargingShoot)
         {
-            for (int i = 0; i < chargedBullet.partc.Length; i++)
-                chargedBullet.partc[i].Play();
+            
+            chargedBullet.partc.Play();
             chargedBullet.col.SetActive(true);    
             superShootTimer = 0;
             isChargingShoot = false;
@@ -415,17 +415,19 @@ public class Player : MonoBehaviour {
 
 	public void CreateWall()
 	{
-		if (isGrunded && !imDied && currentEnergy >= WallCost)
+        if (wallIndex > wall.Length-1)
+            wallIndex = 0;
+
+        if (isGrunded && !imDied && currentEnergy >= WallCost)
 		{
 			currentEnergy -= WallCost;
 
-            if (wallIndex > wall.Length)
-                wallIndex = 0;
-            
-                wall[wallIndex].transform.position = WallSpawnPoint.transform.position;
-                wall[wallIndex].transform.rotation = transform.rotation;
-                wall[wallIndex].transform.SetParent(null);
-                wall[wallIndex].SetActive(true);
+              
+               wall[wallIndex].transform.position = WallSpawnPoint.transform.position;
+              
+               wall[wallIndex].transform.rotation = transform.rotation;               
+               wall[wallIndex].SetActive(true);
+               wallIndex++;
                 AudioManager.instance.PlaySound(crackSound);
         }
         

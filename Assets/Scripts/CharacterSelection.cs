@@ -14,8 +14,7 @@ public class CharacterSelection : MonoBehaviour {
 
 
 	public GameObject[] Selector=new GameObject[4];
-
-	public GameObject temp;
+	public int rotationSpeed;
 
 	public int[] counter = new int[4];
 	Rewired.Controller[] control;
@@ -58,7 +57,8 @@ public class CharacterSelection : MonoBehaviour {
 
 			if(Application.loadedLevelName.Equals("CharacterSelection"))
 			   {
-					
+					RotateRobot ();
+
 				for (int i =0; i< timer.Length; i++)
 			
 					timer [i] += Time.deltaTime;
@@ -69,7 +69,6 @@ public class CharacterSelection : MonoBehaviour {
 				for (int i = 0; i<control.Length; i++) {
 
 						
-//						RotateRobot (i);
 
 					if (control [i] != null && GetAxis (i, "LeftRotationH") != 0 && !ready[i] && timer[i]>=delay) 
 					
@@ -179,8 +178,8 @@ public class CharacterSelection : MonoBehaviour {
 				}
 				if (sel == 3) {
 					index [sel] = icon.Length - 1;			
-					roboModelsTwo [modelIndex[3]].SetActive (false);
-					roboModelsTwo [modelIndex[3]+modelIndex.Length].SetActive (true);
+					roboModelsThree [modelIndex[3]].SetActive (false);
+					roboModelsThree [modelIndex[3]+modelIndex.Length].SetActive (true);
 					modelIndex [3] =modelIndex.Length;
 				}
 
@@ -203,7 +202,7 @@ public class CharacterSelection : MonoBehaviour {
 				}
 				if (sel == 3) {
 					roboModelsThree [modelIndex [3]].SetActive (false);
-					roboModelsThree [modelIndex [2] - 1].SetActive (true);
+					roboModelsThree [modelIndex [3] - 1].SetActive (true);
 					modelIndex [3] -= 1;
 				}
 			
@@ -237,38 +236,48 @@ public class CharacterSelection : MonoBehaviour {
 	public void SetTime()
 	{
 	}
-//	public void RotateRobot(int indexRotation){
-//		for (int i = 0; i < control.Length; i++) {
-//			if (GetAxis (i, "RightRotationH") > 0)
-//			{
-//				if (indexRotation == 0) {
-//					roboModels [i].transform.Rotate (-Vector3.up * Time.deltaTime * 100);
-//				}
-//				if (indexRotation == 1) {
-//					roboModelsOne [index[i]].transform.Rotate (-Vector3.up * Time.deltaTime * 100);
-//				}
-//
-//				Debug.Log (index[i]+"ONE");
-//
-//			}
-//
-//			if (GetAxis (i, "RightRotationH") < 0) {
-//				Debug.Log (index[i]+"Two");
-//
-//				if (indexRotation == 0) {
-//					roboModels [index[i]].transform.Rotate (Vector3.up * Time.deltaTime * 100);
-//					Debug.Log ("DEstra");
-//				}
-//				if (indexRotation == 1) {
-//					roboModelsOne [index[i]].transform.Rotate (Vector3.up * Time.deltaTime * 100);
-//					Debug.Log ("Sinistraa");
-//
-//				}
-//
-//			}
-//		}
-//	}
-//
+	public void RotateRobot(){
+		for (int i = 0; i < control.Length; i++) {
+
+			for(int j=0;j<roboModels.Length;j++){
+
+			if (GetAxis (0, "RightRotationH") > 0)
+			{
+					roboModels [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+			if (GetAxis (1, "RightRotationH") > 0)
+			{
+					roboModelsOne [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+			if (GetAxis (2, "RightRotationH") > 0)
+			{
+					roboModelsTwo [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+			if (GetAxis (3, "RightRotationH") > 0)
+			{
+					roboModelsThree [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+
+			if (GetAxis (0, "RightRotationH") < 0)
+			{
+					roboModels [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+			if (GetAxis (1, "RightRotationH") < 0)
+			{
+					roboModelsOne [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+			if (GetAxis (2, "RightRotationH") < 0)
+			{
+					roboModelsTwo [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+			if (GetAxis (3, "RightRotationH") < 0)
+			{
+					roboModelsThree [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+			}
+		}
+	}
+	}
+
 
 	//rewired part
 	bool GetButton(int player, string name)

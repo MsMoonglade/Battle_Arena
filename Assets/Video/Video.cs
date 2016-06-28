@@ -10,6 +10,7 @@ public class Video : MonoBehaviour {
     MovieTexture movie;
     Renderer r;
 	private int firstTime;
+    public string shotsSound = "M_Intro", intro = "M_IntroDub", mainTheme = "M_MainTheme";
 
     void Awake() {
 		firstTime = 0;
@@ -17,6 +18,12 @@ public class Video : MonoBehaviour {
         ((MovieTexture)r.material.mainTexture).Play();
          movie = (MovieTexture)r.material.mainTexture;
         movie.loop = true;
+    }
+
+    void Start()
+    {
+        AudioManager.instance.PlaySound(intro);
+
     }
 
     // Update is called once per frame
@@ -30,10 +37,19 @@ public class Video : MonoBehaviour {
             ((MovieTexture)r.material.mainTexture).Play();
             movie = (MovieTexture)r.material.mainTexture;
             movie.loop = false;
-            AudioManager.instance.PlaySound("M_Intro");
-			firstTime++;
+            AudioManager.instance.PlaySound(shotsSound);
+            firstTime++;
+            AudioManager.instance.FadeMusic(intro, 0, .5f);
+            Invoke("PlayMain", 3);
         }
 	}
 
- 
+    void PlayMain()
+    {
+        AudioManager.instance.StopSound(intro);
+
+        AudioManager.instance.PlaySound(mainTheme);
+
+    }
+
 }

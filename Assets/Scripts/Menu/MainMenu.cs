@@ -3,11 +3,15 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 	public GameObject gameTitle;
+	public GameObject settingsTitle;
     public GameObject play;
     public GameObject settings;
     public GameObject credits;
     public GameObject exit;
     public GameObject pressAnyKey;
+	public GameObject menu;
+	public GameObject settingsOptions;
+	public GameObject creditsImage;
 
 //	private bool activePlay;
 
@@ -56,12 +60,16 @@ public class MainMenu : MonoBehaviour {
 
     public void Settings()
     {
-        
+		menu.GetComponent<TweenPosition>().PlayForward();
+		gameTitle.SetActive (false);
+		settingsTitle.GetComponent<TweenAlpha> ().PlayForward ();
+		settingsOptions.GetComponent<TweenPosition>().PlayForward();
     }
 
     public void Credits()
     {
-		Application.LoadLevel ("Credits");
+		//Application.LoadLevel ("Credits");
+		//play.GetComponent<TweenPosition>().PlayForward();
     }
 
     public void Exit()

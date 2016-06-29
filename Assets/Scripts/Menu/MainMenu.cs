@@ -3,15 +3,20 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 
+	public GameObject pressAnyKey;
 	public GameObject gameTitle;
     public GameObject play;
-	public GameObject settings;
-    public GameObject credits;
-    public GameObject exit;
-    public GameObject pressAnyKey;
 	public GameObject menu;
+	public GameObject settings;
+	public GameObject settingsTitle;
 	public GameObject settingsMenu;
+    public GameObject credits;
 	public GameObject creditsImage;
+    public GameObject exit;
+	public GameObject exitMenu;
+
+
+
 	private int backToMenu;
 
 
@@ -68,6 +73,7 @@ public class MainMenu : MonoBehaviour {
 		Debug.Log (backToMenu);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		gameTitle.GetComponent<TweenPosition>().PlayReverse();
+		settingsTitle.GetComponent<TweenAlpha>().PlayForward();
 		settingsMenu.GetComponent<TweenPosition>().PlayForward();
 
 	}
@@ -86,13 +92,24 @@ public class MainMenu : MonoBehaviour {
     public void Exit()
     {
 		backToMenu = 3;
-		
-//        Application.Quit();
+		menu.GetComponent<TweenPosition>().PlayForward();
+		gameTitle.GetComponent<TweenPosition>().PlayReverse();
+		exitMenu.GetComponent<TweenPosition>().PlayForward();
+
     }
 
 	public void Undo()
 	{
-		Debug.Log (backToMenu);
+	
+
+		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 1 )
+		{
+			menu.GetComponent<TweenPosition>().PlayReverse();
+			settingsTitle.GetComponent<TweenAlpha>().PlayReverse();
+			settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+			gameTitle.GetComponent<TweenPosition>().PlayForward();
+		}
+
 		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 2 )
 		{
 			menu.GetComponent<TweenPosition>().PlayReverse();
@@ -100,12 +117,14 @@ public class MainMenu : MonoBehaviour {
 			gameTitle.GetComponent<TweenPosition>().PlayForward();
 		}
 
-		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 1 )
+		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 3 )
 		{
 			menu.GetComponent<TweenPosition>().PlayReverse();
-			settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+			exitMenu.GetComponent<TweenPosition>().PlayReverse();
 			gameTitle.GetComponent<TweenPosition>().PlayForward();
 		}
+
+
 		
 	}
 }

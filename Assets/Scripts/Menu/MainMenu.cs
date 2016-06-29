@@ -2,55 +2,59 @@
 using System.Collections;
 
 public class MainMenu : MonoBehaviour {
+
 	public GameObject gameTitle;
-	public GameObject settingsTitle;
     public GameObject play;
-    public GameObject settings;
+	public GameObject settings;
     public GameObject credits;
     public GameObject exit;
     public GameObject pressAnyKey;
 	public GameObject menu;
-	public GameObject settingsOptions;
+	public GameObject settingsMenu;
 	public GameObject creditsImage;
+	private int backToMenu;
 
-//	private bool activePlay;
+
 
 
 	void Awake ()
 	{
-//		activePlay = false; 
-	}
-	void Start () 
-	{
-	
 
 	}
+
+	void Start () 
+	{
+		backToMenu = 0;
+		Debug.Log (backToMenu);
+	}
 	
-	// Update is called once per frame
+
 	void Update () 
 	{
-		MenuFunction ();
+		MenuFunction();
+		Undo();
 
        
     }
-	void MenuFunction()
+
+	public void MenuFunction()
 	{
+	
+		Debug.Log (backToMenu);
 		if (Input.anyKeyDown) {
 			pressAnyKey.SetActive(false);
-			gameTitle.GetComponent<TweenAlpha> ().PlayForward ();
+			gameTitle.GetComponent<TweenPosition>().PlayForward();
 			play.GetComponent<TweenPosition>().PlayForward();
-			play.GetComponent<TweenAlpha> ().PlayForward ();
+			play.GetComponent<TweenAlpha>().PlayForward();
 			settings.GetComponent<TweenPosition>().PlayForward();
-			settings.GetComponent<TweenAlpha> ().PlayForward ();
+			settings.GetComponent<TweenAlpha>().PlayForward();
 			credits.GetComponent<TweenPosition>().PlayForward();
-			credits.GetComponent<TweenAlpha> ().PlayForward ();
+			credits.GetComponent<TweenAlpha>().PlayForward();
 			exit.GetComponent<TweenPosition>().PlayForward();
-			exit.GetComponent<TweenAlpha> ().PlayForward ();
+			exit.GetComponent<TweenAlpha>().PlayForward();
 
 		}
 
-	
-	
 	}
 
     public void Play()
@@ -58,22 +62,50 @@ public class MainMenu : MonoBehaviour {
 //		Application.LoadLevel ("CharacterSelection");
     }
 
-    public void Settings()
-    {
+	public void Settings() 
+	{
+		backToMenu = 1;
+		Debug.Log (backToMenu);
 		menu.GetComponent<TweenPosition>().PlayForward();
-		gameTitle.SetActive (false);
-		settingsTitle.GetComponent<TweenAlpha> ().PlayForward ();
-		settingsOptions.GetComponent<TweenPosition>().PlayForward();
-    }
+		gameTitle.GetComponent<TweenPosition>().PlayReverse();
+		settingsMenu.GetComponent<TweenPosition>().PlayForward();
+
+	}
 
     public void Credits()
     {
-		//Application.LoadLevel ("Credits");
-		//play.GetComponent<TweenPosition>().PlayForward();
+		backToMenu = 2;
+		Debug.Log (backToMenu);
+		menu.GetComponent<TweenPosition>().PlayForward();
+		gameTitle.GetComponent<TweenPosition>().PlayReverse();
+		creditsImage.GetComponent<TweenPosition>().PlayForward();
+
+
     }
 
     public void Exit()
     {
-        Application.Quit();
+		backToMenu = 3;
+		
+//        Application.Quit();
     }
+
+	public void Undo()
+	{
+		Debug.Log (backToMenu);
+		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 2 )
+		{
+			menu.GetComponent<TweenPosition>().PlayReverse();
+			creditsImage.GetComponent<TweenPosition>().PlayReverse();
+			gameTitle.GetComponent<TweenPosition>().PlayForward();
+		}
+
+		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 1 )
+		{
+			menu.GetComponent<TweenPosition>().PlayReverse();
+			settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+			gameTitle.GetComponent<TweenPosition>().PlayForward();
+		}
+		
+	}
 }

@@ -1,14 +1,15 @@
 // Shader created with Shader Forge v1.16 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.16;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,rpth:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:2865,x:32719,y:32712,varname:node_2865,prsc:2|diff-8087-OUT,spec-358-OUT,gloss-8556-R,normal-8529-RGB,emission-4077-OUT,amspl-8410-RGB;n:type:ShaderForge.SFN_Slider,id:358,x:32282,y:32592,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_358,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Tex2d,id:2758,x:31765,y:32214,ptovrint:False,ptlb:Pan_alpha,ptin:_Pan_alpha,varname:node_2758,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:489a4a9af9a7ac64ba60d911fbd0f8ef,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:2624,x:32085,y:32200,ptovrint:False,ptlb:Albdedo,ptin:_Albdedo,varname:node_2624,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:3649782ecbc05764fab240df8dd69f07,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:7093,x:32030,y:32945,ptovrint:False,ptlb:Emission,ptin:_Emission,varname:node_7093,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:e01e891658f4e6b47a1fcdb0f64924a4,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8556,x:32361,y:32679,ptovrint:False,ptlb:Glossines,ptin:_Glossines,varname:node_8556,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:e147d53b2ffcf2148955883249a2888f,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8529,x:32361,y:32849,ptovrint:False,ptlb:Normal,ptin:_Normal,varname:node_8529,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:e383ddac7e8b31b48904e9fdb1bb96bf,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:9057,x:31765,y:32470,ptovrint:False,ptlb:Pan_texture,ptin:_Pan_texture,varname:node_9057,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:47a2f9361651d7744aeea78f5d330eb0,ntxv:0,isnm:False|UVIN-5268-UVOUT;n:type:ShaderForge.SFN_Tex2d,id:8410,x:32363,y:33156,ptovrint:False,ptlb:Specular,ptin:_Specular,varname:node_8410,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:78ce1debad37da94eb5374eaa7def381,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:4077,x:32363,y:33018,varname:node_4077,prsc:2|A-7093-RGB,B-2123-OUT;n:type:ShaderForge.SFN_Slider,id:2123,x:31899,y:33173,ptovrint:False,ptlb:Emissive_power,ptin:_Emissive_power,varname:node_2123,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Time,id:8590,x:31002,y:32260,varname:node_8590,prsc:2;n:type:ShaderForge.SFN_Slider,id:7644,x:31017,y:32578,ptovrint:False,ptlb:Pann_velocity,ptin:_Pann_velocity,varname:node_7644,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0.5,max:1;n:type:ShaderForge.SFN_Panner,id:5268,x:31566,y:32368,varname:node_5268,prsc:2,spu:1,spv:0|DIST-7722-OUT;n:type:ShaderForge.SFN_Multiply,id:7722,x:31368,y:32368,varname:node_7722,prsc:2|A-8590-T,B-7644-OUT;n:type:ShaderForge.SFN_Add,id:8087,x:32356,y:32409,varname:node_8087,prsc:2|A-2624-RGB,B-4052-OUT;n:type:ShaderForge.SFN_Multiply,id:4052,x:31991,y:32365,varname:node_4052,prsc:2|A-2758-RGB,B-9057-RGB;proporder:2624-7644-9057-2758-358-8556-8529-2123-7093-8410;pass:END;sub:END;*/
+/*SF_DATA;ver:1.16;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,rpth:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,rfrpo:True,rfrpn:Refraction,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:2865,x:32784,y:32547,varname:node_2865,prsc:2|diff-1227-OUT,spec-358-OUT,gloss-8556-R,normal-8529-RGB,emission-4077-OUT,amspl-8410-RGB;n:type:ShaderForge.SFN_Slider,id:358,x:32282,y:32592,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_358,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Tex2d,id:2624,x:31782,y:31853,ptovrint:False,ptlb:Albdedo,ptin:_Albdedo,varname:node_2624,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:3649782ecbc05764fab240df8dd69f07,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:7093,x:32030,y:32945,ptovrint:False,ptlb:Emission,ptin:_Emission,varname:node_7093,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:e01e891658f4e6b47a1fcdb0f64924a4,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8556,x:32361,y:32679,ptovrint:False,ptlb:Glossines,ptin:_Glossines,varname:node_8556,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:e147d53b2ffcf2148955883249a2888f,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8529,x:32361,y:32849,ptovrint:False,ptlb:Normal,ptin:_Normal,varname:node_8529,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:e383ddac7e8b31b48904e9fdb1bb96bf,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8410,x:32363,y:33156,ptovrint:False,ptlb:Specular,ptin:_Specular,varname:node_8410,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:78ce1debad37da94eb5374eaa7def381,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:4077,x:32363,y:33018,varname:node_4077,prsc:2|A-7093-RGB,B-2123-OUT;n:type:ShaderForge.SFN_Slider,id:2123,x:31899,y:33173,ptovrint:False,ptlb:Emissive_power,ptin:_Emissive_power,varname:node_2123,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Time,id:8590,x:31002,y:32260,varname:node_8590,prsc:2;n:type:ShaderForge.SFN_Slider,id:7644,x:31017,y:32578,ptovrint:False,ptlb:Pann_velocity,ptin:_Pann_velocity,varname:node_7644,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0.5,max:1;n:type:ShaderForge.SFN_Panner,id:5268,x:31543,y:32409,varname:node_5268,prsc:2,spu:1,spv:0|DIST-7722-OUT;n:type:ShaderForge.SFN_Multiply,id:7722,x:31368,y:32368,varname:node_7722,prsc:2|A-8590-T,B-7644-OUT;n:type:ShaderForge.SFN_Lerp,id:1227,x:32300,y:32080,varname:node_1227,prsc:2|A-2624-RGB,B-4472-OUT,T-7058-RGB;n:type:ShaderForge.SFN_Tex2d,id:7058,x:31842,y:32568,ptovrint:False,ptlb:Alpha,ptin:_Alpha,varname:node_7058,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:489a4a9af9a7ac64ba60d911fbd0f8ef,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:147,x:31740,y:32152,ptovrint:False,ptlb:Panner,ptin:_Panner,varname:node_147,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:543f7c6a1e4a0484a999ba057db27f0f,ntxv:0,isnm:False|UVIN-5268-UVOUT;n:type:ShaderForge.SFN_Multiply,id:3551,x:31938,y:32152,varname:node_3551,prsc:2|A-147-RGB,B-9938-A;n:type:ShaderForge.SFN_Tex2d,id:9938,x:31740,y:32346,ptovrint:False,ptlb:Panner_alpha,ptin:_Panner_alpha,varname:node_9938,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:5dca34d371090f5449e84877bc96978f,ntxv:0,isnm:False|UVIN-5268-UVOUT;n:type:ShaderForge.SFN_Add,id:4472,x:32097,y:32097,varname:node_4472,prsc:2|A-2624-RGB,B-3551-OUT;proporder:2624-147-9938-7058-7644-358-8556-8529-2123-7093-8410;pass:END;sub:END;*/
 
 Shader "Shader Forge/sh_publicitary" {
     Properties {
         _Albdedo ("Albdedo", 2D) = "white" {}
+        _Panner ("Panner", 2D) = "white" {}
+        _Panner_alpha ("Panner_alpha", 2D) = "white" {}
+        _Alpha ("Alpha", 2D) = "white" {}
         _Pann_velocity ("Pann_velocity", Range(0, 1)) = 0.5
-        _Pan_texture ("Pan_texture", 2D) = "white" {}
-        _Pan_alpha ("Pan_alpha", 2D) = "white" {}
         _Metallic ("Metallic", Range(0, 1)) = 0
         _Glossines ("Glossines", 2D) = "white" {}
         _Normal ("Normal", 2D) = "white" {}
@@ -47,15 +48,16 @@ Shader "Shader Forge/sh_publicitary" {
             #pragma target 3.0
             uniform float4 _TimeEditor;
             uniform float _Metallic;
-            uniform sampler2D _Pan_alpha; uniform float4 _Pan_alpha_ST;
             uniform sampler2D _Albdedo; uniform float4 _Albdedo_ST;
             uniform sampler2D _Emission; uniform float4 _Emission_ST;
             uniform sampler2D _Glossines; uniform float4 _Glossines_ST;
             uniform sampler2D _Normal; uniform float4 _Normal_ST;
-            uniform sampler2D _Pan_texture; uniform float4 _Pan_texture_ST;
             uniform sampler2D _Specular; uniform float4 _Specular_ST;
             uniform float _Emissive_power;
             uniform float _Pann_velocity;
+            uniform sampler2D _Alpha; uniform float4 _Alpha_ST;
+            uniform sampler2D _Panner; uniform float4 _Panner_ST;
+            uniform sampler2D _Panner_alpha; uniform float4 _Panner_alpha_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -161,11 +163,12 @@ Shader "Shader Forge/sh_publicitary" {
             float4 _Specular_var = tex2D(_Specular,TRANSFORM_TEX(i.uv0, _Specular));
             float LdotH = max(0.0,dot(lightDirection, halfDirection));
             float4 _Albdedo_var = tex2D(_Albdedo,TRANSFORM_TEX(i.uv0, _Albdedo));
-            float4 _Pan_alpha_var = tex2D(_Pan_alpha,TRANSFORM_TEX(i.uv0, _Pan_alpha));
             float4 node_8590 = _Time + _TimeEditor;
             float2 node_5268 = (i.uv0+(node_8590.g*_Pann_velocity)*float2(1,0));
-            float4 _Pan_texture_var = tex2D(_Pan_texture,TRANSFORM_TEX(node_5268, _Pan_texture));
-            float3 diffuseColor = (_Albdedo_var.rgb+(_Pan_alpha_var.rgb*_Pan_texture_var.rgb)); // Need this for specular when using metallic
+            float4 _Panner_var = tex2D(_Panner,TRANSFORM_TEX(node_5268, _Panner));
+            float4 _Panner_alpha_var = tex2D(_Panner_alpha,TRANSFORM_TEX(node_5268, _Panner_alpha));
+            float4 _Alpha_var = tex2D(_Alpha,TRANSFORM_TEX(i.uv0, _Alpha));
+            float3 diffuseColor = lerp(_Albdedo_var.rgb,(_Albdedo_var.rgb+(_Panner_var.rgb*_Panner_alpha_var.a)),_Alpha_var.rgb); // Need this for specular when using metallic
             float specularMonochrome;
             float3 specularColor;
             diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, _Metallic, specularColor, specularMonochrome );
@@ -227,14 +230,15 @@ Shader "Shader Forge/sh_publicitary" {
         #pragma target 3.0
         uniform float4 _TimeEditor;
         uniform float _Metallic;
-        uniform sampler2D _Pan_alpha; uniform float4 _Pan_alpha_ST;
         uniform sampler2D _Albdedo; uniform float4 _Albdedo_ST;
         uniform sampler2D _Emission; uniform float4 _Emission_ST;
         uniform sampler2D _Glossines; uniform float4 _Glossines_ST;
         uniform sampler2D _Normal; uniform float4 _Normal_ST;
-        uniform sampler2D _Pan_texture; uniform float4 _Pan_texture_ST;
         uniform float _Emissive_power;
         uniform float _Pann_velocity;
+        uniform sampler2D _Alpha; uniform float4 _Alpha_ST;
+        uniform sampler2D _Panner; uniform float4 _Panner_ST;
+        uniform sampler2D _Panner_alpha; uniform float4 _Panner_alpha_ST;
         struct VertexInput {
             float4 vertex : POSITION;
             float3 normal : NORMAL;
@@ -292,11 +296,12 @@ Shader "Shader Forge/sh_publicitary" {
             float NdotL = max(0, dot( normalDirection, lightDirection ));
             float LdotH = max(0.0,dot(lightDirection, halfDirection));
             float4 _Albdedo_var = tex2D(_Albdedo,TRANSFORM_TEX(i.uv0, _Albdedo));
-            float4 _Pan_alpha_var = tex2D(_Pan_alpha,TRANSFORM_TEX(i.uv0, _Pan_alpha));
             float4 node_8590 = _Time + _TimeEditor;
             float2 node_5268 = (i.uv0+(node_8590.g*_Pann_velocity)*float2(1,0));
-            float4 _Pan_texture_var = tex2D(_Pan_texture,TRANSFORM_TEX(node_5268, _Pan_texture));
-            float3 diffuseColor = (_Albdedo_var.rgb+(_Pan_alpha_var.rgb*_Pan_texture_var.rgb)); // Need this for specular when using metallic
+            float4 _Panner_var = tex2D(_Panner,TRANSFORM_TEX(node_5268, _Panner));
+            float4 _Panner_alpha_var = tex2D(_Panner_alpha,TRANSFORM_TEX(node_5268, _Panner_alpha));
+            float4 _Alpha_var = tex2D(_Alpha,TRANSFORM_TEX(i.uv0, _Alpha));
+            float3 diffuseColor = lerp(_Albdedo_var.rgb,(_Albdedo_var.rgb+(_Panner_var.rgb*_Panner_alpha_var.a)),_Alpha_var.rgb); // Need this for specular when using metallic
             float specularMonochrome;
             float3 specularColor;
             diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, _Metallic, specularColor, specularMonochrome );
@@ -348,13 +353,14 @@ Shader "Shader Forge/sh_publicitary" {
         #pragma target 3.0
         uniform float4 _TimeEditor;
         uniform float _Metallic;
-        uniform sampler2D _Pan_alpha; uniform float4 _Pan_alpha_ST;
         uniform sampler2D _Albdedo; uniform float4 _Albdedo_ST;
         uniform sampler2D _Emission; uniform float4 _Emission_ST;
         uniform sampler2D _Glossines; uniform float4 _Glossines_ST;
-        uniform sampler2D _Pan_texture; uniform float4 _Pan_texture_ST;
         uniform float _Emissive_power;
         uniform float _Pann_velocity;
+        uniform sampler2D _Alpha; uniform float4 _Alpha_ST;
+        uniform sampler2D _Panner; uniform float4 _Panner_ST;
+        uniform sampler2D _Panner_alpha; uniform float4 _Panner_alpha_ST;
         struct VertexInput {
             float4 vertex : POSITION;
             float2 texcoord0 : TEXCOORD0;
@@ -387,11 +393,12 @@ Shader "Shader Forge/sh_publicitary" {
             o.Emission = (_Emission_var.rgb*_Emissive_power);
             
             float4 _Albdedo_var = tex2D(_Albdedo,TRANSFORM_TEX(i.uv0, _Albdedo));
-            float4 _Pan_alpha_var = tex2D(_Pan_alpha,TRANSFORM_TEX(i.uv0, _Pan_alpha));
             float4 node_8590 = _Time + _TimeEditor;
             float2 node_5268 = (i.uv0+(node_8590.g*_Pann_velocity)*float2(1,0));
-            float4 _Pan_texture_var = tex2D(_Pan_texture,TRANSFORM_TEX(node_5268, _Pan_texture));
-            float3 diffColor = (_Albdedo_var.rgb+(_Pan_alpha_var.rgb*_Pan_texture_var.rgb));
+            float4 _Panner_var = tex2D(_Panner,TRANSFORM_TEX(node_5268, _Panner));
+            float4 _Panner_alpha_var = tex2D(_Panner_alpha,TRANSFORM_TEX(node_5268, _Panner_alpha));
+            float4 _Alpha_var = tex2D(_Alpha,TRANSFORM_TEX(i.uv0, _Alpha));
+            float3 diffColor = lerp(_Albdedo_var.rgb,(_Albdedo_var.rgb+(_Panner_var.rgb*_Panner_alpha_var.a)),_Alpha_var.rgb);
             float specularMonochrome;
             float3 specColor;
             diffColor = DiffuseAndSpecularFromMetallic( diffColor, _Metallic, specColor, specularMonochrome );

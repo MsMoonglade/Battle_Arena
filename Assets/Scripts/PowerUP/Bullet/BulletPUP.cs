@@ -6,7 +6,6 @@ public class BulletPUP : MonoBehaviour
     public float StayOnFloor;
     public float Duration;
  
-
     void OnEnable()
     {
         StartCoroutine(Deactivate());

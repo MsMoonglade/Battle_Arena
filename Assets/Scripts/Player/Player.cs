@@ -51,9 +51,12 @@ public class Player : MonoBehaviour {
     public bool onDash;
     [HideInInspector]
     public bool onSuperDash;
+
+    //variabili respawn
     [HideInInspector]
  // public bool onFly;
     private GameObject inAirAim;
+    private Vector3 inAirAimStartScale;
  // private bool isFalling;
     public bool isGrunded;
 
@@ -133,8 +136,11 @@ public class Player : MonoBehaviour {
         chargedBullet = superBul.GetComponent<SuperBullet>();
         chargedBullet.ThisPlayer = this.gameObject;
 
+        //respawn
 		inAirAim = Instantiate(MirinoPrefab , Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
-		inAirAim.SetActive (false);
+        inAirAimStartScale = inAirAim.transform.localScale;
+
+        inAirAim.SetActive (false);
 
         //score
         GameObject[] playersTemp = GameObject.FindGameObjectsWithTag("Player");
@@ -200,6 +206,9 @@ public class Player : MonoBehaviour {
         shootTimer += Time.deltaTime;
         superShootTimer += Time.deltaTime;
         shootCharge += Time.deltaTime;
+
+        //il mirino si rimpicciolisce quando il player cade
+        AimScale();
 
         //Metodo per il recupero dell'energy
         RechargeEnergy();
@@ -492,8 +501,7 @@ public class Player : MonoBehaviour {
         {  
             rb.useGravity = true;
            // isFalling = true;
-            StartCoroutine(FallDownAnimation());
-           // inAirAim.SetActive(false);
+            StartCoroutine(FallDownAnimation());       
         }
     }
 
@@ -520,8 +528,8 @@ public class Player : MonoBehaviour {
         //il player cade
         while(!isGrunded)
         {
-            transform.Translate(Vector3.down * fallDownSpeed * Time.deltaTime);
-            
+            transform.Translate(Vector3.down * fallDownSpeed * Time.deltaTime);         
+
             yield return null;
         }
     }
@@ -543,13 +551,24 @@ public class Player : MonoBehaviour {
         inAirAim.transform.position = inAirAim.transform.position + position;
     }
 
+    private void AimScale()
+    {
+        Debug.Log(inAirAim.activeInHierarchy);
+
+        if (inAirAim.activeInHierarchy)
+        {           
+            inAirAim.transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f) * Time.deltaTime;
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
 
         if (currentHealth <= 0)
         {
-            Die();   
+            Die();
+            inAirAim.transform.localScale = inAirAimStartScale;
         }
     }
 
@@ -560,6 +579,7 @@ public class Player : MonoBehaviour {
         particellari.Play("explosion");
         RelaseSuperShoot();
         Respawn();
+      
         AudioManager.instance.PlaySound(explosionSound);
     }
 
@@ -575,7 +595,6 @@ public class Player : MonoBehaviour {
         transform.position = new Vector3(transform.position.x, 20, transform.position.z);
         isGrunded = false;
         rb.useGravity = false;
-        
 
         inAirAim.transform.position = new Vector3(transform.position.x,-6.5f,transform.position.z);
         inAirAim.SetActive(true);
@@ -620,6 +639,9 @@ public class Player : MonoBehaviour {
         }
         percDmg[i] = 0;
     }
+
+
+    //inizio metodi per PowerUp
 
     private void DamagePUP(float[] value)
     {

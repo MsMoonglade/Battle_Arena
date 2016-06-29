@@ -5,24 +5,22 @@ using Rewired;
 public class CharacterSelection : MonoBehaviour {
 	
 	//variables
+	public int rotationSpeed;
 	public GameObject[] icon=new GameObject[5];
-
 	public GameObject[] roboModels=new GameObject[5];
 	public GameObject[] roboModelsOne=new GameObject[5];
 	public GameObject[] roboModelsTwo=new GameObject[5];
 	public GameObject[] roboModelsThree=new GameObject[5];
-
-
 	public GameObject[] Selector=new GameObject[4];
-	public int rotationSpeed;
-
 	public int[] counter = new int[4];
+	public int[] modelIndex=new int[4];
+
+
 	Rewired.Controller[] control;
 	int[] index = new int[4];
 	float delay = 0.1f;
 	bool[] ready;
 	float[] timer;
-	public int[] modelIndex=new int[4];
 
 	void Awake()
 	{

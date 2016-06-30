@@ -34,9 +34,14 @@ public class GameController : MonoBehaviour {
         instance = this;
 
         characterSel = GameObject.FindGameObjectWithTag("CharacterController").GetComponent<CharacterSelection>();
-        players = GameObject.FindGameObjectsWithTag("Player");
+		players = new GameObject[4];
+		AssignPlayers();
 
-       
+		for(int i = 0; i < players.Length; i++)
+		{
+			if( i > characterSel.control.Length - 1)
+				players[i].SetActive(false);
+		}
 
 		rewiredInputController = GameObject.FindGameObjectWithTag ("Rewired");
 		
@@ -128,4 +133,19 @@ public class GameController : MonoBehaviour {
                 EndGame();
         }
     }
+
+	private void AssignPlayers()
+	{
+		if(GameObject.Find("Player1").activeInHierarchy)
+			players[0] = GameObject.Find("Player1");
+		
+		if (GameObject.Find("Player2").activeInHierarchy)
+			players[1] = GameObject.Find("Player2");
+		
+		if (GameObject.Find("Player3").activeInHierarchy)
+			players[2] = GameObject.Find("Player3");
+		
+		if (GameObject.Find("Player4").activeInHierarchy)
+			players[3] = GameObject.Find("Player4");
+	}
 }

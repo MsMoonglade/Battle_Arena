@@ -6,6 +6,8 @@ public class StatsPUP : MonoBehaviour {
     public float StayOnFloor;
     public float Duration;
 
+    private float timer;
+
     void OnEnable()
     {
         StartCoroutine(Deactivate());

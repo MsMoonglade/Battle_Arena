@@ -17,7 +17,8 @@ public class CharacterSelection : MonoBehaviour {
 	public int rotationSpeed;
 
 	public int[] counter = new int[4];
-	Rewired.Controller[] control;
+	[HideInInspector]
+	public Rewired.Controller[] control;
 	int[] index = new int[4];
 	float delay = 0.1f;
 	bool[] ready;
@@ -41,7 +42,10 @@ public class CharacterSelection : MonoBehaviour {
 		timer = new float[control.Length];
 		for (int i =0; i< timer.Length; i++)
 			timer [i] = delay;
-		}
+		}else		
+			control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
+
+	
 
 
 	}

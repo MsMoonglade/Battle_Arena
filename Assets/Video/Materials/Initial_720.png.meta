@@ -1,0 +1,787 @@
+fileFormatVersion: 2
+guid: 3dedd1d395c23724baa4e7dbe3e071d6
+timeCreated: 1467293105
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Initial_720_0
+    21300002: Initial_720_1
+    21300004: Initial_720_2
+    21300006: Initial_720_3
+    21300008: Initial_720_4
+    21300010: Initial_720_5
+    21300012: Initial_720_6
+    21300014: Initial_720_7
+    21300016: Initial_720_8
+    21300018: Initial_720_9
+    21300020: Initial_720_10
+    21300022: Initial_720_11
+    21300024: Initial_720_12
+    21300026: Initial_720_13
+    21300028: Initial_720_14
+    21300030: Initial_720_15
+    21300032: Initial_720_16
+    21300034: Initial_720_17
+    21300036: Initial_720_18
+    21300038: Initial_720_19
+    21300040: Initial_720_20
+    21300042: Initial_720_21
+    21300044: Initial_720_22
+    21300046: Initial_720_23
+    21300048: Initial_720_24
+    21300050: Initial_720_25
+    21300052: Initial_720_26
+    21300054: Initial_720_27
+    21300056: Initial_720_28
+    21300058: Initial_720_29
+    21300060: Initial_720_30
+    21300062: Initial_720_31
+    21300064: Initial_720_32
+    21300066: Initial_720_33
+    21300068: Initial_720_34
+    21300070: Initial_720_35
+    21300072: Initial_720_36
+    21300074: Initial_720_37
+    21300076: Initial_720_38
+    21300078: Initial_720_39
+    21300080: Initial_720_40
+    21300082: Initial_720_41
+    21300084: Initial_720_42
+    21300086: Initial_720_43
+    21300088: Initial_720_44
+    21300090: Initial_720_45
+    21300092: Initial_720_46
+    21300094: Initial_720_47
+    21300096: Initial_720_48
+    21300098: Initial_720_49
+    21300100: Initial_720_50
+    21300102: Initial_720_51
+    21300104: Initial_720_52
+    21300106: Initial_720_53
+    21300108: Initial_720_54
+    21300110: Initial_720_55
+    21300112: Initial_720_56
+    21300114: Initial_720_57
+    21300116: Initial_720_58
+    21300118: Initial_720_59
+    21300120: Initial_720_60
+    21300122: Initial_720_61
+    21300124: Initial_720_62
+    21300126: Initial_720_63
+    21300128: Initial_720_64
+    21300130: Initial_720_65
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    textureFormat: -1
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: Initial_720_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_1
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_2
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_3
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_4
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_5
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_7
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_8
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_9
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_10
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_11
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_13
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_14
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_15
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_16
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_17
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_19
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_20
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_21
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_22
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_23
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_25
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_26
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_27
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_28
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_29
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_31
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_32
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_33
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_34
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_35
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_37
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_38
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_39
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_40
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_41
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_43
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_44
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_45
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_46
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_47
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_49
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_50
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_51
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_52
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_53
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_55
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_56
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_57
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_58
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_59
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_61
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_62
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_63
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_64
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Initial_720_65
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

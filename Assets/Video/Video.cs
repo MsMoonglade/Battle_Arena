@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Video : MonoBehaviour {
@@ -6,17 +6,13 @@ public class Video : MonoBehaviour {
 
 
     // Use this for initialization
-    public Material mat;
-    MovieTexture movie;
-    Renderer r;
+  
 	private int firstTime;
+	Animator anim;
 
     void Awake() {
 		firstTime = 0;
-        r = GetComponent<Renderer>();
-        ((MovieTexture)r.material.mainTexture).Play();
-         movie = (MovieTexture)r.material.mainTexture;
-        movie.loop = true;
+		anim = GetComponent<Animator> ();
     }
 
     // Update is called once per frame
@@ -25,11 +21,7 @@ public class Video : MonoBehaviour {
 
 		if (Input.anyKeyDown && firstTime <= 0)
         {
-            r.material = mat;
-            movie.Stop();
-            ((MovieTexture)r.material.mainTexture).Play();
-            movie = (MovieTexture)r.material.mainTexture;
-            movie.loop = false;
+			anim.SetBool("isStarted",true);
             AudioManager.instance.PlaySound("M_Intro");
 			firstTime++;
         }

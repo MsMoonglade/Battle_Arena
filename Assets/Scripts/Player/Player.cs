@@ -103,15 +103,6 @@ public class Player : MonoBehaviour {
     public bool explosionPuP;
     [HideInInspector]
     public bool bouncePuP;
-	[HideInInspector]
-	public bool damagePuP;
-	[HideInInspector]
-	public bool healthPuP;
-	[HideInInspector]
-	public bool energyPuP;
-	public GameObject GuiIcon;
-	private GameObject[] IconGui = new GameObject[4];
-	private PlayerPowerUpGui playerIcon;
 
 
     void Awake()
@@ -179,18 +170,6 @@ public class Player : MonoBehaviour {
 
         //particellari
         particellari = GetComponent<ParticleController>();
-
-		//PowerUp
-		for (int i = 0; i < IconGui.Length ; i++) 
-		{
-			IconGui[i] = GuiIcon.transform.GetChild(i).gameObject;
-
-			if(IconGui[i].name == transform.name)
-		    {
-				playerIcon = IconGui[i].GetComponent<PlayerPowerUpGui> ();
-				break;
-			}
-		}
     }
 
     void Start()
@@ -213,9 +192,6 @@ public class Player : MonoBehaviour {
         penetrationPuP = false;
         explosionPuP = false;
         bouncePuP = false;
-		damagePuP = false;
-		healthPuP = false;
-		energyPuP = false;
 
         //Assegnazioni indici per sparo
         bulletIndex = 0;
@@ -523,9 +499,9 @@ public class Player : MonoBehaviour {
         //metodo per la caduta
         if (!isGrunded)
         {  
-           
+            rb.useGravity = true;
            // isFalling = true;
-            StartCoroutine("FallDownAnimation");       
+            StartCoroutine(FallDownAnimation());       
         }
     }
 
@@ -618,7 +594,7 @@ public class Player : MonoBehaviour {
         //sposto il player in aria
         transform.position = new Vector3(transform.position.x, 20, transform.position.z);
         isGrunded = false;
-        
+        rb.useGravity = false;
 
         inAirAim.transform.position = new Vector3(transform.position.x,-6.5f,transform.position.z);
         inAirAim.SetActive(true);
@@ -679,11 +655,8 @@ public class Player : MonoBehaviour {
 
     private IEnumerator DamageReset(float time)
     {
-		playerIcon.Change("Damage" , time);
-
         yield return new WaitForSeconds(time);
 
-		damagePuP = false;
         for (int i = 0; i < 30; i++)
         {
             bulletPool[i].GetComponent<Bullet>().Damage = stat.Damage;
@@ -700,15 +673,8 @@ public class Player : MonoBehaviour {
         float timer = 0;
         float hotTime = 0;
 
-		playerIcon.Change("Health" , value[2]); 
-
         while (timer <= value[2])
         {
-			if(timer <= value[2])
-				healthPuP = true;
-			else
-				healthPuP = false;
-
             timer += Time.deltaTime;
 
             hotTime += Time.deltaTime;
@@ -738,16 +704,8 @@ public class Player : MonoBehaviour {
         float timer = 0;
         float hotTime = 0;
 
-		playerIcon.Change("Energy" , value[2]);
-
         while (timer <= value[2])
         {
-			if(timer <= value[2])
-				energyPuP = true;
-			else
-				energyPuP = false;
-
-
             timer += Time.deltaTime;
 
             hotTime += Time.deltaTime;
@@ -797,8 +755,6 @@ public class Player : MonoBehaviour {
 
     private IEnumerator PenetrationPowerUP (float duration)
     {
-		playerIcon.Change("Penetration" , duration);
-
         penetrationPuP = true;
         yield return new WaitForSeconds(duration);
         penetrationPuP = false;
@@ -806,8 +762,6 @@ public class Player : MonoBehaviour {
 
     private IEnumerator ExplosionPowerUp(float duration)
     {
-		playerIcon.Change("Explosion" , duration);
-
         explosionPuP = true;
         yield return new WaitForSeconds(duration);
         explosionPuP = false;
@@ -815,8 +769,6 @@ public class Player : MonoBehaviour {
 
     private IEnumerator BouncePowerUp(float duration)
     {
-		playerIcon.Change("Bounce" , duration);
-
         bouncePuP = true;
         yield return new WaitForSeconds(duration);
         bouncePuP = false;

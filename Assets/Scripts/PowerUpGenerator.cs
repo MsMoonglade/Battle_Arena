@@ -63,10 +63,13 @@ public class PowerUpGenerator : MonoBehaviour {
 
 		StartCoroutine ("FallDownAnimation", randomTemp);
 
+		if(startSpawn)
+		Debug.Log ("power up is : " + PowerUP [randomTemp].name);
 
 		if (!startSpawn) 
 		{
-			startSpawn = true;	
+			startSpawn = true;
+			Debug.Log ("first is : " + PowerUP [randomTemp].name);
 		}
 	}
 

@@ -37,7 +37,7 @@ public class CharacterSelection : MonoBehaviour {
 
 
 		control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
-		AbilitySelector ();
+//		AbilitySelector ();
 		ready = new bool[control.Length];
 		timer = new float[control.Length];
 		for (int i =0; i< timer.Length; i++)
@@ -210,9 +210,6 @@ public class CharacterSelection : MonoBehaviour {
 			
 					}
 				}
-			
-		Selector [sel].transform.position = icon [index [sel]].transform.position;
-
 
 	}
 
@@ -245,36 +242,36 @@ public class CharacterSelection : MonoBehaviour {
 
 			if (GetAxis (0, "RightRotationH") > 0)
 			{
-					roboModels [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModels [j].transform.GetChild(1).Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 			if (GetAxis (1, "RightRotationH") > 0)
 			{
-					roboModelsOne [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModelsOne [j].transform.GetChild(1).Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 			if (GetAxis (2, "RightRotationH") > 0)
 			{
-					roboModelsTwo [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModelsTwo [j].transform.GetChild(1).Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 			if (GetAxis (3, "RightRotationH") > 0)
 			{
-					roboModelsThree [j].transform.Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModelsThree [j].transform.GetChild(1).Rotate (-Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 
 			if (GetAxis (0, "RightRotationH") < 0)
 			{
-					roboModels [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModels [j].transform.GetChild(1).Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 			if (GetAxis (1, "RightRotationH") < 0)
 			{
-					roboModelsOne [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModelsOne [j].transform.GetChild(1).Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 			if (GetAxis (2, "RightRotationH") < 0)
 			{
-					roboModelsTwo [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModelsTwo [j].transform.GetChild(1).Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 			if (GetAxis (3, "RightRotationH") < 0)
 			{
-					roboModelsThree [j].transform.Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
+					roboModelsThree [j].transform.GetChild(1).Rotate (Vector3.up * Time.deltaTime * rotationSpeed);
 			}
 		}
 	}

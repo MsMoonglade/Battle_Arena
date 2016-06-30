@@ -17,12 +17,6 @@ public class GUIController : MonoBehaviour {
         {
             Score[i].GetComponent<UILabel>();
         }
-
-		for (int i = 0; i < Score.Length; i++) 
-		{
-			if(!players[i].gameObject.activeInHierarchy)
-				Score[i].gameObject.SetActive(false);
-		}
 	}
 
 	private void AssignPlayers()
@@ -44,9 +38,9 @@ public class GUIController : MonoBehaviour {
 
     void ScoreView()
     {
-		Score[0].text = "Score  " + GameController.instance.Score[0].ToString("00") ;
-		Score[1].text = "Score  " + GameController.instance.Score[1].ToString("00") ;
-		Score[2].text = "Score  " + GameController.instance.Score[2].ToString("00") ;
-		Score[3].text = "Score  " + GameController.instance.Score[3].ToString("00") ;
+        Score[0].text = "Score  " + GameController.instance.Score[0].ToString();
+        Score[1].text = "Score  " + GameController.instance.Score[1].ToString();
+        Score[2].text = "Score  " + GameController.instance.Score[2].ToString();
+        Score[3].text = "Score  " + GameController.instance.Score[3].ToString();
     }
 }

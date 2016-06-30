@@ -498,9 +498,10 @@ public class Player : MonoBehaviour {
     {     
         //metodo per la caduta
         if (!isGrunded)
-        {           
+        {  
+            rb.useGravity = true;
            // isFalling = true;
-            StartCoroutine("FallDownAnimation");       
+            StartCoroutine(FallDownAnimation());       
         }
     }
 
@@ -527,7 +528,6 @@ public class Player : MonoBehaviour {
         //il player cade
         while(!isGrunded)
         {
-			Debug.Log("qui");
             transform.Translate(Vector3.down * fallDownSpeed * Time.deltaTime);         
 
             yield return null;
@@ -594,7 +594,7 @@ public class Player : MonoBehaviour {
         //sposto il player in aria
         transform.position = new Vector3(transform.position.x, 20, transform.position.z);
         isGrunded = false;
-        
+        rb.useGravity = false;
 
         inAirAim.transform.position = new Vector3(transform.position.x,-6.5f,transform.position.z);
         inAirAim.SetActive(true);

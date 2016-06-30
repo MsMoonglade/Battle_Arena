@@ -86,39 +86,31 @@ public class MainMenu : MonoBehaviour {
 
 	public void Undo()
 	{
-
-		if(Input.GetKeyDown(KeyCode.Q))
-		{
-			menu.GetComponent<TweenPosition>().PlayReverse();
-			creditsImage.GetComponent<TweenPosition>().PlayReverse();
-			
+		for (int i=0; i<4; i++) {
+			if(GetButtonDown(i,"DeselectB")){
+				menu.GetComponent<TweenPosition>().PlayReverse();
+				creditsImage.GetComponent<TweenPosition>().PlayReverse();
+			}
 		}
 	
-//
-//		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 1 )
-//		{
-//			menu.GetComponent<TweenPosition>().PlayReverse();
-//			settingsTitle.GetComponent<TweenAlpha>().PlayReverse();
-//			settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-//
-//		}
-//
-//		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 2 )
-//		{
-//			menu.GetComponent<TweenPosition>().PlayReverse();
-//			creditsImage.GetComponent<TweenPosition>().PlayReverse();
-//
-//		}
-//
-//		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 3 )
-//		{
-//			ExitNo();
-//			menu.GetComponent<TweenPosition>().PlayReverse();
-//			exitMenu.GetComponent<TweenPosition>().PlayReverse();
-//
-//		}
 
 
-		
+
 	}
+	//rewired part
+	bool GetButton(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetButton(name);
+	}
+	
+	bool GetButtonDown(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetButtonDown(name);
+	}
+	
+	float GetAxis(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetAxis(name);
+	}
+	
 }

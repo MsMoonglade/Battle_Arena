@@ -16,36 +16,15 @@ public class MainMenu : MonoBehaviour {
 	public GameObject exitMenu;
 
 
-
-	private int backToMenu;
-
-
-
-
-	void Awake ()
-	{
-
-	}
-
-	void Start () 
-	{
-		backToMenu = 0;
-		Debug.Log (backToMenu);
-	}
-	
-
 	void Update () 
 	{
 		MenuFunction();
-		Undo();
-
-       
+		Undo();   
     }
 
 	public void MenuFunction()
 	{
-	
-		Debug.Log (backToMenu);
+
 		if (Input.anyKeyDown) {
 			pressAnyKey.SetActive(false);
 			gameTitle.GetComponent<TweenPosition>().PlayForward();
@@ -69,60 +48,75 @@ public class MainMenu : MonoBehaviour {
 
 	public void Settings() 
 	{
-		backToMenu = 1;
-		Debug.Log (backToMenu);
+
 		menu.GetComponent<TweenPosition>().PlayForward();
-		gameTitle.GetComponent<TweenPosition>().PlayReverse();
-		settingsTitle.GetComponent<TweenAlpha>().PlayForward();
 		settingsMenu.GetComponent<TweenPosition>().PlayForward();
+
+	}
+
+	public void SettingsBack()
+	{
+		menu.GetComponent<TweenPosition>().PlayReverse();
+		settingsMenu.GetComponent<TweenPosition>().PlayReverse();
 
 	}
 
     public void Credits()
     {
-		backToMenu = 2;
-		Debug.Log (backToMenu);
 		menu.GetComponent<TweenPosition>().PlayForward();
-		gameTitle.GetComponent<TweenPosition>().PlayReverse();
 		creditsImage.GetComponent<TweenPosition>().PlayForward();
-
-
     }
 
     public void Exit()
     {
-		backToMenu = 3;
+
 		menu.GetComponent<TweenPosition>().PlayForward();
-		gameTitle.GetComponent<TweenPosition>().PlayReverse();
 		exitMenu.GetComponent<TweenPosition>().PlayForward();
 
     }
+	public void ExitYes()
+	{
+		Application.Quit ();
+	}
+	public void ExitNo()
+	{
+		menu.GetComponent<TweenPosition>().PlayReverse();
+		exitMenu.GetComponent<TweenPosition>().PlayReverse();
+	}
 
 	public void Undo()
 	{
-	
 
-		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 1 )
-		{
-			menu.GetComponent<TweenPosition>().PlayReverse();
-			settingsTitle.GetComponent<TweenAlpha>().PlayReverse();
-			settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-			gameTitle.GetComponent<TweenPosition>().PlayForward();
-		}
-
-		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 2 )
+		if(Input.GetKeyDown(KeyCode.Q))
 		{
 			menu.GetComponent<TweenPosition>().PlayReverse();
 			creditsImage.GetComponent<TweenPosition>().PlayReverse();
-			gameTitle.GetComponent<TweenPosition>().PlayForward();
+			
 		}
-
-		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 3 )
-		{
-			menu.GetComponent<TweenPosition>().PlayReverse();
-			exitMenu.GetComponent<TweenPosition>().PlayReverse();
-			gameTitle.GetComponent<TweenPosition>().PlayForward();
-		}
+	
+//
+//		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 1 )
+//		{
+//			menu.GetComponent<TweenPosition>().PlayReverse();
+//			settingsTitle.GetComponent<TweenAlpha>().PlayReverse();
+//			settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+//
+//		}
+//
+//		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 2 )
+//		{
+//			menu.GetComponent<TweenPosition>().PlayReverse();
+//			creditsImage.GetComponent<TweenPosition>().PlayReverse();
+//
+//		}
+//
+//		if(Input.GetKeyDown(KeyCode.Q) && backToMenu == 3 )
+//		{
+//			ExitNo();
+//			menu.GetComponent<TweenPosition>().PlayReverse();
+//			exitMenu.GetComponent<TweenPosition>().PlayReverse();
+//
+//		}
 
 
 		

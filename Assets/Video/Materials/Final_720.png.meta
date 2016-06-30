@@ -1,0 +1,787 @@
+fileFormatVersion: 2
+guid: 9835a470d6808f8418e6e46a6ed7ba7f
+timeCreated: 1467291811
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Final_720_0
+    21300002: Final_720_1
+    21300004: Final_720_2
+    21300006: Final_720_3
+    21300008: Final_720_4
+    21300010: Final_720_5
+    21300012: Final_720_6
+    21300014: Final_720_7
+    21300016: Final_720_8
+    21300018: Final_720_9
+    21300020: Final_720_10
+    21300022: Final_720_11
+    21300024: Final_720_12
+    21300026: Final_720_13
+    21300028: Final_720_14
+    21300030: Final_720_15
+    21300032: Final_720_16
+    21300034: Final_720_17
+    21300036: Final_720_18
+    21300038: Final_720_19
+    21300040: Final_720_20
+    21300042: Final_720_21
+    21300044: Final_720_22
+    21300046: Final_720_23
+    21300048: Final_720_24
+    21300050: Final_720_25
+    21300052: Final_720_26
+    21300054: Final_720_27
+    21300056: Final_720_28
+    21300058: Final_720_29
+    21300060: Final_720_30
+    21300062: Final_720_31
+    21300064: Final_720_32
+    21300066: Final_720_33
+    21300068: Final_720_34
+    21300070: Final_720_35
+    21300072: Final_720_36
+    21300074: Final_720_37
+    21300076: Final_720_38
+    21300078: Final_720_39
+    21300080: Final_720_40
+    21300082: Final_720_41
+    21300084: Final_720_42
+    21300086: Final_720_43
+    21300088: Final_720_44
+    21300090: Final_720_45
+    21300092: Final_720_46
+    21300094: Final_720_47
+    21300096: Final_720_48
+    21300098: Final_720_49
+    21300100: Final_720_50
+    21300102: Final_720_51
+    21300104: Final_720_52
+    21300106: Final_720_53
+    21300108: Final_720_54
+    21300110: Final_720_55
+    21300112: Final_720_56
+    21300114: Final_720_57
+    21300116: Final_720_58
+    21300118: Final_720_59
+    21300120: Final_720_60
+    21300122: Final_720_61
+    21300124: Final_720_62
+    21300126: Final_720_63
+    21300128: Final_720_64
+    21300130: Final_720_65
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    textureFormat: -1
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: Final_720_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_1
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_2
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_3
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_4
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_5
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 7470
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_7
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_8
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_9
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_10
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_11
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 6748
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_13
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_14
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_15
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_16
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_17
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 6026
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_19
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_20
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_21
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_22
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_23
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 5304
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_25
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_26
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_27
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_28
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_29
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 4582
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_31
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_32
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_33
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_34
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_35
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 3860
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_37
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_38
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_39
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_40
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_41
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 3138
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_43
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_44
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_45
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_46
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_47
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 2416
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_49
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_50
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_51
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_52
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_53
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 1694
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_55
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_56
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_57
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_58
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_59
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 972
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_61
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_62
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_63
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_64
+      rect:
+        serializedVersion: 2
+        x: 5128
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Final_720_65
+      rect:
+        serializedVersion: 2
+        x: 6410
+        y: 250
+        width: 1282
+        height: 722
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

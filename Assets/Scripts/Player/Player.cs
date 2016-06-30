@@ -427,8 +427,8 @@ public class Player : MonoBehaviour {
 		if (isGrunded && !imDied && currentEnergy >= WallCost)
 		{
 			currentEnergy -= WallCost;
-
-            if (wallIndex > wall.Length)
+            wallIndex++;
+            if (wallIndex > wall.Length -1)
                 wallIndex = 0;
             
                 wall[wallIndex].transform.position = WallSpawnPoint.transform.position;

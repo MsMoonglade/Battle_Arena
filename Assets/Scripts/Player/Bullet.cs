@@ -39,54 +39,43 @@ public class Bullet : MonoBehaviour {
   
     void OnTriggerEnter(Collider col)
     {
+        if (col.transform.CompareTag("PlayerWall"))
+            gameObject.SetActive(false);            
+                   
 
-        if (!player.penetrationPuP && !player.explosionPuP && !player.bouncePuP)
-        {
-            if (col.transform.CompareTag("PlayerWall"))            
-                gameObject.SetActive(false);            
-
-            if (col.transform.CompareTag("Player"))
+        if (col.transform.CompareTag("Player") && !player.penetrationPuP && !player.explosionPuP && !player.bouncePuP)
             {
                 col.SendMessage("TakeDamage", Damage);
                 ThisPlayer.SendMessage("HitScore", col.name);
 
                 gameObject.SetActive(false);
             }
-        }
+        
 
-        else if (player.penetrationPuP)
-        {
-            if (col.transform.CompareTag("Player"))
+
+        
+       else if (col.transform.CompareTag("Player") && player.penetrationPuP)
             {
                 col.SendMessage("TakeDamage", Damage);
                 ThisPlayer.SendMessage("HitScore", col.name);
-            }
-        }
+            }        
 
-        else if(player.explosionPuP)
-        {
-            if (col.transform.CompareTag("PlayerWall"))
-                gameObject.SetActive(false);
-
-            if (col.transform.CompareTag("Player"))
+     
+       else if (col.transform.CompareTag("Player") && player.explosionPuP)
             {
                 Explosion();
             }
-        }
+        
 
-        else if (player.bouncePuP)
-        {
-            if (col.transform.CompareTag("PlayerWall"))
-                gameObject.SetActive(false);
 
-            if (col.transform.CompareTag("Player"))
+       else if (col.transform.CompareTag("Player") && player.bouncePuP)
             {
                 col.SendMessage("TakeDamage", Damage);
                 ThisPlayer.SendMessage("HitScore", col.name);
 
                 Bounce();
             }
-        }
+        
     }
 
     private IEnumerator Deactivate()

@@ -109,8 +109,8 @@ public class Player : MonoBehaviour {
 	public bool healthPuP;
 	[HideInInspector]
 	public bool energyPuP;
-	public GameObject GuiIcon;
-	private GameObject[] IconGui = new GameObject[4];
+	public GameObject UiRoot;
+	private GameObject[] IconGui;
 	private PlayerPowerUpGui playerIcon;
 
 
@@ -180,13 +180,15 @@ public class Player : MonoBehaviour {
         //particellari
         particellari = GetComponent<ParticleController>();
 
-		//PowerUp
+        //PowerUp
+        IconGui = new GameObject[UiRoot.transform.childCount];
 		for (int i = 0; i < IconGui.Length ; i++) 
 		{
-			IconGui[i] = GuiIcon.transform.GetChild(i).gameObject;
+			IconGui[i] = UiRoot.transform.GetChild(i).gameObject;
 
 			if(IconGui[i].name == transform.name)
 		    {
+                Debug.Log(IconGui[i].name);
 				playerIcon = IconGui[i].GetComponent<PlayerPowerUpGui> ();
 				break;
 			}
@@ -675,12 +677,11 @@ public class Player : MonoBehaviour {
         }
 
         StartCoroutine("DamageReset", value[1]);
+        playerIcon.Change("Damage", value[1]);
     }
 
     private IEnumerator DamageReset(float time)
-    {
-		playerIcon.Change("Damage" , time);
-
+    {	
         yield return new WaitForSeconds(time);
 
 		damagePuP = false;
@@ -693,6 +694,7 @@ public class Player : MonoBehaviour {
     private void HealthRegen(float[] value)
     {
         StartCoroutine("HealthRegenPowerUP", value);
+        playerIcon.Change("Health", value[2]);
     }
 
     private IEnumerator HealthRegenPowerUP(float[] value)
@@ -700,15 +702,8 @@ public class Player : MonoBehaviour {
         float timer = 0;
         float hotTime = 0;
 
-		playerIcon.Change("Health" , value[2]); 
-
         while (timer <= value[2])
         {
-			if(timer <= value[2])
-				healthPuP = true;
-			else
-				healthPuP = false;
-
             timer += Time.deltaTime;
 
             hotTime += Time.deltaTime;
@@ -731,6 +726,7 @@ public class Player : MonoBehaviour {
     private void EnergyRegen(float[] value)
     {
         StartCoroutine("EnergyRegenPowerUP", value);
+        playerIcon.Change("Energy", value[2]);
     }
 
     private IEnumerator EnergyRegenPowerUP(float[] value)
@@ -738,16 +734,10 @@ public class Player : MonoBehaviour {
         float timer = 0;
         float hotTime = 0;
 
-		playerIcon.Change("Energy" , value[2]);
+		
 
         while (timer <= value[2])
         {
-			if(timer <= value[2])
-				energyPuP = true;
-			else
-				energyPuP = false;
-
-
             timer += Time.deltaTime;
 
             hotTime += Time.deltaTime;
@@ -769,10 +759,13 @@ public class Player : MonoBehaviour {
 
     private void BulletPowerUp(string[] value)
     {
-        if (value[1] == "PenetrationPowerUp")        
+        if (value[1] == "PenetrationPowerUp")
+        {
             StartCoroutine(PenetrationPowerUP(float.Parse(value[0])));
+            playerIcon.Change("Penetration", float.Parse(value[0]));
+        }
 
-        if (value[1] == "ExplosionPowerUp")
+            if (value[1] == "ExplosionPowerUp")
         {
             for (int i = 0; i < bullPuP.Length; i++)
             {
@@ -781,6 +774,7 @@ public class Player : MonoBehaviour {
             }
 
             StartCoroutine(ExplosionPowerUp(float.Parse(value[0])));
+            playerIcon.Change("Explosion", float.Parse(value[0]));
         }
 
         if (value[1] == "BouncePowerUp")
@@ -792,13 +786,13 @@ public class Player : MonoBehaviour {
             }
 
             StartCoroutine(BouncePowerUp(float.Parse(value[0])));
+            playerIcon.Change("Bounce", float.Parse(value[0]));
+
         }
     }
 
     private IEnumerator PenetrationPowerUP (float duration)
     {
-		playerIcon.Change("Penetration" , duration);
-
         penetrationPuP = true;
         yield return new WaitForSeconds(duration);
         penetrationPuP = false;
@@ -806,8 +800,6 @@ public class Player : MonoBehaviour {
 
     private IEnumerator ExplosionPowerUp(float duration)
     {
-		playerIcon.Change("Explosion" , duration);
-
         explosionPuP = true;
         yield return new WaitForSeconds(duration);
         explosionPuP = false;
@@ -815,8 +807,6 @@ public class Player : MonoBehaviour {
 
     private IEnumerator BouncePowerUp(float duration)
     {
-		playerIcon.Change("Bounce" , duration);
-
         bouncePuP = true;
         yield return new WaitForSeconds(duration);
         bouncePuP = false;

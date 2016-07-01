@@ -3,50 +3,70 @@ using System.Collections;
 
 public class PlayerPowerUpGui : MonoBehaviour {
 	
-	public GameObject[] icon;
+	public UISprite[] icon;
 
-	//private GameObject playerGO;
-	//private GameObject allplayer;
-	private Player player;
+
+    private bool deactive;
+    private float timer;
+    private float deactiveAfter;
 
 	void Awake()
 	{
-		icon = new GameObject[transform.childCount];
+		icon = new UISprite[transform.childCount];
 
 		for (int i = 0; i < icon.Length; i ++) 
 		{
-			icon[i] = gameObject.transform.GetChild(i).gameObject;
-			icon[i].SetActive (false);
+			icon[i] = gameObject.transform.GetChild(i).gameObject.GetComponent<UISprite>();
+			icon[i].enabled = false;
 		}
-
-		//allplayer = GameObject.Find;
-		//playerGO = GameObject.Find (transform.name);
-		//player = playerGO.GetComponent<Player> ();
 	}
+
+    void Start()
+    {
+        deactive = false;
+
+    }
+
+
+    void Update()
+    {
+        DeactiveIcon();       
+    }
 
 	public void Change(string name , float timer)
 	{
-		for (int i = 0; i < icon.Length; i ++) 
+        Debug.Log(icon.Length);
+
+		for (int i = 0; i < transform.childCount ; i ++) 
 		{ 
 			if(icon[i].name == name)
-			{			
-				icon[i].SetActive(true);
-				break;
+			{
+                Debug.Log("comparo");
+                icon[i].enabled = true;
+                deactive = true;
+                deactiveAfter = timer;
+                break;
 			}
-		    else 
-				icon[i].SetActive(false);
-		}
-
-		StartCoroutine ("ResetIcon", timer);
-	}
-
-	private IEnumerator ResetIcon(float time)
-	{
-		yield return new WaitForSeconds (time);
-
-		for (int i = 0; i < icon.Length; i ++) 
-		{ 
-	     	icon[i].SetActive(false);
 		}
 	}
+
+    private void DeactiveIcon()
+    {
+        if (deactive)
+            timer += Time.deltaTime;
+
+        if (timer >= deactiveAfter)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                icon[i].enabled = false;                
+            }
+
+            deactive = false;
+            timer = 0;
+            deactiveAfter = 0;
+        }
+
+
+    }
 }

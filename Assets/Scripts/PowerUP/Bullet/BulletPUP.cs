@@ -5,6 +5,7 @@ public class BulletPUP : MonoBehaviour
 {
     public float StayOnFloor;
     public float Duration;
+    public float RotSpeed;
  
 
     void OnEnable()
@@ -19,4 +20,10 @@ public class BulletPUP : MonoBehaviour
         if (this.gameObject.activeSelf)
             this.gameObject.SetActive(false);
     } 
+
+    void Update()
+    {
+        if (transform.position.y <= -4)
+            transform.Rotate (Vector3.up , RotSpeed);
+    }
 }

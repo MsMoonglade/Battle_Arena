@@ -5,8 +5,8 @@ public class StatsPUP : MonoBehaviour {
 
     public float StayOnFloor;
     public float Duration;
+    public float RotSpeed;
 
-    private float timer;
 
     void OnEnable()
     {
@@ -19,6 +19,12 @@ public class StatsPUP : MonoBehaviour {
 
         if (this.gameObject.activeSelf)
             this.gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (transform.position.y <= -5)
+            transform.Rotate (Vector3.up , RotSpeed);
     }
 
 }

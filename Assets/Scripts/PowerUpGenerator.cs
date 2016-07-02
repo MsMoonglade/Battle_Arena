@@ -72,7 +72,7 @@ public class PowerUpGenerator : MonoBehaviour {
 
 	private IEnumerator FallDownAnimation(int index)
 	{
-		while (PowerUP[index].transform.position.y > -5f) 
+		while (PowerUP[index].transform.position.y > -5.5f) 
 		{
 			PowerUP [index].transform.Translate (Vector3.down * FallDownSpeed * Time.deltaTime);
 			yield return null;

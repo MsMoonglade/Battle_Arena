@@ -23,7 +23,7 @@ public class BulletPUP : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.y <= -4)
+        if (transform.position.y <= -5)
             transform.Rotate (Vector3.up , RotSpeed);
     }
 }

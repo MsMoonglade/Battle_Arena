@@ -35,10 +35,12 @@ public class PlayerPowerUpGui : MonoBehaviour {
 
 	public void Change(string name , float timer)
 	{
+        Debug.Log(name);
 		for (int i = 0; i < transform.childCount ; i ++) 
 		{ 
 			if(icon[i].name == name)
 			{
+                Debug.Log("entrrato");
                 icon[i].enabled = true;
                 deactive = true;
                 deactiveAfter = timer;

@@ -673,8 +673,8 @@ public class Player : MonoBehaviour {
             bulletPool[i].GetComponent<Bullet>().Damage += ((stat.Damage * value[0]) / 100);
         }
 
-        StartCoroutine("DamageReset", value[1]);
         playerIcon.Change("Damage", value[1]);
+        StartCoroutine("DamageReset", value[1]);      
     }
 
     private IEnumerator DamageReset(float time)
@@ -690,8 +690,8 @@ public class Player : MonoBehaviour {
 
     private void HealthRegen(float[] value)
     {
-        StartCoroutine("HealthRegenPowerUP", value);
         playerIcon.Change("Health", value[2]);
+        StartCoroutine("HealthRegenPowerUP", value);       
     }
 
     private IEnumerator HealthRegenPowerUP(float[] value)
@@ -722,8 +722,8 @@ public class Player : MonoBehaviour {
 
     private void EnergyRegen(float[] value)
     {
-        StartCoroutine("EnergyRegenPowerUP", value);
         playerIcon.Change("Energy", value[2]);
+        StartCoroutine("EnergyRegenPowerUP", value);        
     }
 
     private IEnumerator EnergyRegenPowerUP(float[] value)
@@ -731,7 +731,6 @@ public class Player : MonoBehaviour {
         float timer = 0;
         float hotTime = 0;
 
-		
 
         while (timer <= value[2])
         {
@@ -756,13 +755,14 @@ public class Player : MonoBehaviour {
 
     private void BulletPowerUp(string[] value)
     {
-        if (value[1] == "PenetrationPowerUp")
+        if (value[1] == "PenetrationPowerUp(Clone)")
         {
+           
             StartCoroutine(PenetrationPowerUP(float.Parse(value[0])));
             playerIcon.Change("Penetration", float.Parse(value[0]));
         }
 
-            if (value[1] == "ExplosionPowerUp")
+            if (value[1] == "ExplosionPowerUp(Clone)")
         {
             for (int i = 0; i < bullPuP.Length; i++)
             {
@@ -770,11 +770,12 @@ public class Player : MonoBehaviour {
                 bullPuP[i].explosionRange = int.Parse(value[3]);
             }
 
+           
             StartCoroutine(ExplosionPowerUp(float.Parse(value[0])));
             playerIcon.Change("Explosion", float.Parse(value[0]));
         }
 
-        if (value[1] == "BouncePowerUp")
+        if (value[1] == "BouncePowerUp(Clone)")
         {         
             for (int i = 0; i < bullPuP.Length; i++)
             {
@@ -782,9 +783,9 @@ public class Player : MonoBehaviour {
                 bullPuP[i].bounceRange = int.Parse(value[3]);
             }
 
+           
             StartCoroutine(BouncePowerUp(float.Parse(value[0])));
             playerIcon.Change("Bounce", float.Parse(value[0]));
-
         }
     }
 

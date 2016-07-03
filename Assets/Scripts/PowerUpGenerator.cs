@@ -55,7 +55,7 @@ public class PowerUpGenerator : MonoBehaviour {
 			randomTemp = Random.Range (0, PowerUP.Length - 1);
 
 		float randomX = Random.Range( -20 , 20) ;
-		float randomZ = Random.Range( -14 , 0) ;
+		float randomZ = Random.Range( -18 , -1) ;
 		Vector3 randomPos = new Vector3( randomX , 20 ,randomZ);
 
 		PowerUP [randomTemp].transform.position = randomPos ;

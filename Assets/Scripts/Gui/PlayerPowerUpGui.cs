@@ -17,14 +17,14 @@ public class PlayerPowerUpGui : MonoBehaviour {
 		for (int i = 0; i < icon.Length; i ++) 
 		{
 			icon[i] = gameObject.transform.GetChild(i).gameObject.GetComponent<UISprite>();
-			icon[i].enabled = false;
+            if(icon[i].gameObject.name != "Base")
+                icon[i].enabled = false;
 		}
 	}
 
     void Start()
     {
         deactive = false;
-
     }
 
 
@@ -35,13 +35,10 @@ public class PlayerPowerUpGui : MonoBehaviour {
 
 	public void Change(string name , float timer)
 	{
-        Debug.Log(icon.Length);
-
 		for (int i = 0; i < transform.childCount ; i ++) 
 		{ 
 			if(icon[i].name == name)
 			{
-                Debug.Log("comparo");
                 icon[i].enabled = true;
                 deactive = true;
                 deactiveAfter = timer;
@@ -59,7 +56,8 @@ public class PlayerPowerUpGui : MonoBehaviour {
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                icon[i].enabled = false;                
+                if (icon[i].gameObject.name != "Base")
+                    icon[i].enabled = false;
             }
 
             deactive = false;

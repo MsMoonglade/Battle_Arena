@@ -44,9 +44,9 @@ public class GUIController : MonoBehaviour {
 
     void ScoreView()
     {
-		Score[0].text = "Score  " + GameController.instance.Score[0].ToString("00") ;
-		Score[1].text = "Score  " + GameController.instance.Score[1].ToString("00") ;
-		Score[2].text = "Score  " + GameController.instance.Score[2].ToString("00") ;
-		Score[3].text = "Score  " + GameController.instance.Score[3].ToString("00") ;
+		Score[0].text = GameController.instance.Score[0].ToString("00") ;
+		Score[1].text = GameController.instance.Score[1].ToString("00") ;
+		Score[2].text = GameController.instance.Score[2].ToString("00") ;
+		Score[3].text = GameController.instance.Score[3].ToString("00") ;
     }
 }

@@ -188,7 +188,6 @@ public class Player : MonoBehaviour {
 
 			if(IconGui[i].name == transform.name)
 		    {
-                Debug.Log(IconGui[i].name);
 				playerIcon = IconGui[i].GetComponent<PlayerPowerUpGui> ();
 				break;
 			}
@@ -579,8 +578,6 @@ public class Player : MonoBehaviour {
 
     private void AimScale()
     {
-        Debug.Log(inAirAim.activeInHierarchy);
-
         if (inAirAim.activeInHierarchy)
         {           
             inAirAim.transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f) * Time.deltaTime;

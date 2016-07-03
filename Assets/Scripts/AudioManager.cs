@@ -287,7 +287,6 @@ public class AudioManager : MonoBehaviour
         {
             if(fadingMusics[p] != null)
             {
-                Debug.Log(fadingMusics[p].theName);
                 if (fadingMusics[p].Fading())
                 {
                     fadingMusics[p] = null;

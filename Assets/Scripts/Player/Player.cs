@@ -308,6 +308,11 @@ public class Player : MonoBehaviour {
             if (imDied)
                 imDied = false;
         }
+
+		if (col.transform.CompareTag ("Destroyer")) {
+			transform.position = new Vector3(0,10,-5);
+			Respawn ();
+		}
     }
 
     public void Move(float horizontal, float vertical)
@@ -519,16 +524,19 @@ public class Player : MonoBehaviour {
         particellari.Stop("superDash");
     }
 
-    private void FallDown()
+    private IEnumerator FallDown()
     {     
-        //metodo per la caduta
-        if (!isGrunded)
-        {  
-           
-           // isFalling = true;
-            StartCoroutine("FallDownAnimation");       
-        }
+		yield return new WaitForSeconds (RespawnFallTime);
+		rb.useGravity = true;
+		rb.AddForce (Vector3.down + new Vector3(0, -fallDownSpeed,0), ForceMode.Impulse);               
     }
+
+	public void FallDownNow()
+	{
+		StopCoroutine ("FallDown");
+		rb.useGravity = true;
+		rb.AddForce (Vector3.down + new Vector3(0, -fallDownSpeed,0), ForceMode.Impulse);
+	}
 
     private void FallDownDamage()
     {
@@ -544,18 +552,6 @@ public class Player : MonoBehaviour {
                 col[i].SendMessage("TakeDamage", FallDownDmg);
                 HitScore(col[i].name);
             }
-        }
-    }
-
-    private IEnumerator FallDownAnimation()
-    {
-        yield return new WaitForSeconds(RespawnFallTime);
-        //il player cade
-        while(!isGrunded)
-        {
-            transform.Translate(Vector3.down * fallDownSpeed * Time.deltaTime);         
-
-            yield return null;
         }
     }
 
@@ -616,6 +612,7 @@ public class Player : MonoBehaviour {
     {
         //sposto il player in aria
         transform.position = new Vector3(transform.position.x, 20, transform.position.z);
+		rb.useGravity = false;
         isGrunded = false;
         
 
@@ -625,7 +622,7 @@ public class Player : MonoBehaviour {
         currentHealth = stat.MaxHealth;
         currentEnergy = stat.MaxEnergy;
         shootCharge = 0;
-        FallDown(); 
+		StartCoroutine ("FallDown"); 
     }
 
     private void HitScore(string name)

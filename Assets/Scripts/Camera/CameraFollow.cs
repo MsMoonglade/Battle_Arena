@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour {
         players = GameObject.FindGameObjectsWithTag("Player");
         playersScript = new Player[4];
         for (int i = 0; i < playersScript.Length; i++)
-            if (players[1].gameObject.activeInHierarchy)
+            if (players[i].gameObject.activeInHierarchy)
                 playersScript[i] = players[i].GetComponent<Player>();
 
         LookFollow();
@@ -36,9 +36,17 @@ public class CameraFollow : MonoBehaviour {
     }
 
     void LookFollow()
-    {
-        float x = (players[0].transform.position.x + players[1].transform.position.x + players[2].transform.position.x + players[3].transform.position.x) / 4;
-        float z = (players[0].transform.position.z + players[1].transform.position.z + players[2].transform.position.z + players[3].transform.position.z) / 4;
+	{
+		float x  = 0;
+		float z = 0;
+		for (int i = 0; i < playersScript.Length; i++) 
+		{
+			x += players[i].transform.position.x;
+			z += players[i].transform.position.z;
+		}
+		x = x / playersScript.Length;
+		z = z / playersScript.Length;
+
         
         pos = new Vector3(x, 0, z);
         if (offSet == Vector3.zero)

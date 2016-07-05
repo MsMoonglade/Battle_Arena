@@ -33,6 +33,10 @@ public class GameController : MonoBehaviour {
 		Time.timeScale = 1.0f; 
         instance = this;
 
+		if(Application.loadedLevelName.Equals("GameScene")){
+			DontDestroyOnLoad(this.gameObject);
+		}
+
         characterSel = GameObject.FindGameObjectWithTag("CharacterController").GetComponent<CharacterSelection>();
 		players = new GameObject[4];
 
@@ -129,7 +133,7 @@ public class GameController : MonoBehaviour {
 	private void EndGame()
 	{
 		Debug.Log ("gioco finito");
-		Time.timeScale = 0.0f;
+		Application.LoadLevel ("ScoreScene");
 	}
 
     private void GameTimer()

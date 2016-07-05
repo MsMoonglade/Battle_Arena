@@ -110,8 +110,8 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(2, "Wall") && !players[2].onDash && !GetButton(2, "Dash"))
             players[2].CreateWall();
 
-		if (GetButtonDown (1, "FallDown") && !players [1].isGrunded)
-			players [1].FallDownNow ();
+		if (GetButtonDown (2, "FallDown") && !players [2].isGrunded)
+			players [2].FallDownNow ();
 
         //player 4
         if (GetAxis(3, "LeftRotationH") != 0 || GetAxis(3, "LeftRotationV") != 0 || GetAxis(3, "RightRotationH") != 0 || GetAxis(3, "RightRotationV") != 0)

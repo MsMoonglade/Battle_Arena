@@ -52,7 +52,10 @@ public class CharacterSelection : MonoBehaviour {
 
 	void Start() 
 	{
-		colorRobot ();
+		if(Application.loadedLevelName.Equals("CharacterSelection"))
+			colorRobot ();
+	
+
 
 	}
 
@@ -134,29 +137,29 @@ public class CharacterSelection : MonoBehaviour {
 		for (int i=0; i<roboModelsTwo.Length; i++) {
 			Renderer rendBody = roboModelsTwo [i].transform.GetChild (1).GetComponent<Renderer> ();
 			rendBody.material.shader = Shader.Find ("Shader Forge/sh_robots");
-			rendBody.material.SetColor ("_Player_color", Color.blue);
+			rendBody.material.SetColor ("_Player_color", Color.cyan);
 			
 			Renderer rendLeft = roboModelsTwo [i].transform.GetChild (1).GetChild (0).GetComponent<Renderer> ();
 			rendLeft.material.shader = Shader.Find ("Shader Forge/sh_robots");
-			rendLeft.material.SetColor ("_Player_color", Color.blue);
+			rendLeft.material.SetColor ("_Player_color", Color.cyan);
 			
 			Renderer rendRight = roboModelsTwo [i].transform.GetChild (1).GetChild (1).GetComponent<Renderer> ();
 			rendRight.material.shader = Shader.Find ("Shader Forge/sh_robots");
-			rendRight.material.SetColor ("_Player_color", Color.blue);
+			rendRight.material.SetColor ("_Player_color", Color.cyan);
 		}
 
 		for (int i=0; i<roboModelsThree.Length; i++) {
 			Renderer rendBody = roboModelsThree [i].transform.GetChild (1).GetComponent<Renderer> ();
 			rendBody.material.shader = Shader.Find ("Shader Forge/sh_robots");
-			rendBody.material.SetColor ("_Player_color", Color.yellow);
+			rendBody.material.SetColor ("_Player_color", new Color(244,146,0,255));
 			
 			Renderer rendLeft = roboModelsThree [i].transform.GetChild (1).GetChild (0).GetComponent<Renderer> ();
 			rendLeft.material.shader = Shader.Find ("Shader Forge/sh_robots");
-			rendLeft.material.SetColor ("_Player_color", Color.yellow);
+			rendLeft.material.SetColor ("_Player_color", new Color(244,146,0,255));
 			
 			Renderer rendRight = roboModelsThree [i].transform.GetChild (1).GetChild (1).GetComponent<Renderer> ();
 			rendRight.material.shader = Shader.Find ("Shader Forge/sh_robots");
-			rendRight.material.SetColor ("_Player_color", Color.yellow);
+			rendRight.material.SetColor ("_Player_color", new Color(244,146,0,255));
 		}
 	}
 
@@ -332,8 +335,8 @@ public class CharacterSelection : MonoBehaviour {
 			}
 		}
 	}
-	}
 
+	}
 
 	//rewired part
 	bool GetButton(int player, string name)

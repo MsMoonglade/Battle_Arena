@@ -113,6 +113,8 @@ public class Player : MonoBehaviour {
 	private GameObject[] IconGui;
 	private PlayerPowerUpGui playerIcon;
 
+	//color
+	private Color myColor;
 
     void Awake()
 	{        
@@ -223,6 +225,12 @@ public class Player : MonoBehaviour {
         bulletIndex = 0;
         spawnpointIndex = 0;
 
+		//color
+		myColor = transform.GetComponent<LoadCharacter>().MyColor;
+		for(int i = 0 ; i < bulletPool.Length ; i ++)
+			bulletPool[i].GetComponent<Renderer>().material.color = myColor;
+
+		inAirAim.GetComponent<Renderer>().material.color = myColor;
 
     }
 

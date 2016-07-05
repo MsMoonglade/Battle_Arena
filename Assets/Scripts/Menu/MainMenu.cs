@@ -15,19 +15,32 @@ public class MainMenu : MonoBehaviour {
 	public GameObject creditsImage;
     public GameObject exit;
 	public GameObject exitMenu;
+	public GameObject abSprite;
 
 	public bool secondTemp;
 	public float second = 0f;
 	public float minute = 0f;
 	public UILabel timer;
 
+	public float timerSel;
+	public bool timerIsOn;
+	public float delay=0.1f;
+
+
 	void Start () 
 	{
 		secondTemp = true;
+		play.SetActive (false);
 	}
 
 	void Update () 
 	{
+		if (timerIsOn) {
+			timerSel+=Time.deltaTime;
+
+		}
+
+
 		MenuFunction();
 		Undo();   
 		SetGameTime();
@@ -46,7 +59,8 @@ public class MainMenu : MonoBehaviour {
 			credits.GetComponent<TweenAlpha>().PlayForward();
 			exit.GetComponent<TweenPosition>().PlayForward();
 			exit.GetComponent<TweenAlpha>().PlayForward();
-
+			abSprite.GetComponent<TweenAlpha>().PlayForward();
+			play.SetActive(true);
 		}
 	}
 
@@ -90,6 +104,7 @@ public class MainMenu : MonoBehaviour {
 	{
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		exitMenu.GetComponent<TweenPosition>().PlayReverse();
+		//GameObject.Find ("StartButton").GetComponent<UIKeyNavigation> ().startsSelected= true;
 	}
 
 	//CreditsUndo
@@ -100,7 +115,10 @@ public class MainMenu : MonoBehaviour {
 			{
 				menu.GetComponent<TweenPosition>().PlayReverse();
 				creditsImage.GetComponent<TweenPosition>().PlayReverse();
-			
+				setTime.GetComponent<TweenPosition>().PlayReverse();	
+//				settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+//				exitMenu.GetComponent<TweenPosition>().PlayReverse();
+//				ExitNo();
 			}
 		}
 	}
@@ -110,7 +128,9 @@ public class MainMenu : MonoBehaviour {
 	{
 		timer.text = minute.ToString() +" : " + second.ToString();
 		Debug.Log (secondTemp);
-		if (GetButtonDown (0, "ArrowUp")){
+		if (GetAxis (0, "LeftRotationH") >= 1 && minute < 5){
+			timerIsOn=true;
+			if(timerSel>delay){
 			if ( secondTemp == true){
 				second = 30;
 				secondTemp = false;
@@ -120,19 +140,27 @@ public class MainMenu : MonoBehaviour {
 				minute++;
 				secondTemp = true;
 			}
+				timerIsOn=false;
+				timerSel=0;
 		}
-		if (GetButtonDown (0, "ArrowDown") && minute > 0) {
-			if ( secondTemp == true){
-				second = 30;
-				minute--;
-				secondTemp = false;
-			}
-			else if ( secondTemp == false){
-				second = 0;
-				secondTemp = true;
+		}
+		if (GetAxis (0, "LeftRotationH") <= -1 && minute > 0) {
+			timerIsOn = true;
+			if (timerSel > delay) {
+				if (secondTemp == true) {
+					second = 30;
+					minute--;
+					secondTemp = false;
+				} else if (secondTemp == false) {
+					second = 0;
+					secondTemp = true;
+				}
+				timerIsOn=false;
+				timerSel=0;
 			}
 		}
-
+		Debug.Log (minute);
+		Debug.Log (second);
 	}
 
 	//rewired

@@ -147,6 +147,7 @@ public class Player : MonoBehaviour {
         chargedBullet = superBul.GetComponent<SuperBullet>();
         chargedBullet.ThisPlayer = this.gameObject;
 		chargedBullet.gameObject.SetActive (false);
+		chargedBullet.MyPlayer=this.gameObject;
 
         //respawn
 		inAirAim = Instantiate(MirinoPrefab , Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;

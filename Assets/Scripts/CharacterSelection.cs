@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿	using UnityEngine;
 using System.Collections;
 using Rewired;
 
@@ -12,7 +12,11 @@ public class CharacterSelection : MonoBehaviour {
 	public GameObject[] roboModelsTwo=new GameObject[5];
 	public GameObject[] roboModelsThree=new GameObject[5];
 
+	public GameObject Models;
+	public GameObject Images;
+
 	public int rotationSpeed;
+	public UISprite LoadingScreen;
 
 	public int[] counter = new int[4];
 	[HideInInspector]
@@ -48,7 +52,8 @@ public class CharacterSelection : MonoBehaviour {
 
 	void Start() 
 	{
-		
+		colorRobot ();
+
 	}
 
 	void Update() 
@@ -64,7 +69,7 @@ public class CharacterSelection : MonoBehaviour {
 					timer [i] += Time.deltaTime;
 
 		
-				StartGame ();
+				LoadingGame ();
 		
 				for (int i = 0; i<control.Length; i++) {
 
@@ -95,7 +100,65 @@ public class CharacterSelection : MonoBehaviour {
 
 	}
 
+	void colorRobot()
+	{
 
+		for (int i=0; i<roboModels.Length; i++) {
+			Renderer rendBody = roboModels [i].transform.GetChild (1).GetComponent<Renderer> ();
+			rendBody.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendBody.material.SetColor ("_Player_color", Color.green);
+		
+			Renderer rendLeft = roboModels [i].transform.GetChild (1).GetChild (0).GetComponent<Renderer> ();
+			rendLeft.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendLeft.material.SetColor ("_Player_color", Color.green);
+
+			Renderer rendRight = roboModels [i].transform.GetChild (1).GetChild (1).GetComponent<Renderer> ();
+			rendRight.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendRight.material.SetColor ("_Player_color", Color.green);
+		}
+
+		for (int i=0; i<roboModelsOne.Length; i++) {
+			Renderer rendBody = roboModelsOne [i].transform.GetChild (1).GetComponent<Renderer> ();
+			rendBody.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendBody.material.SetColor ("_Player_color", Color.red);
+			
+			Renderer rendLeft = roboModelsOne [i].transform.GetChild (1).GetChild (0).GetComponent<Renderer> ();
+			rendLeft.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendLeft.material.SetColor ("_Player_color", Color.red);
+			
+			Renderer rendRight = roboModelsOne [i].transform.GetChild (1).GetChild (1).GetComponent<Renderer> ();
+			rendRight.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendRight.material.SetColor ("_Player_color", Color.red);
+		}
+
+		for (int i=0; i<roboModelsTwo.Length; i++) {
+			Renderer rendBody = roboModelsTwo [i].transform.GetChild (1).GetComponent<Renderer> ();
+			rendBody.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendBody.material.SetColor ("_Player_color", Color.blue);
+			
+			Renderer rendLeft = roboModelsTwo [i].transform.GetChild (1).GetChild (0).GetComponent<Renderer> ();
+			rendLeft.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendLeft.material.SetColor ("_Player_color", Color.blue);
+			
+			Renderer rendRight = roboModelsTwo [i].transform.GetChild (1).GetChild (1).GetComponent<Renderer> ();
+			rendRight.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendRight.material.SetColor ("_Player_color", Color.blue);
+		}
+
+		for (int i=0; i<roboModelsThree.Length; i++) {
+			Renderer rendBody = roboModelsThree [i].transform.GetChild (1).GetComponent<Renderer> ();
+			rendBody.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendBody.material.SetColor ("_Player_color", Color.yellow);
+			
+			Renderer rendLeft = roboModelsThree [i].transform.GetChild (1).GetChild (0).GetComponent<Renderer> ();
+			rendLeft.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendLeft.material.SetColor ("_Player_color", Color.yellow);
+			
+			Renderer rendRight = roboModelsThree [i].transform.GetChild (1).GetChild (1).GetComponent<Renderer> ();
+			rendRight.material.shader = Shader.Find ("Shader Forge/sh_robots");
+			rendRight.material.SetColor ("_Player_color", Color.yellow);
+		}
+	}
 
 	public void SelectRobot(int sel, float control)
 	{
@@ -213,15 +276,20 @@ public class CharacterSelection : MonoBehaviour {
 
 
 
-	public void StartGame()
+	public void LoadingGame()
 	{
 		bool go = true;
 		for (int i = 0; i < ready.Length; i++) 		
 			if(!ready[i])
 				go = false;
-		if (go)
-			Application.LoadLevel ("GameScene");
-	
+		if (go) {
+			LoadingScreen.GetComponent<UITweener> ().PlayForward ();
+			Images.SetActive(false);
+			Models.SetActive(false);
+		}
+		}
+	public void StartGame(){
+		Application.LoadLevel ("GameScene");
 	}
 
 	public void RotateRobot(){

@@ -92,7 +92,7 @@ public class ParticleController : MonoBehaviour {
 
 
         //Caricamento super colpo
-        if (Particle.Equals("charge"))
+        if (Particle.Equals("charge") && !charge.isPlaying)
             charge.Play();
        
 

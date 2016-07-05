@@ -29,6 +29,8 @@ public class SuperBullet : MonoBehaviour {
     private GameObject particle;
     private float speed;
     private float damage;
+	[HideInInspector]
+	public GameObject MyPlayer;
     [HideInInspector]
     public float scale;
     [HideInInspector]
@@ -54,7 +56,7 @@ public class SuperBullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && (collider.gameObject != MyPlayer))
         {
             collider.SendMessage("TakeDamage", damage);
             ThisPlayer.SendMessage("HitScore", collider.name);          

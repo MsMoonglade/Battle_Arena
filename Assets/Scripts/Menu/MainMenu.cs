@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class MainMenu : MonoBehaviour {
+	
 
 	public GameObject pressAnyKey;
 	public GameObject gameTitle;
@@ -16,21 +17,46 @@ public class MainMenu : MonoBehaviour {
     public GameObject exit;
 	public GameObject exitMenu;
 	public GameObject abSprite;
-
-	public bool secondTemp;
-	public float second = 0f;
-	public float minute = 0f;
 	public UILabel timer;
+	private bool ready= false;
+	public bool puppa=false;
+
+	[HideInInspector]
+	public bool secondTemp;
+	[HideInInspector]
+	public float second = 0f;
+	[HideInInspector]
+	public float minute = 3f;
+
 
 	public float timerSel;
 	public bool timerIsOn;
 	public float delay=0.1f;
 
+	void Awake(){
+		DontDestroyOnLoad (this.gameObject);
+
+	}
 
 	void Start () 
 	{
+		minute = 3f;
 		secondTemp = true;
 		play.SetActive (false);
+//
+		if (Application.loadedLevelName.Equals("GameScene")) 
+		{
+			GameController.instance.timerMinute = minute;
+			GameController.instance.timerSecond = second;
+		}
+//
+		setTime.SetActive (false);
+//		settingsMenu.SetActive (false);
+//		creditsImage.SetActive (false);
+//		exitMenu.SetActive (false);
+
+
+
 	}
 
 	void Update () 
@@ -44,6 +70,12 @@ public class MainMenu : MonoBehaviour {
 		MenuFunction();
 		Undo();   
 		SetGameTime();
+		ReadyToPlay (puppa);
+
+		if (GetButtonDown (0, "SelectA") && ready) {
+			Application.LoadLevel("CharacterSelection");
+			
+		}
     }
 
 	public void MenuFunction()
@@ -67,12 +99,15 @@ public class MainMenu : MonoBehaviour {
 	//mainMenu
     public void Play()
 	{
+		setTime.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		setTime.GetComponent<TweenPosition>().PlayForward();
     }
 
 	public void Settings() 
 	{
+//		menu.SetActive (false);
+//		settingsMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		settingsMenu.GetComponent<TweenPosition>().PlayForward();
 	}
@@ -85,12 +120,14 @@ public class MainMenu : MonoBehaviour {
 
     public void Credits()
     {
+//		creditsImage.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		creditsImage.GetComponent<TweenPosition>().PlayForward();
     }
 
     public void Exit()
     {
+//		exitMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		exitMenu.GetComponent<TweenPosition>().PlayForward();
     }
@@ -113,12 +150,18 @@ public class MainMenu : MonoBehaviour {
 		for(int i=0;i<4;i++){
 			if(GetButtonDown(i,"DeselectB"))
 			{
+				settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+//				settingsMenu.SetActive(false);
+//				menu.SetActive(true);
+				menu.GetComponent<TweenPosition>().PlayReverse();
+//				settingsMenu.SetActive(true);
+
 				menu.GetComponent<TweenPosition>().PlayReverse();
 				creditsImage.GetComponent<TweenPosition>().PlayReverse();
 				setTime.GetComponent<TweenPosition>().PlayReverse();	
-//				settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-//				exitMenu.GetComponent<TweenPosition>().PlayReverse();
-//				ExitNo();
+
+				exitMenu.GetComponent<TweenPosition>().PlayReverse();
+	
 			}
 		}
 	}
@@ -159,8 +202,18 @@ public class MainMenu : MonoBehaviour {
 				timerSel=0;
 			}
 		}
-		Debug.Log (minute);
-		Debug.Log (second);
+		puppa = true;
+
+	
+
+	
+	}
+	void ReadyToPlay(bool puppa)
+	{
+		if (GetButtonDown (0, "SelectA") && ready) {
+			ready = puppa;
+			
+		}
 	}
 
 	//rewired

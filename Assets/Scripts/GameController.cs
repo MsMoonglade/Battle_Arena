@@ -154,4 +154,13 @@ public class GameController : MonoBehaviour {
                 EndGame();
         }
     }
+
+    private void Pause()
+    {
+        Time.timeScale = 0;
+    }
+    private void Play()
+    {
+        Time.timeScale = 1;
+    }
 }

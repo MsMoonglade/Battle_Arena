@@ -8,6 +8,11 @@ public class PowerUpGenerator : MonoBehaviour {
 	public float NextPupIn;
 	public float FallDownSpeed;
 
+    public GameObject DxLimit;
+    public GameObject SxLimit;
+    public GameObject TopLimit;
+    public GameObject BotLimit;
+
 	private GameObject[] PowerUP;
 	private float spawnTimer;
 	private bool startSpawn;
@@ -54,8 +59,8 @@ public class PowerUpGenerator : MonoBehaviour {
 		while (PowerUP[randomTemp].activeInHierarchy)
 			randomTemp = Random.Range (0, PowerUP.Length - 1);
 
-		float randomX = Random.Range( -20 , 20) ;
-		float randomZ = Random.Range( -18 , -1) ;
+		float randomX = Random.Range( SxLimit.transform.position.x +2, DxLimit.transform.position.x +2) ;
+		float randomZ = Random.Range( BotLimit.transform.position.z +6 , TopLimit.transform.position.z -3) ;
 		Vector3 randomPos = new Vector3( randomX , 20 ,randomZ);
 
 		PowerUP [randomTemp].transform.position = randomPos ;

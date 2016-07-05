@@ -144,6 +144,7 @@ public class Player : MonoBehaviour {
         GameObject superBul = Instantiate(ChargedBulletPrefab, Vector3.zero, ChargedBulletPrefab.transform.rotation) as GameObject;
         chargedBullet = superBul.GetComponent<SuperBullet>();
         chargedBullet.ThisPlayer = this.gameObject;
+		chargedBullet.gameObject.SetActive (false);
 
         //respawn
 		inAirAim = Instantiate(MirinoPrefab , Vector3.zero, MirinoPrefab.transform.rotation) as GameObject;
@@ -381,7 +382,7 @@ public class Player : MonoBehaviour {
 
     public void SuperShoot()
     {
-        if (isGrunded &&  !imDied && superShootTimer > SuperShootCD && currentEnergy >= SuperShootEnergyCost)
+        if (isGrunded &&  !imDied && !chargedBullet.isActive)
         {
             if (isChargingShoot)
             {
@@ -398,9 +399,11 @@ public class Player : MonoBehaviour {
 
     private void ChargeBullet()
     {       
+		chargedBullet.gameObject.SetActive (true);
         chargedBullet.transform.rotation = transform.rotation;
         chargedBullet.transform.position = WallSpawnPoint.transform.position;
         particellari.Play("charge");
+
 
         if (shootCharge < 1)
         {
@@ -427,7 +430,7 @@ public class Player : MonoBehaviour {
         {
             for (int i = 0; i < chargedBullet.partc.Length; i++)
                 chargedBullet.partc[i].Play();
-            chargedBullet.col.SetActive(true);    
+			chargedBullet.col.enabled = true;    
             superShootTimer = 0;
             isChargingShoot = false;
             chargedBullet.SendMessage("Relase");
@@ -582,13 +585,14 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(float amount)
     {
-        currentHealth -= amount;
+		if (!onSuperDash) {
+			currentHealth -= amount;
 
-        if (currentHealth <= 0)
-        {
-            Die();
-            inAirAim.transform.localScale = inAirAimStartScale;
-        }
+			if (currentHealth <= 0) {
+				Die ();
+				inAirAim.transform.localScale = inAirAimStartScale;
+			}
+		}
     }
 
      void Die()

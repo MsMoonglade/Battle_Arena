@@ -6,6 +6,7 @@ public class SuperBullet : MonoBehaviour {
     public float[] Damage = new float[3];
     public float[] Scale = new float[3];
     public float DeactivationTime;
+	public bool isActive=false;
 
     [HideInInspector]
     public string SuperShotSound = "S_SuperShot";
@@ -20,7 +21,7 @@ public class SuperBullet : MonoBehaviour {
     public bool isShot;
 
     [HideInInspector]
-    public GameObject col;
+    public Collider col;
     [HideInInspector]
     public GameObject ThisPlayer;
     [HideInInspector]
@@ -35,13 +36,13 @@ public class SuperBullet : MonoBehaviour {
 
     void Awake()
     {
-        col = transform.FindChild("Collider").gameObject;
+        col = GetComponent<Collider>();
         partc = GetComponentsInChildren<ParticleSystem>();       
     }
 
     void Start()
     {
-        col.SetActive(false);
+        col.enabled = false;
 
     }
 
@@ -67,7 +68,7 @@ public class SuperBullet : MonoBehaviour {
         else if (collider.CompareTag("PlayerWall") && scale != 3)
             Disable();
 
-       else  if (collider.CompareTag("EnvironmentWall"))
+       else  if (collider.CompareTag("EnvironmentLimit"))
             Disable();
     }
 
@@ -126,6 +127,7 @@ public class SuperBullet : MonoBehaviour {
 
     void Relase()
     {
+		isActive = true;
         StartCoroutine(DisableCor());
     }
 
@@ -139,6 +141,7 @@ public class SuperBullet : MonoBehaviour {
 
     void Disable()
     {
+		isActive = false;
         if(isShot)
         {
         
@@ -146,9 +149,10 @@ public class SuperBullet : MonoBehaviour {
         shotID = -1;
             isShot = false;
         }
-        col.SetActive(false);
+        col.enabled = false;
         for (int i = 0; i < partc.Length; i++)
             partc[i].Stop();
         StopAllCoroutines();
+		gameObject.SetActive (false);
     }
 }

@@ -17,10 +17,9 @@ public class MainMenu : MonoBehaviour {
     public GameObject exit;
 	public GameObject exitMenu;
 	public UILabel timer;
-	private bool ready= false;
 
-	public GameObject lastSelection;
-
+	private int menuNumber;
+	
 	[HideInInspector]
 	public bool secondTemp;
 	[HideInInspector]
@@ -32,12 +31,30 @@ public class MainMenu : MonoBehaviour {
 	private bool timerIsOn;
 	private float delay=0.1f;
 
+	private TweenPosition Title;
+	private TweenPosition PlayButton;
+	private TweenPosition SettingsButton;
+	private TweenPosition CreditsButton;
+	private TweenPosition ExitButton;
+
+
+
+
+
+
 	void Awake(){
 		DontDestroyOnLoad (this.gameObject);
+
+		Title = gameTitle.GetComponent<TweenPosition> ();
+		PlayButton = play.GetComponent<TweenPosition> ();
+		SettingsButton = settings.GetComponent<TweenPosition> ();
+		CreditsButton = credits.GetComponent<TweenPosition> ();
+		ExitButton = exit.GetComponent<TweenPosition> ();
 	}
 
 	void Start () 
 	{
+		menuNumber = 0;
 		minute = 3f;
 		secondTemp = true;
 		play.SetActive (false);
@@ -54,47 +71,44 @@ public class MainMenu : MonoBehaviour {
 //		exitMenu.SetActive (false);
 
 
-
 	}
 
 	void Update () 
 	{
-		if (timerIsOn) {
+		if (timerIsOn) 
 			timerSel+=Time.deltaTime;
-
-		}
-
-
+		
 		MenuFunction();
 		Undo();   
 		SetGameTime();
-
-		if (GetButtonDown (0, "SelectA") && ready) {
-			Application.LoadLevel("CharacterSelection");
-			
-		}
+					
     }
 
+	
 	public void MenuFunction()
 	{
 		if (Input.anyKeyDown) {
 			pressAnyKey.SetActive(false);
-			gameTitle.GetComponent<TweenPosition>().PlayForward();
-			play.GetComponent<TweenPosition>().PlayForward();
-			play.GetComponent<TweenAlpha>().PlayForward();
-			settings.GetComponent<TweenPosition>().PlayForward();
-			settings.GetComponent<TweenAlpha>().PlayForward();
-			credits.GetComponent<TweenPosition>().PlayForward();
-			credits.GetComponent<TweenAlpha>().PlayForward();
-			exit.GetComponent<TweenPosition>().PlayForward();
-			exit.GetComponent<TweenAlpha>().PlayForward();
+
+			Title.PlayForward();
+			PlayButton.PlayForward();
+			SettingsButton.PlayForward();
+			CreditsButton.PlayForward();
+			ExitButton.PlayForward();
+		
 			play.SetActive(true);
 		}
 	}
 
+//	public void PlayMenu()
+//	{
+//
+//	}
+
 	//mainMenu
     public void Play()
 	{
+		menuNumber = 1;
 		setTime.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		setTime.GetComponent<TweenPosition>().PlayForward();
@@ -102,6 +116,7 @@ public class MainMenu : MonoBehaviour {
 
 	public void Settings() 
 	{
+		menuNumber = 2;
 //		menu.SetActive (false);
 //		settingsMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
@@ -110,14 +125,15 @@ public class MainMenu : MonoBehaviour {
 
 	public void SettingsBack()
 	{
-		lastSelection = UIButton.current.gameObject;
+		menuNumber = 0;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-		UICamera.selectedObject = lastSelection;
+
 	}
 
     public void Credits()
     {
+		menuNumber = 3;
 //		creditsImage.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		creditsImage.GetComponent<TweenPosition>().PlayForward();
@@ -125,6 +141,7 @@ public class MainMenu : MonoBehaviour {
 
     public void Exit()
     {
+		menuNumber = 4;
 //		exitMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		exitMenu.GetComponent<TweenPosition>().PlayForward();
@@ -135,12 +152,13 @@ public class MainMenu : MonoBehaviour {
 	{
 		Application.Quit ();
 	}
+
 	public void ExitNo()
 	{
-		lastSelection = UIButton.current.gameObject;
+		menuNumber = 0;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		exitMenu.GetComponent<TweenPosition>().PlayReverse();
-		UICamera.selectedObject = lastSelection;
+
 	}
 
 	//CreditsUndo
@@ -150,11 +168,38 @@ public class MainMenu : MonoBehaviour {
 		for(int i=0;i<4;i++){
 			if(GetButtonDown(i,"DeselectB"))
 			{
-				settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-				menu.GetComponent<TweenPosition>().PlayReverse();
-				creditsImage.GetComponent<TweenPosition>().PlayReverse();
-				setTime.GetComponent<TweenPosition>().PlayReverse();
-				exitMenu.GetComponent<TweenPosition>().PlayReverse();
+
+				switch(menuNumber)
+				{
+				case 0:
+					menu.GetComponent<TweenPosition>().PlayReverse();
+					settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+					break;
+				case 1:
+					setTime.GetComponent<TweenPosition>().PlayReverse();
+					menu.GetComponent<TweenPosition>().PlayReverse();
+					menuNumber=0;
+					break;
+				case 2:
+					settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+					menu.GetComponent<TweenPosition>().PlayReverse();
+					menuNumber=0;
+					break;
+				case 3:
+					creditsImage.GetComponent<TweenPosition>().PlayReverse();
+					menu.GetComponent<TweenPosition>().PlayReverse();
+					menuNumber=0;
+					break;
+				case 4:
+					exitMenu.GetComponent<TweenPosition>().PlayReverse();
+					menu.GetComponent<TweenPosition>().PlayReverse();
+					menuNumber=0;
+					break;
+				default:
+					Debug.Log("ERRORE");
+					menuNumber=0;
+					break;
+				}
 	
 			}
 		}
@@ -196,6 +241,14 @@ public class MainMenu : MonoBehaviour {
 			}
 		}
 	}
+	public void StartGameY()
+	{
+		Application.LoadLevel("CharacterSelection");
+	}
+//	public void StartGameN()
+//	{
+//		Undo()
+//	}
 
 
 	//rewired

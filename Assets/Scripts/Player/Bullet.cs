@@ -67,20 +67,23 @@ public class Bullet : MonoBehaviour {
 
     public void AutoAim()
     {
-        Debug.Log("ho ikpowerup");
+
         Collider[] collider = Physics.OverlapSphere(transform.position, autoAimRange , mask);
 
         if (collider != null)
         {
             for (int i = 0; i < collider.Length; i++)
-            {
-                Debug.Log(autoAimRange);
+			{
+				Vector3 toTarget = (collider[i].transform.position - transform.position).normalized;
+				
+				if (Vector3.Dot(toTarget, transform.forward) > 0) {			
 
-                if (collider[i] != player.GetComponent<Collider>() && collider[i].GetComponent<Player>().isGrunded)
-                {
-                    transform.LookAt(collider[i].transform.position);
-                    break;
-                }
+                    if (collider[i] != ThisPlayer.GetComponent<Collider>() && collider[i].GetComponent<Player>().isGrunded)
+                    {
+                         transform.LookAt(collider[i].transform.position);
+                         break;
+                    }
+				}
             }
         }
     }

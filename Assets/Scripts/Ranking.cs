@@ -7,7 +7,7 @@ public class Ranking : MonoBehaviour {
 
 	public UILabel[] ScoreText=new UILabel[4];
 	public string[] Score = new string[4];
-	public float[] ScoreTemp=new float[4];
+	public UISprite[] UiBars;
 	public GameObject[] PlayerNumPos = new GameObject[4];
 	public UILabel[] PlayerNum = new UILabel[4];
 	public UILabel[] Kills = new UILabel[4];
@@ -53,6 +53,7 @@ public class Ranking : MonoBehaviour {
 
             }*/
 
+        DisablePlayer();
         SetPosition();
 
     }
@@ -84,6 +85,21 @@ public class Ranking : MonoBehaviour {
         ScoreText[1].text = player2String[0];
         ScoreText[2].text = player3String[0];
         ScoreText[3].text = player4String[0];
+    }
+
+    private void DisablePlayer()
+    {
+        int numberOfPlayer = PlayerPrefs.GetInt("NumberOfPlayer");
+
+        for (int i = 0; i < Score.Length; i++)
+        {
+            if (i >= numberOfPlayer)
+            {
+                UiBars[i].enabled = false;
+                ScoreText[i].enabled = false;
+                PlayerNum[i].enabled = false;
+            }
+        }
     }
 
 	public void Quit(){

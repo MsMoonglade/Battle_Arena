@@ -59,8 +59,8 @@ public class PowerUpGenerator : MonoBehaviour {
 		while (PowerUP[randomTemp].activeInHierarchy)
 			randomTemp = Random.Range (0, PowerUP.Length - 1);
 
-		float randomX = Random.Range( SxLimit.transform.position.x +20, DxLimit.transform.position.x -5) ;
-		float randomZ = Random.Range( BotLimit.transform.position.z +6 , TopLimit.transform.position.z -4) ;
+		float randomX = Random.Range( SxLimit.transform.position.x +20, DxLimit.transform.position.x -7) ;
+		float randomZ = Random.Range( BotLimit.transform.position.z +6 , TopLimit.transform.position.z -6) ;
 		Vector3 randomPos = new Vector3( randomX , 20 ,randomZ);
 
 		PowerUP [randomTemp].transform.position = randomPos ;

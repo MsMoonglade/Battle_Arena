@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(0, "Wall") && !players[0].onDash && !GetButton(0, "Dash"))
             players[0].CreateWall();
 
-		if (GetButtonDown (0, "FallDown") && !players [0].isGrunded)
+		if (GetButtonDown (0, "SelectA") && !players [0].isGrunded)
 			players [0].FallDownNow ();
 
        //player 2
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(1, "Wall") && !players[1].onDash && !GetButton(1, "Dash"))
             players[1].CreateWall();
 
-		if (GetButtonDown (1, "FallDown") && !players [1].isGrunded)
+		if (GetButtonDown (1, "SelectA") && !players [1].isGrunded)
 			players [1].FallDownNow ();
 
         //player 3
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(2, "Wall") && !players[2].onDash && !GetButton(2, "Dash"))
             players[2].CreateWall();
 
-		if (GetButtonDown (2, "FallDown") && !players [2].isGrunded)
+		if (GetButtonDown (2, "SelectA") && !players [2].isGrunded)
 			players [2].FallDownNow ();
 
         //player 4
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour {
         if (GetButtonDown(3, "Wall") && !players[3].onDash && !GetButton(3, "Dash"))
             players[3].CreateWall();
 
-		if (GetButtonDown (3, "FallDown") && !players [3].isGrunded)
+		if (GetButtonDown (3, "SelectA") && !players [3].isGrunded)
 			players [3].FallDownNow ();
             
     }

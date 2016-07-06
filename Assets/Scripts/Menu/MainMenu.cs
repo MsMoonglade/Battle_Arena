@@ -269,12 +269,13 @@ public class MainMenu : MonoBehaviour {
 		}
 		if (GetButtonDown (0, "StartButton")) {
 			readyToPlay.SetActive (true);
-			PlayerPrefs.SetFloat("second",second);
-			PlayerPrefs.SetFloat("minute",minute);
 			setTime.SetActive(false);
-			Debug.Log ("ciao");
 
-		}
+
+            PlayerPrefs.SetFloat("second", second);
+            PlayerPrefs.SetFloat("minute", minute);
+
+        }
 	}
 	public void StartGameY()
 	{

@@ -32,7 +32,10 @@ public class GameController : MonoBehaviour {
     {
 		Time.timeScale = 1.0f; 
         instance = this;
-
+		
+		if (Input.anyKeyDown) {
+			Application.LoadLevel("ScoreScene");
+		}
 		if(Application.loadedLevelName.Equals("GameScene")){
 			DontDestroyOnLoad(this.gameObject);
 		}

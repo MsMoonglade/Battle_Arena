@@ -1,9 +1,11 @@
-﻿	using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using Rewired;
 
 public class CharacterSelection : MonoBehaviour {
-	
+
+	public static CharacterSelection instance;
+
 	//variables
 	public GameObject[] icon=new GameObject[5];
 
@@ -29,10 +31,13 @@ public class CharacterSelection : MonoBehaviour {
 
 	void Awake()
 	{
-
+		instance = this;
 		if (GameObject.FindGameObjectWithTag ("CharacterController") != this.gameObject)
 			Destroy (this.gameObject);
+		if (Application.loadedLevelName.Equals ("GameScene")) {
+			DontDestroyOnLoad (this);
 
+		}
 		DontDestroyOnLoad (this);
 		if(Application.loadedLevelName.Equals("CharacterSelection"))
 		{
@@ -61,7 +66,6 @@ public class CharacterSelection : MonoBehaviour {
 
 	void Update() 
 	{
-
 
 			if(Application.loadedLevelName.Equals("CharacterSelection"))
 			   {

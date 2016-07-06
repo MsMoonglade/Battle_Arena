@@ -121,7 +121,7 @@ public class Sound
     public void SetVolume(float _volume)
     {
         source.volume = _volume;
-        volume = _volume;
+        
     }
 
 

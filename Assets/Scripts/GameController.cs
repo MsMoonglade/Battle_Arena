@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour {
     {
 		Time.timeScale = 1.0f; 
 
+		timerSecond=PlayerPrefs.GetFloat ("second");
+		timerMinute=PlayerPrefs.GetFloat ("minute");
 
 		if (instance != null)
 		{

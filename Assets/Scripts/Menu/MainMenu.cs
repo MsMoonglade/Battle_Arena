@@ -40,10 +40,7 @@ public class MainMenu : MonoBehaviour {
 	private TweenPosition ExitButton;
 //	private TweenPosition ExitButton;
 
-
-
-
-
+	
 
 	void Awake(){
 		DontDestroyOnLoad (this.gameObject);
@@ -80,10 +77,10 @@ public class MainMenu : MonoBehaviour {
 
 	void Update () 
 	{
-		if (Application.loadedLevelName.Equals("CharacterSelection")) 
+	if (Application.loadedLevelName.Equals("CharacterSelection")) 
 		{
 			CharacterSelection.instance.timerMinute = minute;
-			CharacterSelection.instance.timerSecond = second;
+		CharacterSelection.instance.timerSecond = second;
 			Destroy(this.gameObject);
 		}
 	
@@ -218,6 +215,23 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
+	void MusicOn (){
+		AudioManager.instance.MusicsActivation (true);
+	}
+
+	void MusicOff (){
+		AudioManager.instance.MusicsActivation (false);
+	}
+
+	void SoundOn (){
+		AudioManager.instance.SoundsActivation (true);
+	}
+
+	void SoundOff (){
+		AudioManager.instance.SoundsActivation (false);
+	}
+
+
 	//SetTimer
 	public void SetGameTime()
 	{
@@ -255,7 +269,8 @@ public class MainMenu : MonoBehaviour {
 		}
 		if (GetButtonDown (0, "StartButton")) {
 			readyToPlay.SetActive (true);
-
+			PlayerPrefs.SetFloat("second",second);
+			PlayerPrefs.SetFloat("minute",minute);
 			setTime.SetActive(false);
 			Debug.Log ("ciao");
 

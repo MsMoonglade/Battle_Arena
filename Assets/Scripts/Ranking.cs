@@ -14,27 +14,27 @@ public class Ranking : MonoBehaviour {
 
 	public GameObject[] playersInGame;
 	public Rewired.Controller[] control;
-
-
+	public UISprite endGame;
+	private bool endGameIsOn;
 	void Awake () {
 
-		control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
+//		control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
 
-		for (int i=0; i<Score.Length; i++) {
-			Score[i]=GameController.instance.Score[i];
-			ScoreTemp[i]=GameController.instance.Score[i];
-		}
+//		for (int i=0; i<Score.Length; i++) {
+////			Score[i]=GameController.instance.Score[i];
+//			ScoreTemp[i]=GameController.instance.Score[i];
+//		}
 
 		Array.Sort (Score);
 		Array.Reverse (Score);
-
-		for (int i=0; i<control.Length; i++) {
-			playersInGame[i].SetActive(true);
-		}
-
-		for (int i=0; i<Score.Length; i++) {
-			ScoreText[i].text=Score[i].ToString();
-		}
+//
+//		for (int i=0; i<control.Length; i++) {
+//			playersInGame[i].SetActive(true);
+//		}
+//
+//		for (int i=0; i<Score.Length; i++) {
+//			ScoreText[i].text=Score[i].ToString();
+//		}
 
 		for (int i = 0; i < PlayerNum.Length; i++) {
 			for(int j = 0; j < ScoreTemp.Length; j++){
@@ -44,6 +44,49 @@ public class Ranking : MonoBehaviour {
 			}
 
 		}
+	}
+	void Update(){
+		if(GetButtonDown(0,"StartButton")){
+			endGame.GetComponent<UITweener>().PlayForward();
+			endGameIsOn=true;
+		}
+		if(GetButtonDown(0,"DeselectB")){
+			endGame.GetComponent<UITweener>().PlayReverse();
+			endGameIsOn=false;
+		}
+	}
+	
+	public void Quit(){
+		if(endGameIsOn)
+		Application.LoadLevel ("Title");
+	}
+	public void SelectCharacter(){
+		if(endGameIsOn)
+		Application.LoadLevel ("CharacterSelection");
+	}
+	public void Restart(){
+
+		if (endGameIsOn) {
+			for (int i=0; i<4; i++) {
+				GameController.instance.Score [i] = 0;
+			}
+			Application.LoadLevel ("GameScene");
+		}
+	}
+	//rewired part
+	bool GetButton(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetButton(name);
+	}
+	
+	bool GetButtonDown(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetButtonDown(name);
+	}
+	
+	float GetAxis(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetAxis(name);
 	}
 
 

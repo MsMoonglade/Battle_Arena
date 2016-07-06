@@ -16,10 +16,10 @@ public class MainMenu : MonoBehaviour {
 	public GameObject creditsImage;
     public GameObject exit;
 	public GameObject exitMenu;
-	public GameObject abSprite;
 	public UILabel timer;
 	private bool ready= false;
-	public bool puppa=false;
+
+	public GameObject lastSelection;
 
 	[HideInInspector]
 	public bool secondTemp;
@@ -27,15 +27,13 @@ public class MainMenu : MonoBehaviour {
 	public float second = 0f;
 	[HideInInspector]
 	public float minute = 3f;
-
-
-	public float timerSel;
-	public bool timerIsOn;
-	public float delay=0.1f;
+	
+	private float timerSel;
+	private bool timerIsOn;
+	private float delay=0.1f;
 
 	void Awake(){
 		DontDestroyOnLoad (this.gameObject);
-
 	}
 
 	void Start () 
@@ -43,13 +41,13 @@ public class MainMenu : MonoBehaviour {
 		minute = 3f;
 		secondTemp = true;
 		play.SetActive (false);
-//
+
 		if (Application.loadedLevelName.Equals("GameScene")) 
 		{
 			GameController.instance.timerMinute = minute;
 			GameController.instance.timerSecond = second;
 		}
-//
+
 		setTime.SetActive (false);
 //		settingsMenu.SetActive (false);
 //		creditsImage.SetActive (false);
@@ -70,7 +68,6 @@ public class MainMenu : MonoBehaviour {
 		MenuFunction();
 		Undo();   
 		SetGameTime();
-		ReadyToPlay (puppa);
 
 		if (GetButtonDown (0, "SelectA") && ready) {
 			Application.LoadLevel("CharacterSelection");
@@ -91,7 +88,6 @@ public class MainMenu : MonoBehaviour {
 			credits.GetComponent<TweenAlpha>().PlayForward();
 			exit.GetComponent<TweenPosition>().PlayForward();
 			exit.GetComponent<TweenAlpha>().PlayForward();
-			abSprite.GetComponent<TweenAlpha>().PlayForward();
 			play.SetActive(true);
 		}
 	}
@@ -114,8 +110,10 @@ public class MainMenu : MonoBehaviour {
 
 	public void SettingsBack()
 	{
+		lastSelection = UIButton.current.gameObject;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+		UICamera.selectedObject = lastSelection;
 	}
 
     public void Credits()
@@ -139,27 +137,23 @@ public class MainMenu : MonoBehaviour {
 	}
 	public void ExitNo()
 	{
+		lastSelection = UIButton.current.gameObject;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		exitMenu.GetComponent<TweenPosition>().PlayReverse();
-		//GameObject.Find ("StartButton").GetComponent<UIKeyNavigation> ().startsSelected= true;
+		UICamera.selectedObject = lastSelection;
 	}
 
 	//CreditsUndo
 	public void Undo()
 	{
+
 		for(int i=0;i<4;i++){
 			if(GetButtonDown(i,"DeselectB"))
 			{
 				settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-//				settingsMenu.SetActive(false);
-//				menu.SetActive(true);
-				menu.GetComponent<TweenPosition>().PlayReverse();
-//				settingsMenu.SetActive(true);
-
 				menu.GetComponent<TweenPosition>().PlayReverse();
 				creditsImage.GetComponent<TweenPosition>().PlayReverse();
-				setTime.GetComponent<TweenPosition>().PlayReverse();	
-
+				setTime.GetComponent<TweenPosition>().PlayReverse();
 				exitMenu.GetComponent<TweenPosition>().PlayReverse();
 	
 			}
@@ -170,7 +164,6 @@ public class MainMenu : MonoBehaviour {
 	public void SetGameTime()
 	{
 		timer.text = minute.ToString() +" : " + second.ToString();
-		Debug.Log (secondTemp);
 		if (GetAxis (0, "LeftRotationH") >= 1 && minute < 5){
 			timerIsOn=true;
 			if(timerSel>delay){
@@ -202,19 +195,8 @@ public class MainMenu : MonoBehaviour {
 				timerSel=0;
 			}
 		}
-		puppa = true;
-
-	
-
-	
 	}
-	void ReadyToPlay(bool puppa)
-	{
-		if (GetButtonDown (0, "SelectA") && ready) {
-			ready = puppa;
-			
-		}
-	}
+
 
 	//rewired
 	bool GetButton(int player, string name)

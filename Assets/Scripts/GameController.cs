@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
 	public GameObject rewiredInputControllerPrefab;
 	private GameObject rewiredInputController;
 	
-
+	public GameObject pauseMenu;
     void Awake()
     {
 		Time.timeScale = 1.0f; 
@@ -106,6 +106,7 @@ public class GameController : MonoBehaviour {
     void Update ()
     {
         GameTimer();
+		Pause ();
 	}
 
     public void AssignScore(string player , float value)
@@ -169,10 +170,51 @@ public class GameController : MonoBehaviour {
 
     private void Pause()
     {
-        Time.timeScale = 0;
+		for (int i = 0; i < players.Length; i++) {
+			if (GetButtonDown (i, "StartButton")) {
+				pauseMenu.SetActive (true);
+				pauseMenu.GetComponent<UITweener> ().PlayForward ();
+				Time.timeScale = 0;
+			}
+		}
+
     }
+
+	public void Resume(){
+		pauseMenu.GetComponent<UITweener> ().PlayReverse();
+		Time.timeScale = 1f;
+	}
+	public void DeactiveMenu(){
+		pauseMenu.SetActive (false);
+	}
+	public void LoadCharacterSelection(){
+		Application.LoadLevel ("CharacterSelection");
+	}
+	public void GoToMenu(){
+		Application.LoadLevel ("Title");
+	}
+
+
     private void Play()
     {
         Time.timeScale = 1;
     }
+
+	//rewired part
+	bool GetButton(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetButton(name);
+	}
+
+	bool GetButtonDown(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetButtonDown(name);
+	}
+
+	float GetAxis(int player, string name)
+	{
+		return Rewired.ReInput.players.GetPlayer(player).GetAxis(name);
+	}
+
+
 }

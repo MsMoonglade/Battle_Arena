@@ -37,26 +37,24 @@ public class CharacterSelection : MonoBehaviour {
 	void Awake()
 	{
 		instance = this;
-		/*if (GameObject.FindGameObjectWithTag ("CharacterController") != this.gameObject)
-			Destroy (this.gameObject);*/
+		if (GameObject.FindGameObjectWithTag ("CharacterController") != this.gameObject)
+			Destroy (this.gameObject);
+		if (Application.loadedLevelName.Equals ("GameScene")) {
+			DontDestroyOnLoad (this);
 
-
-		if (!Application.loadedLevelName.Equals ("GameScene") || !Application.loadedLevelName.Equals("CharacterSelection")) 
-			Destroy (this);
-		
+		}
 		DontDestroyOnLoad (this);
-
 		if(Application.loadedLevelName.Equals("CharacterSelection"))
 		{
+
+
 		control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
 
 		ready = new bool[control.Length];
 		timer = new float[control.Length];
 		for (int i =0; i< timer.Length; i++)
 			timer [i] = delay;
-        }
-
-        else
+		}else
 			control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
 
 

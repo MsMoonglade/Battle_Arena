@@ -17,7 +17,9 @@ public class MainMenu : MonoBehaviour {
     public GameObject exit;
 	public GameObject exitMenu;
 	public GameObject readyToPlay;
-	public UILabel timer;
+    public GameObject aButton;
+    public GameObject bButton;
+    public UILabel timer;
 
 	private int menuNumber;
 	private bool ready;
@@ -59,13 +61,7 @@ public class MainMenu : MonoBehaviour {
 		minute = 3f;
 		secondTemp = true;
 		play.SetActive (false);
-//
-//		if (Application.loadedLevelName.Equals("CharacterSelection")) 
-//		{
-//			CharacterSelection.instance.timerMinute = minute;
-//			CharacterSelection.instance.timerSecond = second;
-//			Destroy(this.gameObject);
-//		}
+
 
 		setTime.SetActive (false);
 //		settingsMenu.SetActive (false);
@@ -109,10 +105,6 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-//	public void PlayMenu()
-//	{
-//
-//	}
 
 	//mainMenu
     public void Play()
@@ -121,6 +113,7 @@ public class MainMenu : MonoBehaviour {
 		setTime.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		setTime.GetComponent<TweenPosition>().PlayForward();
+        ready = true;
     }
 
 	public void Settings() 
@@ -130,16 +123,20 @@ public class MainMenu : MonoBehaviour {
 //		settingsMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		settingsMenu.GetComponent<TweenPosition>().PlayForward();
-		ready = true;
-	}
+        aButton.SetActive(false);
+        bButton.SetActive(false);
+
+    }
 
 	public void SettingsBack()
 	{
 		menuNumber = 0;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+        aButton.SetActive(true);
+        bButton.SetActive(true);
 
-	}
+    }
 
     public void Credits()
     {
@@ -155,6 +152,8 @@ public class MainMenu : MonoBehaviour {
 //		exitMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		exitMenu.GetComponent<TweenPosition>().PlayForward();
+        aButton.SetActive(false);
+        bButton.SetActive(false);
     }
 
 	//ExitMenu
@@ -168,8 +167,10 @@ public class MainMenu : MonoBehaviour {
 		menuNumber = 0;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		exitMenu.GetComponent<TweenPosition>().PlayReverse();
+        aButton.SetActive(true);
+        bButton.SetActive(true);
 
-	}
+    }
 
 	//CreditsUndo
 	public void Undo()
@@ -185,21 +186,25 @@ public class MainMenu : MonoBehaviour {
 					menu.GetComponent<TweenPosition>().PlayReverse();
 					settingsMenu.GetComponent<TweenPosition>().PlayReverse();
 					break;
+                //PLay
 				case 1:
 					setTime.GetComponent<TweenPosition>().PlayReverse();
 					menu.GetComponent<TweenPosition>().PlayReverse();
 					menuNumber=0;
 					break;
-				case 2:
-					settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-					menu.GetComponent<TweenPosition>().PlayReverse();
+                //Settings
+                case 2:
+				//	settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+				//	menu.GetComponent<TweenPosition>().PlayReverse();
 					menuNumber=0;
 					break;
-				case 3:
+                //Credits
+                case 3:
 					creditsImage.GetComponent<TweenPosition>().PlayReverse();
 					menu.GetComponent<TweenPosition>().PlayReverse();
 					menuNumber=0;
 					break;
+                //Exit
 				case 4:
 					exitMenu.GetComponent<TweenPosition>().PlayReverse();
 					menu.GetComponent<TweenPosition>().PlayReverse();
@@ -215,19 +220,19 @@ public class MainMenu : MonoBehaviour {
 		}
 	}
 
-	void MusicOn (){
+	public void MusicOn (){
 		AudioManager.instance.MusicsActivation (true);
 	}
 
-	void MusicOff (){
+	public void MusicOff (){
 		AudioManager.instance.MusicsActivation (false);
 	}
 
-	void SoundOn (){
+	public void SoundOn (){
 		AudioManager.instance.SoundsActivation (true);
 	}
 
-	void SoundOff (){
+	public void SoundOff (){
 		AudioManager.instance.SoundsActivation (false);
 	}
 
@@ -267,16 +272,22 @@ public class MainMenu : MonoBehaviour {
 				timerSel=0;
 			}
 		}
-		if (GetButtonDown (0, "StartButton")) {
-			readyToPlay.SetActive (true);
-			setTime.SetActive(false);
-
-
+        if (GetButtonDown(0, "SelectA") && ready)
+        {
+            //readyToPlay.SetActive(true);
+            Application.LoadLevel("CharacterSelection");
             PlayerPrefs.SetFloat("second", second);
             PlayerPrefs.SetFloat("minute", minute);
-
+            //setTime.SetActive(false);
+            Debug.Log("ciao");
         }
-	}
+        else if (GetButtonDown(0, "DeselectB")) {
+            ready = false;
+            Debug.Log("ciaone");
+        }
+
+
+    }
 	public void StartGameY()
 	{
 		Application.LoadLevel("CharacterSelection");

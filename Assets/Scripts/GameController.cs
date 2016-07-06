@@ -29,15 +29,16 @@ public class GameController : MonoBehaviour {
 	public GameObject pauseMenu;
     void Awake()
     {
-		Time.timeScale = 1.0f;
+        instance = this;
 
+		Time.timeScale = 1.0f;
         if (timerSecond == 0 && timerMinute == 0)
         {
             timerSecond = PlayerPrefs.GetFloat("second");
             timerMinute = PlayerPrefs.GetFloat("minute");
         }
 
-        /*if (instance != null)
+		if (instance != null)
 		{
 			
 			if (instance != this)
@@ -49,9 +50,8 @@ public class GameController : MonoBehaviour {
 			DontDestroyOnLoad(this);
 		}
 
-		DontDestroyOnLoad (transform.gameObject);*/
+		DontDestroyOnLoad (transform.gameObject);
 
-        instance = this;
 
         characterSel = GameObject.FindGameObjectWithTag("CharacterController").GetComponent<CharacterSelection>();
 		players = new GameObject[4];
@@ -169,11 +169,11 @@ public class GameController : MonoBehaviour {
                 if (timerSecond <= 0.0f)
                 {
                     EndGame();
+                    PlayerPrefs.SetString("Player2Score", Score[1].ToString() + " P2&quot");
 
-                    PlayerPrefs.SetString("Player1Score", Score[0].ToString() + " P1");
-                    PlayerPrefs.SetString("Player2Score", Score[1].ToString() + " P2");
-                    PlayerPrefs.SetString("Player3Score", Score[2].ToString() + " P3");
-                    PlayerPrefs.SetString("Player4Score", Score[3].ToString() + " P4");
+                    PlayerPrefs.SetString("Player3Score", Score[2].ToString() + " P3&quot");
+
+                    PlayerPrefs.SetString("Player4Score", Score[3].ToString() + " P4&quot");
                 }
 			}
 		}

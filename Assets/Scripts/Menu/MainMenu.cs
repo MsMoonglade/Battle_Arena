@@ -16,9 +16,11 @@ public class MainMenu : MonoBehaviour {
 	public GameObject creditsImage;
     public GameObject exit;
 	public GameObject exitMenu;
+	public GameObject readyToPlay;
 	public UILabel timer;
 
 	private int menuNumber;
+	private bool ready;
 	
 	[HideInInspector]
 	public bool secondTemp;
@@ -36,6 +38,7 @@ public class MainMenu : MonoBehaviour {
 	private TweenPosition SettingsButton;
 	private TweenPosition CreditsButton;
 	private TweenPosition ExitButton;
+//	private TweenPosition ExitButton;
 
 
 
@@ -54,16 +57,18 @@ public class MainMenu : MonoBehaviour {
 
 	void Start () 
 	{
+		ready = false;
 		menuNumber = 0;
 		minute = 3f;
 		secondTemp = true;
 		play.SetActive (false);
-
-		if (Application.loadedLevelName.Equals("GameScene")) 
-		{
-			GameController.instance.timerMinute = minute;
-			GameController.instance.timerSecond = second;
-		}
+//
+//		if (Application.loadedLevelName.Equals("CharacterSelection")) 
+//		{
+//			CharacterSelection.instance.timerMinute = minute;
+//			CharacterSelection.instance.timerSecond = second;
+//			Destroy(this.gameObject);
+//		}
 
 		setTime.SetActive (false);
 //		settingsMenu.SetActive (false);
@@ -75,6 +80,13 @@ public class MainMenu : MonoBehaviour {
 
 	void Update () 
 	{
+		if (Application.loadedLevelName.Equals("CharacterSelection")) 
+		{
+			CharacterSelection.instance.timerMinute = minute;
+			CharacterSelection.instance.timerSecond = second;
+			Destroy(this.gameObject);
+		}
+	
 		if (timerIsOn) 
 			timerSel+=Time.deltaTime;
 		
@@ -121,6 +133,7 @@ public class MainMenu : MonoBehaviour {
 //		settingsMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		settingsMenu.GetComponent<TweenPosition>().PlayForward();
+		ready = true;
 	}
 
 	public void SettingsBack()
@@ -209,7 +222,7 @@ public class MainMenu : MonoBehaviour {
 	public void SetGameTime()
 	{
 		timer.text = minute.ToString() +" : " + second.ToString();
-		if (GetAxis (0, "LeftRotationH") >= 1 && minute < 5){
+		if (GetAxis (0, "LeftRotationH") >= 0.7f && minute < 5){
 			timerIsOn=true;
 			if(timerSel>delay){
 			if ( secondTemp == true){
@@ -225,7 +238,7 @@ public class MainMenu : MonoBehaviour {
 				timerSel=0;
 		}
 		}
-		if (GetAxis (0, "LeftRotationH") <= -1 && minute > 0) {
+		if (GetAxis (0, "LeftRotationH") <= -0.7f && minute > 0) {
 			timerIsOn = true;
 			if (timerSel > delay) {
 				if (secondTemp == true) {
@@ -240,15 +253,24 @@ public class MainMenu : MonoBehaviour {
 				timerSel=0;
 			}
 		}
+		if (GetButtonDown (0, "StartButton")) {
+			readyToPlay.SetActive (true);
+
+			setTime.SetActive(false);
+			Debug.Log ("ciao");
+
+		}
 	}
 	public void StartGameY()
 	{
 		Application.LoadLevel("CharacterSelection");
 	}
-//	public void StartGameN()
-//	{
-//		Undo()
-//	}
+
+	public void StartGameN()
+	{
+		readyToPlay.SetActive (false);
+		setTime.GetComponent<TweenPosition>().PlayReverse();
+	}
 
 
 	//rewired

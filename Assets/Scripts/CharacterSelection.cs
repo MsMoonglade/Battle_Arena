@@ -29,6 +29,11 @@ public class CharacterSelection : MonoBehaviour {
 	float[] timer;
 	public int[] modelIndex=new int[4];
 
+
+	public float timerMinute;
+
+	public float timerSecond;
+
 	void Awake()
 	{
 		instance = this;
@@ -59,7 +64,7 @@ public class CharacterSelection : MonoBehaviour {
 	{
 		if(Application.loadedLevelName.Equals("CharacterSelection"))
 			colorRobot ();
-	
+		Debug.Log (timerMinute + " " +timerSecond);
 
 
 	}

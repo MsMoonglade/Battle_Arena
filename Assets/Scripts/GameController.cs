@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour {
             timerMinute = PlayerPrefs.GetFloat("minute");
         }
 
-		if (instance != null)
+	/*	if (instance != null)
 		{
 			
 			if (instance != this)
@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour {
 			DontDestroyOnLoad(this);
 		}
 
-		DontDestroyOnLoad (transform.gameObject);
+		DontDestroyOnLoad (transform.gameObject);*/
 
 
         characterSel = GameObject.FindGameObjectWithTag("CharacterController").GetComponent<CharacterSelection>();
@@ -169,11 +169,11 @@ public class GameController : MonoBehaviour {
                 if (timerSecond <= 0.0f)
                 {
                     EndGame();
-                    PlayerPrefs.SetString("Player2Score", Score[1].ToString() + " P2&quot");
 
-                    PlayerPrefs.SetString("Player3Score", Score[2].ToString() + " P3&quot");
-
-                    PlayerPrefs.SetString("Player4Score", Score[3].ToString() + " P4&quot");
+                    PlayerPrefs.SetString("Player1Score", Score[0].ToString("00") + " P1");
+                    PlayerPrefs.SetString("Player2Score", Score[1].ToString("00") + " P2");
+                    PlayerPrefs.SetString("Player3Score", Score[2].ToString("00") + " P3");
+                    PlayerPrefs.SetString("Player4Score", Score[3].ToString("00") + " P4");
                 }
 			}
 		}

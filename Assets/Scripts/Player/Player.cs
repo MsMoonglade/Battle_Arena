@@ -102,7 +102,7 @@ public class Player : MonoBehaviour {
     [HideInInspector]
     public bool explosionPuP;
     [HideInInspector]
-    public bool bouncePuP;
+    public bool AutoAimPuP;
 	[HideInInspector]
 	public bool damagePuP;
 	[HideInInspector]
@@ -217,7 +217,7 @@ public class Player : MonoBehaviour {
         //bool PowerUp
         penetrationPuP = false;
         explosionPuP = false;
-        bouncePuP = false;
+        AutoAimPuP = false;
 		damagePuP = false;
 		healthPuP = false;
 		energyPuP = false;
@@ -373,6 +373,9 @@ public class Player : MonoBehaviour {
                 bulletPool[bulletIndex].transform.position = BulletSpawnPoint[spawnpointIndex].transform.position;
 				bulletPool[bulletIndex].transform.rotation = transform.rotation;
 				bulletPool[bulletIndex].SetActive(true);
+                if(AutoAimPuP)
+                    bullPuP[bulletIndex].AutoAim();
+
                 particellari.Play("shoot" + spawnpointIndex);
                 anim.Play("shoot" + spawnpointIndex);
                 AudioManager.instance.PlaySound(shotSound);
@@ -785,17 +788,14 @@ public class Player : MonoBehaviour {
             playerIcon.Change("Explosion", float.Parse(value[0]));
         }
 
-        if (value[1] == "BouncePowerUp(Clone)")
-        {         
-            for (int i = 0; i < bullPuP.Length; i++)
-            {
-                bullPuP[i].numberOfBounce = int.Parse(value[2]);
-                bullPuP[i].bounceRange = int.Parse(value[3]);
-            }
+        if (value[1] == "AutoAimPowerUp(Clone)")
+        {
+            for (int i = 0; i < bullPuP.Length; i++)            
+                bullPuP[i].autoAimRange = int.Parse(value[2]);
 
-           
-            StartCoroutine(BouncePowerUp(float.Parse(value[0])));
-            playerIcon.Change("Bounce", float.Parse(value[0]));
+
+            StartCoroutine(AutoAimPowerUp(float.Parse(value[0])));
+            playerIcon.Change("Aim", float.Parse(value[0]));
         }
     }
 
@@ -813,10 +813,10 @@ public class Player : MonoBehaviour {
         explosionPuP = false;
     }
 
-    private IEnumerator BouncePowerUp(float duration)
+    private IEnumerator AutoAimPowerUp(float duration)
     {
-        bouncePuP = true;
+        AutoAimPuP = true;
         yield return new WaitForSeconds(duration);
-        bouncePuP = false;
+        AutoAimPuP = false;
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 public class Bullet : MonoBehaviour {
 
     public float deactivationTime = 1;
+    public LayerMask mask;
 
     [HideInInspector]
     public float Damage;
@@ -16,9 +17,7 @@ public class Bullet : MonoBehaviour {
 
     //stats PowerUP
     [HideInInspector]
-    public int numberOfBounce;
-    [HideInInspector]
-    public float bounceRange;
+    public float autoAimRange;
     [HideInInspector]
     public float explosionRange;
     [HideInInspector]
@@ -43,7 +42,7 @@ public class Bullet : MonoBehaviour {
             gameObject.SetActive(false);            
                    
 
-        if (col.transform.CompareTag("Player") && !player.penetrationPuP && !player.explosionPuP && !player.bouncePuP)
+        if (col.transform.CompareTag("Player") && !player.penetrationPuP && !player.explosionPuP)
             {
                 col.SendMessage("TakeDamage", Damage);
                 ThisPlayer.SendMessage("HitScore", col.name);
@@ -52,8 +51,6 @@ public class Bullet : MonoBehaviour {
             }
         
 
-
-        
        else if (col.transform.CompareTag("Player") && player.penetrationPuP)
             {
                 col.SendMessage("TakeDamage", Damage);
@@ -64,18 +61,28 @@ public class Bullet : MonoBehaviour {
        else if (col.transform.CompareTag("Player") && player.explosionPuP)
             {
                 Explosion();
-            }
-        
+            }  
+      
+    }
 
+    public void AutoAim()
+    {
+        Debug.Log("ho ikpowerup");
+        Collider[] collider = Physics.OverlapSphere(transform.position, autoAimRange , mask);
 
-       else if (col.transform.CompareTag("Player") && player.bouncePuP)
+        if (collider != null)
+        {
+            for (int i = 0; i < collider.Length; i++)
             {
-                col.SendMessage("TakeDamage", Damage);
-                ThisPlayer.SendMessage("HitScore", col.name);
+                Debug.Log(autoAimRange);
 
-                Bounce();
+                if (collider[i] != player.GetComponent<Collider>() && collider[i].GetComponent<Player>().isGrunded)
+                {
+                    transform.LookAt(collider[i].transform.position);
+                    break;
+                }
             }
-        
+        }
     }
 
     private IEnumerator Deactivate()
@@ -88,7 +95,7 @@ public class Bullet : MonoBehaviour {
      //   StopAllCoroutines();
     }
 
-    private void Bounce()
+   /* private void Bounce()
     {
         Collider[] collider = Physics.OverlapSphere(transform.position, bounceRange);
 
@@ -104,7 +111,7 @@ public class Bullet : MonoBehaviour {
 
         if (numberOfBounce == 0)
             gameObject.SetActive(false);
-    }
+    }*/
 
     private void Explosion()
     {

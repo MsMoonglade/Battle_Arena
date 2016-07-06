@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BouncePUP : BulletPUP {
+public class AutoAimPUP : BulletPUP {
 
-    public int MaxBounce;
-    public float BounceRange;
+    public float MaxRange;
 
     private string[] value = new string[4];
 
@@ -12,8 +11,7 @@ public class BouncePUP : BulletPUP {
     {
         value[0] = Duration.ToString();
         value[1] = transform.name;
-        value[2] = MaxBounce.ToString();
-        value[3] = BounceRange.ToString();
+        value[2] = MaxRange.ToString();
 
     }
 

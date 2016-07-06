@@ -67,7 +67,7 @@ public class Ranking : MonoBehaviour {
 	public void Restart(){
 
 		if (endGameIsOn) {
-			for (int i=0; i<4; i++) {
+			for (int i=0; i< GameController.instance.Score.Length ; i++) {
 				GameController.instance.Score [i] = 0;
 			}
 			Application.LoadLevel ("GameScene");

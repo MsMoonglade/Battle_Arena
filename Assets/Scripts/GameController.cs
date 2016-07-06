@@ -25,20 +25,27 @@ public class GameController : MonoBehaviour {
 
 	public GameObject rewiredInputControllerPrefab;
 	private GameObject rewiredInputController;
-
-
+	
 
     void Awake()
     {
 		Time.timeScale = 1.0f; 
-        instance = this;
-		
-		if (Input.anyKeyDown) {
-			Application.LoadLevel("ScoreScene");
+
+
+		if (instance != null)
+		{
+			
+			if (instance != this)
+				Destroy(gameObject);
 		}
-		if(Application.loadedLevelName.Equals("GameScene")){
-			DontDestroyOnLoad(this.gameObject);
+		else
+		{
+			instance = this;
+			DontDestroyOnLoad(this);
 		}
+
+		DontDestroyOnLoad (transform.gameObject);
+
 
         characterSel = GameObject.FindGameObjectWithTag("CharacterController").GetComponent<CharacterSelection>();
 		players = new GameObject[4];
@@ -141,21 +148,21 @@ public class GameController : MonoBehaviour {
 
     private void GameTimer()
     {
-        timerSecond -= 1 * Time.deltaTime;
+		if (Application.loadedLevelName.Equals ("GameScene")) {
+			timerSecond -= 1 * Time.deltaTime;
 
 
-        timeMinuteLabel.text = timerMinute.ToString("00") + ":" + timerSecond.ToString("00");
+			timeMinuteLabel.text = timerMinute.ToString ("00") + ":" + timerSecond.ToString ("00");
 
-        if (timerSecond <= 0 && timerMinute > 0)
-        {
-            timerMinute -= 1.0f;
-            timerSecond = 59.0f;
-        }
-        if (timerMinute == 0.0f)
-        {
-            if (timerSecond <= 0.0f)
-                EndGame();
-        }
+			if (timerSecond <= 0 && timerMinute > 0) {
+				timerMinute -= 1.0f;
+				timerSecond = 59.0f;
+			}
+			if (timerMinute == 0.0f) {
+				if (timerSecond <= 0.0f)
+					EndGame ();
+			}
+		}
     }
 
     private void Pause()

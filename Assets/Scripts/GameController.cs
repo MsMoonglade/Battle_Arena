@@ -82,19 +82,19 @@ public class GameController : MonoBehaviour {
         }
     
 
-    Random.Range(0, battleThemesName.Length);
-        Invoke("Mooseca", 0.05f);
+        AudioManager.instance.stopAllMusic();
+        Mooseca();
 
 	}
 
 
 	void Mooseca()
 	{
-		AudioManager.instance.PlaySound (countdown);
+		//AudioManager.instance.PlaySound (countdown);
 		musicSelector = Random.Range (0, battleThemesName.Length);
 		AudioManager.instance.PlaySound (battleThemesName [musicSelector]);
-		AudioManager.instance.setVolume (battleThemesName [musicSelector], 0.05f);
-		Invoke ("BattleThemeVolume", 1);
+		//AudioManager.instance.setVolume (battleThemesName [musicSelector], 0.05f);
+		//Invoke ("BattleThemeVolume", 1);
 
 
 	}

@@ -42,6 +42,7 @@ public class MainMenu : MonoBehaviour {
 	private TweenPosition ExitButton;
 
 	private string Confirm;
+	private string back;
 //	private TweenPosition ExitButton;
 
 	
@@ -55,6 +56,7 @@ public class MainMenu : MonoBehaviour {
 		CreditsButton = credits.GetComponent<TweenPosition> ();
 		ExitButton = exit.GetComponent<TweenPosition> ();
 		Confirm = "S_Confirm";
+		back = "S_Back";
 	}
 
 	void Start () 
@@ -138,7 +140,7 @@ public class MainMenu : MonoBehaviour {
 		menuNumber = 0;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		settingsMenu.GetComponent<TweenPosition>().PlayReverse();
-		AudioManager.instance.PlaySound (Confirm);
+		AudioManager.instance.PlaySound (back);
         aButton.SetActive(true);
         bButton.SetActive(true);
 
@@ -178,6 +180,8 @@ public class MainMenu : MonoBehaviour {
 		exitMenu.GetComponent<TweenPosition>().PlayReverse();
         aButton.SetActive(true);
         bButton.SetActive(true);
+		AudioManager.instance.PlaySound (back);
+
 
     }
 
@@ -197,6 +201,7 @@ public class MainMenu : MonoBehaviour {
 					break;
                 //PLay
 				case 1:
+					AudioManager.instance.PlaySound (back);
 					setTime.GetComponent<TweenPosition>().PlayReverse();
 					menu.GetComponent<TweenPosition>().PlayReverse();
 					menuNumber=0;
@@ -209,14 +214,15 @@ public class MainMenu : MonoBehaviour {
 					break;
                 //Credits
                 case 3:
+					AudioManager.instance.PlaySound (back);
 					creditsImage.GetComponent<TweenPosition>().PlayReverse();
 					menu.GetComponent<TweenPosition>().PlayReverse();
 					menuNumber=0;
 					break;
                 //Exit
 				case 4:
-					exitMenu.GetComponent<TweenPosition>().PlayReverse();
-					menu.GetComponent<TweenPosition>().PlayReverse();
+//					exitMenu.GetComponent<TweenPosition>().PlayReverse();
+//					menu.GetComponent<TweenPosition>().PlayReverse();
 					menuNumber=0;
 					break;
 				default:

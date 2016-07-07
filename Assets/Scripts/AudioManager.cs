@@ -196,7 +196,7 @@ public class Sound
 
 public class AudioManager : MonoBehaviour
 {
-
+	bool musicOn=true;
 
     //Inserire i suoni nell'editor
     [SerializeField]
@@ -287,6 +287,7 @@ public class AudioManager : MonoBehaviour
         if (PlayerPrefs.GetInt("MusicState") == 2)
         {
             MusicsActivation(false);
+			musicOn=false;
         }
 
         if (PlayerPrefs.GetInt("SoundState") == 2)
@@ -301,17 +302,15 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        for(int p=0; p<fadingMusics.Length; p++)
-        {
-            if(fadingMusics[p] != null)
-            {
-                if (fadingMusics[p].Fading())
-                {
-                    fadingMusics[p] = null;
-                    Debug.Log("done");
-                }
-            }
-        }
+		if(musicOn){
+			for (int p=0; p<fadingMusics.Length; p++) {
+				if (fadingMusics [p] != null) {
+					if (fadingMusics [p].Fading ()) {
+						fadingMusics [p] = null;
+						Debug.Log ("done");
+					}
+				}
+			}}
     }
 
     public void PlaySound(string soundName)
@@ -483,26 +482,24 @@ public class AudioManager : MonoBehaviour
     public void setVolume(string soundName, float volume)
     {
 
-        //chiamata del suono tramite nome
+		//chiamata del suono tramite nome
+		if (musicOn) {
 
+			for (int i = 0; i < musics.Length; i++) {
 
-        for (int i = 0; i < musics.Length; i++)
-        {
+				//ricerca del suono
 
-            //ricerca del suono
+				if (musics [i].theName == soundName) {
 
-            if (musics[i].theName == soundName)
-            {
+					//modifica volume
+					musics [i].SetVolume (volume);
+					return;
+				}
+			}
 
-                //modifica volume
-                musics[i].SetVolume(volume);
-                return;
-            }
-        }
-
-        Debug.LogError("Music " + soundName + " doesn't exist");
-    }
-
+			Debug.LogError ("Music " + soundName + " doesn't exist");
+		}
+	}
 
     public void SoundsActivation(bool setOn)
     {
@@ -550,11 +547,13 @@ public class AudioManager : MonoBehaviour
             {
                 musics[i].SetVolume(0);
                 PlayerPrefs.SetInt("MusicState", 2);
+				musicOn=false;
 
             }
             else
             { musics[i].CurrentVolume();
                 PlayerPrefs.SetInt("MusicState", 1);
+				musicOn=true;
             }
 
         }
@@ -596,29 +595,27 @@ public class AudioManager : MonoBehaviour
 
     public void FadeMusic(string soundName, float to, float fadeSpeed)
     {
+		if (musicOn) {
 
-        for (int i = 0; i < musics.Length; i++)
-        {
+			for (int i = 0; i < musics.Length; i++) {
 
-            //ricerca del suono
+				//ricerca del suono
 
-            if (musics[i].theName == soundName)
-            {
+				if (musics [i].theName == soundName) {
 
-                //modifica volume
-                musics[i].Fade(to, fadeSpeed);
-                for(int k=0; k<fadingMusics.Length; k++)
-                {
+					//modifica volume
+					musics [i].Fade (to, fadeSpeed);
+					for (int k=0; k<fadingMusics.Length; k++) {
 
-                    if (fadingMusics[k] == null)
-                    {
-                        fadingMusics[k] = musics[i];
-                        return;
-                    }
-                }
-                return;
-            }
-        }
+						if (fadingMusics [k] == null) {
+							fadingMusics [k] = musics [i];
+							return;
+						}
+					}
+					return;
+				}
+			}
+		}
 
     }
 

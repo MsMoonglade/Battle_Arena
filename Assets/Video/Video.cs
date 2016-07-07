@@ -50,7 +50,7 @@ public class Video : MonoBehaviour {
     }
 
     void StartMainTheme(){
-
+		AudioManager.instance.StopSound (intro);
 		AudioManager.instance.PlaySound (mainTheme);
 	}
  

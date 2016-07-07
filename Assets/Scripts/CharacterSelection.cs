@@ -14,6 +14,7 @@ public class CharacterSelection : MonoBehaviour {
 	public GameObject[] roboModelsTwo=new GameObject[5];
 	public GameObject[] roboModelsThree=new GameObject[5];
 
+	bool isFading;
 	public GameObject Models;
 	public GameObject Images;
 
@@ -296,6 +297,9 @@ public class CharacterSelection : MonoBehaviour {
 				go = false;
 		if (go) {
 			LoadingScreen.GetComponent<UITweener> ().PlayForward ();
+			if(!isFading)
+			{AudioManager.instance.FadeMusic("M_MainTheme", 0, 0.3f);
+				isFading=true;}
 			Images.SetActive(false);
 			Models.SetActive(false);
 		}

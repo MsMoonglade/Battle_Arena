@@ -211,6 +211,7 @@ public class AudioManager : MonoBehaviour
 
     Sound[] fadingMusics = new Sound[2];
 
+    
 
     public static AudioManager instance;
     void Awake()
@@ -235,6 +236,8 @@ public class AudioManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+      
+
 
 
         int requiredSounds = 0;
@@ -279,6 +282,16 @@ public class AudioManager : MonoBehaviour
             _go.transform.SetParent(this.transform);
 
          
+        }
+
+        if (PlayerPrefs.GetInt("MusicState") == 2)
+        {
+            MusicsActivation(false);
+        }
+
+        if (PlayerPrefs.GetInt("SoundState") == 2)
+        {
+            SoundsActivation(false);
         }
 
 
@@ -496,18 +509,34 @@ public class AudioManager : MonoBehaviour
 
         for (int i = 0; i < usingSounds.Length; i++)
         {
-            Debug.Log(usingSounds[i]);
 
             if (!setOn)
+            {
                 usingSounds[i].SetVolume(0);
+                PlayerPrefs.SetInt("SoundState", 2);
+            }
             else
-                usingSounds[i].CurrentVolume();
+            { usingSounds[i].CurrentVolume();
+                PlayerPrefs.SetInt("SoundState", 1);
+
+            }
 
         }
 
     }
 
 
+    public void StopAllSounds()
+    {
+
+        for (int i = 0; i < usingSounds.Length; i++)
+        {
+                usingSounds[i].StopSound();
+            
+
+        }
+
+    }
 
 
 
@@ -518,9 +547,15 @@ public class AudioManager : MonoBehaviour
         {
 
             if (!setOn)
+            {
                 musics[i].SetVolume(0);
+                PlayerPrefs.SetInt("MusicState", 2);
+
+            }
             else
-                musics[i].CurrentVolume();
+            { musics[i].CurrentVolume();
+                PlayerPrefs.SetInt("MusicState", 1);
+            }
 
         }
 

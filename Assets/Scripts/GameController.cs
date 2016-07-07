@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
 
     public UILabel timeSecondLabel;
 	public UILabel timeMinuteLabel;
+	public GameObject timeIsUp; 
 
 	public GameObject rewiredInputControllerPrefab;
 	private GameObject rewiredInputController;
@@ -147,7 +148,7 @@ public class GameController : MonoBehaviour {
             Application.LoadLevel(Application.loadedLevel);
     }
 
-	private void EndGame()
+	public void EndGame()
 	{
 		Debug.Log ("gioco finito");
 		Application.LoadLevel ("ScoreScene");
@@ -168,12 +169,16 @@ public class GameController : MonoBehaviour {
 			if (timerMinute == 0.0f) {
                 if (timerSecond <= 0.0f)
                 {
-                    EndGame();
+					Time.timeScale=0.3f;
+					timeIsUp.SetActive(true);
+
+//                    EndGame();
 
                     PlayerPrefs.SetString("Player1Score", Score[0].ToString("00") + " P1");
                     PlayerPrefs.SetString("Player2Score", Score[1].ToString("00") + " P2");
                     PlayerPrefs.SetString("Player3Score", Score[2].ToString("00") + " P3");
                     PlayerPrefs.SetString("Player4Score", Score[3].ToString("00") + " P4");
+					timeIsUp.GetComponent<TweenAlpha>().PlayForward();
                 }
 			}
 		}

@@ -54,6 +54,8 @@ public class CharacterSelection : MonoBehaviour {
 
 		control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
 
+			PlayerPrefs.SetInt("NumberOfPlayer", control.Length);
+
 		ready = new bool[control.Length];
 		timer = new float[control.Length];
 		for (int i =0; i< timer.Length; i++)

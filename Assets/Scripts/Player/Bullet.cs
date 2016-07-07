@@ -38,10 +38,7 @@ public class Bullet : MonoBehaviour {
   
     void OnTriggerEnter(Collider col)
     {
-        if (col.transform.CompareTag("PlayerWall"))
-            gameObject.SetActive(false);            
                    
-
         if (col.transform.CompareTag("Player") && !player.penetrationPuP && !player.explosionPuP)
             {
                 col.SendMessage("TakeDamage", Damage);

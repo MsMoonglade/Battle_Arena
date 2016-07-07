@@ -14,6 +14,7 @@ public class CharacterSelection : MonoBehaviour {
 	public GameObject[] roboModelsTwo=new GameObject[5];
 	public GameObject[] roboModelsThree=new GameObject[5];
 
+	public GameObject[] readyText = new GameObject[4];
 	bool isFading;
 	public GameObject Models;
 	public GameObject Images;
@@ -47,7 +48,9 @@ public class CharacterSelection : MonoBehaviour {
 		DontDestroyOnLoad (this);
 		if(Application.loadedLevelName.Equals("CharacterSelection"))
 		{
-
+			for(int i =0;i<readyText.Length;i++){
+				readyText[i].SetActive(false);
+			}
 
 		control = Rewired.ReInput.controllers.GetControllers(Rewired.ControllerType.Joystick);
 
@@ -98,15 +101,16 @@ public class CharacterSelection : MonoBehaviour {
 					}
 
 			
-					if(GetButtonDown(i, "SelectA"))
-				
+					if(GetButtonDown(i, "SelectA")){
+						readyText[i].SetActive(true);
 						CheckRobot(i);
-
+				}
 			
-					if(GetButtonDown(i, "DeselectB"))
-				
+					if(GetButtonDown(i, "DeselectB")){
+						readyText[i].SetActive(false);
 						ready[i] = false;
-		
+				}
+
 				}
 			
 			}

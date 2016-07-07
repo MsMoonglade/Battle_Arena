@@ -16,7 +16,7 @@ public class Ranking : MonoBehaviour {
 	public GameObject[] playersInGame;
 	public Rewired.Controller[] control;
 	public UISprite endGame;
-	private bool endGameIsOn;
+	public bool endGameIsOn;
 
     void Awake() {
 

@@ -15,19 +15,27 @@ public class Video : MonoBehaviour {
 
 
     void Awake() {
-		firstTime = 0;
-		anim = GetComponent<Animator> ();
+
     }
 
 
-	void Start(){
-	
-		AudioManager.instance.PlaySound (intro);
-		AudioManager.instance.setVolume (intro, 0.01f);
-			AudioManager.instance.FadeMusic(intro,fadeLimit,fadeSpeed);
-        Invoke("QuickFade", 1);
 
-	}
+	void Start(){
+        firstTime = 0;
+        anim = GetComponent<Animator>();
+        StartCoroutine("StartSounds");	}
+
+
+    IEnumerator StartSounds() {
+        yield return new WaitForEndOfFrame();
+        AudioManager.instance.stopAllMusic();
+        AudioManager.instance.StopAllSounds();
+
+        AudioManager.instance.PlaySound (intro);
+        AudioManager.instance.setVolume (intro, 0.01f);
+        AudioManager.instance.FadeMusic(intro,fadeLimit,fadeSpeed);
+        Invoke("QuickFade", 1);
+    }
     // Update is called once per frame
     void Update () {
 

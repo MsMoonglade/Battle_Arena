@@ -169,7 +169,7 @@ public class GameController : MonoBehaviour {
 			if (timerMinute == 0.0f) {
                 if (timerSecond <= 0.0f)
                 {
-					Time.timeScale=0.3f;
+					Time.timeScale=0.5f;
 					timeIsUp.SetActive(true);
 
 //                    EndGame();

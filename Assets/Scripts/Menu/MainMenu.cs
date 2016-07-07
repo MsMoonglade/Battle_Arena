@@ -40,6 +40,8 @@ public class MainMenu : MonoBehaviour {
 	private TweenPosition SettingsButton;
 	private TweenPosition CreditsButton;
 	private TweenPosition ExitButton;
+
+	private string Confirm;
 //	private TweenPosition ExitButton;
 
 	
@@ -52,6 +54,7 @@ public class MainMenu : MonoBehaviour {
 		SettingsButton = settings.GetComponent<TweenPosition> ();
 		CreditsButton = credits.GetComponent<TweenPosition> ();
 		ExitButton = exit.GetComponent<TweenPosition> ();
+		Confirm = "S_Confirm";
 	}
 
 	void Start () 
@@ -113,6 +116,7 @@ public class MainMenu : MonoBehaviour {
 		setTime.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		setTime.GetComponent<TweenPosition>().PlayForward();
+		AudioManager.instance.PlaySound (Confirm);
         ready = true;
     }
 
@@ -125,6 +129,7 @@ public class MainMenu : MonoBehaviour {
 		settingsMenu.GetComponent<TweenPosition>().PlayForward();
         aButton.SetActive(false);
         bButton.SetActive(false);
+		AudioManager.instance.PlaySound (Confirm);
 
     }
 
@@ -133,8 +138,10 @@ public class MainMenu : MonoBehaviour {
 		menuNumber = 0;
 		menu.GetComponent<TweenPosition>().PlayReverse();
 		settingsMenu.GetComponent<TweenPosition>().PlayReverse();
+		AudioManager.instance.PlaySound (Confirm);
         aButton.SetActive(true);
         bButton.SetActive(true);
+
 
     }
 
@@ -144,6 +151,7 @@ public class MainMenu : MonoBehaviour {
 //		creditsImage.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		creditsImage.GetComponent<TweenPosition>().PlayForward();
+		AudioManager.instance.PlaySound (Confirm);
     }
 
     public void Exit()
@@ -152,6 +160,7 @@ public class MainMenu : MonoBehaviour {
 //		exitMenu.SetActive (true);
 		menu.GetComponent<TweenPosition>().PlayForward();
 		exitMenu.GetComponent<TweenPosition>().PlayForward();
+		AudioManager.instance.PlaySound (Confirm);
         aButton.SetActive(false);
         bButton.SetActive(false);
     }
@@ -221,14 +230,17 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void MusicOn (){
+		AudioManager.instance.PlaySound (Confirm);
 		AudioManager.instance.MusicsActivation (true);
 	}
 
 	public void MusicOff (){
+		AudioManager.instance.PlaySound (Confirm);
 		AudioManager.instance.MusicsActivation (false);
 	}
 
 	public void SoundOn (){
+		AudioManager.instance.PlaySound (Confirm);
 		AudioManager.instance.SoundsActivation (true);
 	}
 

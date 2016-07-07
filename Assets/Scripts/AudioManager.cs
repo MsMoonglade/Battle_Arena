@@ -496,6 +496,7 @@ public class AudioManager : MonoBehaviour
 
         for (int i = 0; i < usingSounds.Length; i++)
         {
+            Debug.Log(usingSounds[i]);
 
             if (!setOn)
                 usingSounds[i].SetVolume(0);

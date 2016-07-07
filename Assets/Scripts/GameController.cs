@@ -184,7 +184,6 @@ public class GameController : MonoBehaviour {
 		for (int i = 0; i < players.Length; i++) {
 			if (GetButtonDown (i, "StartButton")) {
 				pauseMenu.SetActive (true);
-				pauseMenu.GetComponent<UITweener> ().PlayForward ();
 				Time.timeScale = 0;
 			}
 		}
@@ -192,12 +191,10 @@ public class GameController : MonoBehaviour {
     }
 
 	public void Resume(){
-		pauseMenu.GetComponent<UITweener> ().PlayReverse();
 		Time.timeScale = 1f;
-	}
-	public void DeactiveMenu(){
-		pauseMenu.SetActive (false);
-	}
+        pauseMenu.SetActive(false);
+    }
+
 	public void LoadCharacterSelection(){
 		Application.LoadLevel ("CharacterSelection");
 	}

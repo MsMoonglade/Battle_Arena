@@ -11,6 +11,7 @@ public class Video : MonoBehaviour {
 	public string shots= "M_Shots", intro ="M_Intro", mainTheme= "M_MainTheme";
 	Animator anim;
 	public int startTime=1;
+    float fadeSpeed = 0.01f, fadeLimit = 0.7f;
 
 
     void Awake() {
@@ -22,8 +23,9 @@ public class Video : MonoBehaviour {
 	void Start(){
 	
 		AudioManager.instance.PlaySound (intro);
-		AudioManager.instance.setVolume (intro, 0.1f);
-			AudioManager.instance.FadeMusic(intro,0.7f,0.5f);
+		AudioManager.instance.setVolume (intro, 0.01f);
+			AudioManager.instance.FadeMusic(intro,fadeLimit,fadeSpeed);
+        Invoke("QuickFade", 1);
 
 	}
     // Update is called once per frame
@@ -41,7 +43,13 @@ public class Video : MonoBehaviour {
 	}
 
 
-	void StartMainTheme(){
+    void QuickFade()
+    {
+        AudioManager.instance.FadeMusic(intro, fadeLimit, fadeSpeed*10);
+
+    }
+
+    void StartMainTheme(){
 
 		AudioManager.instance.PlaySound (mainTheme);
 	}

@@ -36,6 +36,8 @@ public class Sound
     public bool loop;
     float fadeFrom, fadeTo, fadeStep;
     bool fadeIn;
+
+    float currentVolume;
    
     public Sound(Sound s)
     {
@@ -57,6 +59,8 @@ public class Sound
 
         source.clip = clip;
         source.volume = defaultVolume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
+        currentVolume = source.volume;
+
         source.pitch = pitch * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f));
         source.loop = loop;
        // duration = clip.length;
@@ -127,7 +131,8 @@ public class Sound
 
     public void CurrentVolume()
     {
-        source.volume = volume;
+        source.volume = currentVolume;
+
     }
 
     public void Pause()
@@ -515,6 +520,18 @@ public class AudioManager : MonoBehaviour
                 musics[i].SetVolume(0);
             else
                 musics[i].CurrentVolume();
+
+        }
+
+    }
+
+    public void stopAllMusic()
+    {
+
+        for (int i = 0; i < musics.Length; i++)
+        {
+
+            musics[i].StopSound();
 
         }
 
